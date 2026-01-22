@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+
+# Virtual environments
+venv/
+.env/
+.venv/
+
+# Environment variables / secrets
+.env
+*.env
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Pytest
+.pytest_cache/
+
+# Optional: large local data (only if you regenerate static_graph.json)
+# backend/static_graph.json
+
+# Docker
+.Dockerfile
+#CSV files
+*.csv
+
+#Utils
+backend/utils.py
+backend/verify_json.py
+backend/update_graph_data.py
+backend/data.json
+
+CHECKS

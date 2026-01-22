@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Feature Graph Visualization</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <!-- Error Handler -->
+    <script>
+        window.onerror = function (msg, url, line, col, error) {
+            alert("Error: " + msg + "\nurl: " + url + "\nline: " + line);
+            return false;
+        };
+        // Catch unhandled promise rejections
+        window.onunhandledrejection = function (event) {
+            alert("Unhandled Rejection: " + event.reason);
+        };
+    </script>
+
+    <!-- Local Assets -->
+    <script src="assets/cytoscape.min.js"></script>
+    <script src="assets/layout-base.js"></script>
+    <script src="assets/cose-base.js"></script>
+    <script src="assets/cytoscape-fcose.js"></script>
+
+
+</head>
+
+<body>
+    <div id="app">
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h1>Bot Feature<br>Capability Graph</h1>
+            </div>
+            <div class="sidebar-content">
+
+                <!-- Clustering Section -->
+                <div class="filter-section">
+                    <h3 class="filter-section-title">Clustering Analysis</h3>
+
+                    <label class="filter-item">
+                        <span style="font-size: 0.9em; margin-right: 10px;">Algorithm:</span>
+                        <select id="cluster-algo-select"
+                            style="padding: 5px; border-radius: 4px; border: 1px solid #ccc; width: 100%; color: #333;">
+                            <option value="louvain">Louvain (Modularity)</option>
+                            <option value="greedy_modularity">Greedy Modularity</option>
+                            <option value="spectral">Spectral Clustering</option>
+                            <option value="agglomerative">Agglomerative (Hierarchical)</option>
+                        </select>
+                    </label>
+
+                    <!-- Info Expander -->
+                    <details id="algo-details"
+                        style="margin-bottom: 15px; background: rgba(255,255,255,0.1); border-radius: 4px; border: 1px solid rgba(255,255,255,0.2);">
+                        <summary
+                            style="padding: 8px; font-size: 0.85rem; cursor: pointer; outline: none; color: #e2e8f0;">
+                            Algorithm Info
+                        </summary>
+                        <div id="algo-info-content"
+                            style="padding: 10px; font-size: 0.8rem; color: #cbd5e1; line-height: 1.4; border-top: 1px solid rgba(255,255,255,0.1);">
+                            Select an algorithm to see details.
+                        </div>
+                    </details>
+
+                    <div style="margin-bottom: 10px; display: none;" id="remove-edges-container">
+                        <label class="filter-item">
+                            <input type="checkbox" id="remove-edges-checkbox">
+                            <span style="font-size: 0.9em;">Remove Edges</span>
+                        </label>
+                    </div>
+
+                    <button id="run-clustering-btn" class="cluster-btn">Run Clustering</button>
+                    <button id="reset-clustering-btn" class="cluster-btn secondary" style="display: none;">Reset
+                        Graph</button>
+
+                    <style>
+                        .cluster-btn {
+                            background: white;
+                            color: var(--accent-color);
+                            border: none;
+                            padding: 8px 12px;
+                            border-radius: 6px;
+                            cursor: pointer;
+                            width: 100%;
+                            margin-top: 10px;
+                            font-weight: 700;
+                            transition: background 0.2s, opacity 0.2s;
+                        }
+
+                        .cluster-btn:hover {
+                            opacity: 0.9;
+                        }
+
+                        .cluster-btn.secondary {
+                            background: rgba(255, 255, 255, 0.2);
+                            color: white;
+                            margin-top: 5px;
+                        }
+
+                        .cluster-btn.secondary:hover {
+                            background: rgba(255, 255, 255, 0.3);
+                        }
+                    </style>
+                </div>
+
+                <div class="filter-separator" style="margin-top: 2rem;"></div>
+
+                <!-- Bot Walkthrough Section -->
+                <div class="filter-section" style="margin-bottom: 2rem;">
+                    <h3 class="filter-section-title">Bot Walkthrough</h3>
+                    <div style="margin-bottom: 10px;">
+                        <select id="walkthrough-bot-select"
+                            style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; background: white; color: #333;">
+                            <option value="">Select a bot to start...</option>
+                            <!-- Options populated by JS -->
+                        </select>
+                    </div>
+
+                    <button id="start-walkthrough-btn" class="cluster-btn">Start Walkthrough</button>
+                    <button id="reset-walkthrough-btn" class="cluster-btn secondary" style="display: none;">Reset
+                        View</button>
+                </div>
+
+                <div class="filter-separator" style="margin-bottom: 1rem;"></div>
+
+                <div class="sidebar-controls">
+                    <label class="filter-item">
+                        <input type="checkbox" id="toggle-node-labels" checked>
+                        Show Node Labels
+                    </label>
+                    <label class="filter-item">
+                        <input type="checkbox" id="toggle-edge-labels" checked>
+                        Show Edge Labels
+                    </label>
+                </div>
+                <h3 class="filter-section-title" style="color: white !important;">Filters</h3>
+
+                <div class="filter-separator"></div>
+                <details class="filter-group">
+                    <summary>Bots</summary>
+                    <div id="filter-bots" class="filter-content"></div>
+                </details>
+
+                <details class="filter-group">
+                    <summary>Domains</summary>
+                    <div id="filter-domains" class="filter-content"></div>
+                </details>
+
+                <details class="filter-group">
+                    <summary>Chat Features</summary>
+                    <div id="filter-chat-features" class="filter-content"></div>
+                </details>
+
+                <details class="filter-group">
+                    <summary>UI Features</summary>
+                    <div id="filter-ui-features" class="filter-content"></div>
+                </details>
+
+                <details class="filter-group">
+                    <summary>
+                        <span class="summary-text">
+                            Interactive<br><br>
+                            Features
+                        </span>
+                    </summary>
+
+                    <div id="filter-interactive-features" class="filter-content"></div>
+                </details>
+            </div>
+        </aside>
+
+        <button id="sidebar-toggle" title="Toggle Sidebar">❮</button>
+
+        <main>
+            <div id="cy"></div>
+            <div id="details-panel" class="hidden">
+                <h2>Node Details</h2>
+                <div id="details-content"></div>
+
+                <!-- Bot Selector for Feature Nodes -->
+                <div id="bot-selector-container" class="hidden">
+                    <div class="detail-label">Bot View</div>
+                    <select id="bot-selector">
+                        <option value="">Select a Bot...</option>
+                    </select>
+                </div>
+
+                <!-- Screenshot Area -->
+                <div id="screenshot-container" class="hidden">
+                    <div class="detail-label">Interface Screenshot</div>
+                    <div class="screenshot-wrapper">
+                        <img id="feature-screenshot" src="" alt="Feature Screenshot">
+                    </div>
+                </div>
+
+                <button id="close-details">Close</button>
+            </div>
+        </main>
+    </div>
+    <script src="app.js?v=24"></script>
+</body>
+
+</html>

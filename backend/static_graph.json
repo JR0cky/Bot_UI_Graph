@@ -1,0 +1,2267 @@
+{
+    "nodes": [
+        {
+            "data": {
+                "id": "chat_features",
+                "nodeType": "feature_group",
+                "label": "Chat Features"
+            }
+        },
+        {
+            "data": {
+                "id": "ui_features",
+                "nodeType": "feature_group",
+                "label": "UI Features"
+            }
+        },
+        {
+            "data": {
+                "id": "interactive_features",
+                "nodeType": "feature_group",
+                "label": "Interactive Features"
+            }
+        },
+        {
+            "data": {
+                "id": "ada",
+                "nodeType": "bot",
+                "label": "Ada"
+            }
+        },
+        {
+            "data": {
+                "id": "health",
+                "nodeType": "domain",
+                "label": "Health"
+            }
+        },
+        {
+            "data": {
+                "id": "characterai",
+                "nodeType": "bot",
+                "label": "characterAI"
+            }
+        },
+        {
+            "data": {
+                "id": "companion",
+                "nodeType": "domain",
+                "label": "Companion"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt",
+                "nodeType": "bot",
+                "label": "ChatGPT"
+            }
+        },
+        {
+            "data": {
+                "id": "open_domain",
+                "nodeType": "domain",
+                "label": "Open-Domain"
+            }
+        },
+        {
+            "data": {
+                "id": "deepseek",
+                "nodeType": "bot",
+                "label": "Deepseek"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini",
+                "nodeType": "bot",
+                "label": "Gemini"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot",
+                "nodeType": "bot",
+                "label": "Paradot"
+            }
+        },
+        {
+            "data": {
+                "id": "replika",
+                "nodeType": "bot",
+                "label": "Replika"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky",
+                "nodeType": "bot",
+                "label": "Rocky"
+            }
+        },
+        {
+            "data": {
+                "id": "education",
+                "nodeType": "domain",
+                "label": "Education"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk",
+                "nodeType": "bot",
+                "label": "SeniorTalk"
+            }
+        },
+        {
+            "data": {
+                "id": "supetutor",
+                "nodeType": "bot",
+                "label": "Supetutor"
+            }
+        },
+        {
+            "data": {
+                "id": "talkpal",
+                "nodeType": "bot",
+                "label": "Talkpal"
+            }
+        },
+        {
+            "data": {
+                "id": "wysa",
+                "nodeType": "bot",
+                "label": "Wysa"
+            }
+        },
+        {
+            "data": {
+                "id": "quick_start_button",
+                "nodeType": "ui_element",
+                "label": "Quick Start Button",
+                "description": "a set of action buttons to start a specific conversation that suggested possible topics/actions"
+            }
+        },
+        {
+            "data": {
+                "id": "sticker_chat_messages",
+                "nodeType": "feature_class",
+                "label": "Sticker Chat Messages",
+                "description": ""
+            }
+        },
+        {
+            "data": {
+                "id": "input_adjustment",
+                "nodeType": "interaction",
+                "label": "Input adjustment",
+                "description": "request for how chatbot should reply/generate answers e.g. \"thinking\" mode vs quick mode etc"
+            }
+        },
+        {
+            "data": {
+                "id": "web_preview_chat_message",
+                "nodeType": "feature_class",
+                "label": "Web Preview Chat Message",
+                "description": "A preview on web content from other providers or the chatbot homepage itself. (1.)"
+            }
+        },
+        {
+            "data": {
+                "id": "avatar",
+                "nodeType": "ui_element",
+                "label": "Avatar",
+                "description": ""
+            }
+        },
+        {
+            "data": {
+                "id": "accordion",
+                "nodeType": "ui_element",
+                "label": "Accordion",
+                "description": "The\u00a0Accordion\u00a0is a well known pattern from graphical user interfaces and is used to hide information to save space. In the analysed chatbots,\u00a0Accordions\u00a0are used either to shorten a very long chat message or to provide a short insight into several available search results. Some chatbots also include a similar option to show more\u00a0Quick Replies\u00a0for the users."
+            }
+        },
+        {
+            "data": {
+                "id": "interactive_canvas",
+                "nodeType": "interaction",
+                "label": "Interactive canvas",
+                "description": "kind of like a canvas that both chatbot and user can edit/work on, can be text based (e.g. for writing code together) or possibly graphical or other"
+            }
+        },
+        {
+            "data": {
+                "id": "conversation_recovery",
+                "nodeType": "ui_element",
+                "label": "Conversation Recovery",
+                "description": "Avoiding conversation breakdowns by providing possible actions or commands. (4., 7.)"
+            }
+        },
+        {
+            "data": {
+                "id": "call_on_menu",
+                "nodeType": "ui_element",
+                "label": "Call- on Menu",
+                "description": "A dynamic representation of consistent information which was requested by the user. (1., 4., 6."
+            }
+        },
+        {
+            "data": {
+                "id": "emoji_chat_message",
+                "nodeType": "feature_class",
+                "label": "Emoji Chat Message",
+                "description": ""
+            }
+        },
+        {
+            "data": {
+                "id": "request_message_completion",
+                "nodeType": "feature_class",
+                "label": "Request/Message Completion",
+                "description": "completion of chatmessage, inspired by Google and maybe motivated by chatbots taking over web search"
+            }
+        },
+        {
+            "data": {
+                "id": "persistent_menu",
+                "nodeType": "ui_element",
+                "label": "Persistent Menu",
+                "description": "A constant menu in the chat window for important information or settings"
+            }
+        },
+        {
+            "data": {
+                "id": "additional_input",
+                "nodeType": "interaction",
+                "label": "Additional input???",
+                "description": "e.g. upload of extra info, documents, media etc\ne.g. request specific actions of chatbot, like generate image, story etc.\npossible other stuff that is an action which goes beyond sending a kind of chat message to the chatbot"
+            }
+        },
+        {
+            "data": {
+                "id": "system_information",
+                "nodeType": "ui_element",
+                "label": "System Information",
+                "description": "This pattern presents itself by offering information on the chatbot system outside of the conversation with the entity chatbot itself. It is provided as banners or like \u201cnews tickers\u201d above or underneath the respective footer or header of the chatbot, but can also be presented as a small pop-up or even span the complete area of the chatbot interface before access is given. As such, it mostly provides information on data protection, although the pattern can also inform on technical limitations of the chatbot. For this pattern we do not include any information provided via the persistent menu."
+            }
+        },
+        {
+            "data": {
+                "id": "gif_chat_message",
+                "nodeType": "feature_class",
+                "label": "Gif Chat Messages",
+                "description": "",
+                "screenshots": {
+                    "wysa": "assets/screenshots/wysa_feature.jpg"
+                }
+            }
+        },
+        {
+            "data": {
+                "id": "video_chat_messages",
+                "nodeType": "feature_class",
+                "label": "Video Chat Messages",
+                "description": ""
+            }
+        },
+        {
+            "data": {
+                "id": "voice_chat_messages",
+                "nodeType": "feature_class",
+                "label": "Voice Chat Messages",
+                "description": ""
+            }
+        },
+        {
+            "data": {
+                "id": "help_system",
+                "nodeType": "ui_element",
+                "label": "Help System",
+                "description": "Offering assistance for users, either on request or proactively by the chatbot. (4., 6., 7., 11.)"
+            }
+        },
+        {
+            "data": {
+                "id": "message_reactions",
+                "nodeType": "interaction",
+                "label": "Message Reactions",
+                "description": "Emojis\u00a0or symbol\u00a0beside or under a chat message to provide feedback or\u00a0allow for other actions (e.g. re-generate, change language)\u00a0on the answer of the chatbot. (1.)"
+            }
+        },
+        {
+            "data": {
+                "id": "image_chat_messages",
+                "nodeType": "feature_class",
+                "label": "Image Chat Messages",
+                "description": ""
+            }
+        },
+        {
+            "data": {
+                "id": "dialogue_reload",
+                "nodeType": "ui_element",
+                "label": "dialogue reload",
+                "description": "Of the analysed chatbots, 5 offer the option to reload the dialogue and start the conversation again. As such, it can help to solve situations in which the chatbot does not understand the user which might lead to frustrations. This can be seen as a specific sub-pattern of\u00a0Conversation Recovery. The difference to that pattern is that\u00a0Conversation Recovery\u00a0is provided by the chatbot at best without a specific prompt from the user. The\u00a0Dialogue Reload\u00a0on the other hand is an action consciously taken by the user if they recognize that the chatbot either does not function as intended or cannot provide a satisfactory answer."
+            }
+        },
+        {
+            "data": {
+                "id": "processing_indicators",
+                "nodeType": "ui_element",
+                "label": "Processing Indicators",
+                "description": "A visual representation of the waiting time\u00a0(typing, thinking, generating, doing, ...)\u00a0for the reply of the chatbot. (1.)"
+            }
+        },
+        {
+            "data": {
+                "id": "functionality_introduction",
+                "nodeType": "ui_element",
+                "label": "Functionality Introduction",
+                "description": "Introducing the main functionalities or providing a tutorial in the first chat messages. (1.)"
+            }
+        },
+        {
+            "data": {
+                "id": "quick_replies",
+                "nodeType": "interaction",
+                "label": "Quick Replies",
+                "description": "A set of actions or functionalities under a chat message in the form of buttons. (1.)"
+            }
+        },
+        {
+            "data": {
+                "id": "information_stamps",
+                "nodeType": "ui_element",
+                "label": "Information Stamps",
+                "description": "Some chatbots include information on the time, user and context of the conversation. Most often this is done by including the time at which a chat message was sent either above or beneath that message (8 times). This is sometimes accompanied by the date or name of the sender, so either the chatbot name, \u2018guest\u2019 or a given name for the user (3 times). Some chatbots only provided the current date on top of the chat (4 times), while one also provides information on the current topic of the conversation."
+            }
+        },
+        {
+            "data": {
+                "id": "carousel_chat_message",
+                "nodeType": "feature_class",
+                "label": "Carousel Chat Message",
+                "description": ""
+            }
+        },
+        {
+            "data": {
+                "id": "text_chat_message",
+                "nodeType": "feature_class",
+                "label": "Text Chat Messages",
+                "description": "",
+                "screenshots": {
+                    "wysa": "assets/screenshots/wysa_feature.jpg"
+                }
+            }
+        },
+        {
+            "data": {
+                "id": "user",
+                "nodeType": "user",
+                "label": "User"
+            }
+        }
+    ],
+    "edges": [
+        {
+            "data": {
+                "id": "ada_health",
+                "source": "ada",
+                "target": "health",
+                "relation": "partOf",
+                "label": "partOf"
+            }
+        },
+        {
+            "data": {
+                "id": "ada_request_message_completion",
+                "source": "ada",
+                "target": "request_message_completion",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "ada_system_information",
+                "source": "ada",
+                "target": "system_information",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "ada_call_on_menu",
+                "source": "ada",
+                "target": "call_on_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "ada_quick_replies",
+                "source": "ada",
+                "target": "quick_replies",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "ada_avatar",
+                "source": "ada",
+                "target": "avatar",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "ada_help_system",
+                "source": "ada",
+                "target": "help_system",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "ada_text_chat_message",
+                "source": "ada",
+                "target": "text_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "ada_message_reactions",
+                "source": "ada",
+                "target": "message_reactions",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "characterai_companion",
+                "source": "characterai",
+                "target": "companion",
+                "relation": "partOf",
+                "label": "partOf"
+            }
+        },
+        {
+            "data": {
+                "id": "characterai_dialogue_reload",
+                "source": "characterai",
+                "target": "dialogue_reload",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "characterai_sticker_chat_messages",
+                "source": "characterai",
+                "target": "sticker_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "characterai_persistent_menu",
+                "source": "characterai",
+                "target": "persistent_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "characterai_additional_input",
+                "source": "characterai",
+                "target": "additional_input",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "characterai_system_information",
+                "source": "characterai",
+                "target": "system_information",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "characterai_processing_indicators",
+                "source": "characterai",
+                "target": "processing_indicators",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "characterai_message_reactions",
+                "source": "characterai",
+                "target": "message_reactions",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "characterai_voice_chat_messages",
+                "source": "characterai",
+                "target": "voice_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "characterai_avatar",
+                "source": "characterai",
+                "target": "avatar",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "characterai_text_chat_message",
+                "source": "characterai",
+                "target": "text_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "characterai_image_chat_messages",
+                "source": "characterai",
+                "target": "image_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_open_domain",
+                "source": "chatgpt",
+                "target": "open_domain",
+                "relation": "partOf",
+                "label": "partOf"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_quick_start_button",
+                "source": "chatgpt",
+                "target": "quick_start_button",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_sticker_chat_messages",
+                "source": "chatgpt",
+                "target": "sticker_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_input_adjustment",
+                "source": "chatgpt",
+                "target": "input_adjustment",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_web_preview_chat_message",
+                "source": "chatgpt",
+                "target": "web_preview_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_accordion",
+                "source": "chatgpt",
+                "target": "accordion",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_interactive_canvas",
+                "source": "chatgpt",
+                "target": "interactive_canvas",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_emoji_chat_message",
+                "source": "chatgpt",
+                "target": "emoji_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_request_message_completion",
+                "source": "chatgpt",
+                "target": "request_message_completion",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_persistent_menu",
+                "source": "chatgpt",
+                "target": "persistent_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_additional_input",
+                "source": "chatgpt",
+                "target": "additional_input",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_system_information",
+                "source": "chatgpt",
+                "target": "system_information",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_voice_chat_messages",
+                "source": "chatgpt",
+                "target": "voice_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_help_system",
+                "source": "chatgpt",
+                "target": "help_system",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_message_reactions",
+                "source": "chatgpt",
+                "target": "message_reactions",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_image_chat_messages",
+                "source": "chatgpt",
+                "target": "image_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_processing_indicators",
+                "source": "chatgpt",
+                "target": "processing_indicators",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_functionality_introduction",
+                "source": "chatgpt",
+                "target": "functionality_introduction",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_carousel_chat_message",
+                "source": "chatgpt",
+                "target": "carousel_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "chatgpt_text_chat_message",
+                "source": "chatgpt",
+                "target": "text_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "deepseek_open_domain",
+                "source": "deepseek",
+                "target": "open_domain",
+                "relation": "partOf",
+                "label": "partOf"
+            }
+        },
+        {
+            "data": {
+                "id": "deepseek_persistent_menu",
+                "source": "deepseek",
+                "target": "persistent_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "deepseek_additional_input",
+                "source": "deepseek",
+                "target": "additional_input",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "deepseek_input_adjustment",
+                "source": "deepseek",
+                "target": "input_adjustment",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "deepseek_system_information",
+                "source": "deepseek",
+                "target": "system_information",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "deepseek_processing_indicators",
+                "source": "deepseek",
+                "target": "processing_indicators",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "deepseek_message_reactions",
+                "source": "deepseek",
+                "target": "message_reactions",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "deepseek_voice_chat_messages",
+                "source": "deepseek",
+                "target": "voice_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "deepseek_emoji_chat_message",
+                "source": "deepseek",
+                "target": "emoji_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "deepseek_accordion",
+                "source": "deepseek",
+                "target": "accordion",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "deepseek_text_chat_message",
+                "source": "deepseek",
+                "target": "text_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "deepseek_image_chat_messages",
+                "source": "deepseek",
+                "target": "image_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_open_domain",
+                "source": "gemini",
+                "target": "open_domain",
+                "relation": "partOf",
+                "label": "partOf"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_interactive_canvas",
+                "source": "gemini",
+                "target": "interactive_canvas",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_quick_start_button",
+                "source": "gemini",
+                "target": "quick_start_button",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_persistent_menu",
+                "source": "gemini",
+                "target": "persistent_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_additional_input",
+                "source": "gemini",
+                "target": "additional_input",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_input_adjustment",
+                "source": "gemini",
+                "target": "input_adjustment",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_system_information",
+                "source": "gemini",
+                "target": "system_information",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_request_message_completion",
+                "source": "gemini",
+                "target": "request_message_completion",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_video_chat_messages",
+                "source": "gemini",
+                "target": "video_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_processing_indicators",
+                "source": "gemini",
+                "target": "processing_indicators",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_message_reactions",
+                "source": "gemini",
+                "target": "message_reactions",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_voice_chat_messages",
+                "source": "gemini",
+                "target": "voice_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_functionality_introduction",
+                "source": "gemini",
+                "target": "functionality_introduction",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_quick_replies",
+                "source": "gemini",
+                "target": "quick_replies",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_emoji_chat_message",
+                "source": "gemini",
+                "target": "emoji_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_avatar",
+                "source": "gemini",
+                "target": "avatar",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_text_chat_message",
+                "source": "gemini",
+                "target": "text_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "gemini_image_chat_messages",
+                "source": "gemini",
+                "target": "image_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_companion",
+                "source": "paradot",
+                "target": "companion",
+                "relation": "partOf",
+                "label": "partOf"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_quick_start_button",
+                "source": "paradot",
+                "target": "quick_start_button",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_sticker_chat_messages",
+                "source": "paradot",
+                "target": "sticker_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_persistent_menu",
+                "source": "paradot",
+                "target": "persistent_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_conversation_recovery",
+                "source": "paradot",
+                "target": "conversation_recovery",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_system_information",
+                "source": "paradot",
+                "target": "system_information",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_gif_chat_message",
+                "source": "paradot",
+                "target": "gif_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_input_adjustment",
+                "source": "paradot",
+                "target": "input_adjustment",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_call_on_menu",
+                "source": "paradot",
+                "target": "call_on_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_processing_indicators",
+                "source": "paradot",
+                "target": "processing_indicators",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_message_reactions",
+                "source": "paradot",
+                "target": "message_reactions",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_voice_chat_messages",
+                "source": "paradot",
+                "target": "voice_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_quick_replies",
+                "source": "paradot",
+                "target": "quick_replies",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_emoji_chat_message",
+                "source": "paradot",
+                "target": "emoji_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_information_stamps",
+                "source": "paradot",
+                "target": "information_stamps",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_avatar",
+                "source": "paradot",
+                "target": "avatar",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_text_chat_message",
+                "source": "paradot",
+                "target": "text_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "paradot_image_chat_messages",
+                "source": "paradot",
+                "target": "image_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_companion",
+                "source": "replika",
+                "target": "companion",
+                "relation": "partOf",
+                "label": "partOf"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_persistent_menu",
+                "source": "replika",
+                "target": "persistent_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_system_information",
+                "source": "replika",
+                "target": "system_information",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_processing_indicators",
+                "source": "replika",
+                "target": "processing_indicators",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_message_reactions",
+                "source": "replika",
+                "target": "message_reactions",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_voice_chat_messages",
+                "source": "replika",
+                "target": "voice_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_avatar",
+                "source": "replika",
+                "target": "avatar",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_emoji_chat_message",
+                "source": "replika",
+                "target": "emoji_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_information_stamps",
+                "source": "replika",
+                "target": "information_stamps",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_text_chat_message",
+                "source": "replika",
+                "target": "text_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_image_chat_messages",
+                "source": "replika",
+                "target": "image_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky_education",
+                "source": "rocky",
+                "target": "education",
+                "relation": "partOf",
+                "label": "partOf"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky_quick_start_button",
+                "source": "rocky",
+                "target": "quick_start_button",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky_persistent_menu",
+                "source": "rocky",
+                "target": "persistent_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky_system_information",
+                "source": "rocky",
+                "target": "system_information",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky_call_on_menu",
+                "source": "rocky",
+                "target": "call_on_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky_help_system",
+                "source": "rocky",
+                "target": "help_system",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky_processing_indicators",
+                "source": "rocky",
+                "target": "processing_indicators",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky_voice_chat_messages",
+                "source": "rocky",
+                "target": "voice_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky_web_preview_chat_message",
+                "source": "rocky",
+                "target": "web_preview_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky_emoji_chat_message",
+                "source": "rocky",
+                "target": "emoji_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky_quick_replies",
+                "source": "rocky",
+                "target": "quick_replies",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky_avatar",
+                "source": "rocky",
+                "target": "avatar",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky_carousel_chat_message",
+                "source": "rocky",
+                "target": "carousel_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "rocky_text_chat_message",
+                "source": "rocky",
+                "target": "text_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_health",
+                "source": "seniortalk",
+                "target": "health",
+                "relation": "partOf",
+                "label": "partOf"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_quick_start_button",
+                "source": "seniortalk",
+                "target": "quick_start_button",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_persistent_menu",
+                "source": "seniortalk",
+                "target": "persistent_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_gif_chat_message",
+                "source": "seniortalk",
+                "target": "gif_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_video_chat_messages",
+                "source": "seniortalk",
+                "target": "video_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_message_reactions",
+                "source": "seniortalk",
+                "target": "message_reactions",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_functionality_introduction",
+                "source": "seniortalk",
+                "target": "functionality_introduction",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_voice_chat_messages",
+                "source": "seniortalk",
+                "target": "voice_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_quick_replies",
+                "source": "seniortalk",
+                "target": "quick_replies",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_emoji_chat_message",
+                "source": "seniortalk",
+                "target": "emoji_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_information_stamps",
+                "source": "seniortalk",
+                "target": "information_stamps",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_avatar",
+                "source": "seniortalk",
+                "target": "avatar",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_accordion",
+                "source": "seniortalk",
+                "target": "accordion",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_text_chat_message",
+                "source": "seniortalk",
+                "target": "text_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "seniortalk_image_chat_messages",
+                "source": "seniortalk",
+                "target": "image_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "supetutor_education",
+                "source": "supetutor",
+                "target": "education",
+                "relation": "partOf",
+                "label": "partOf"
+            }
+        },
+        {
+            "data": {
+                "id": "supetutor_persistent_menu",
+                "source": "supetutor",
+                "target": "persistent_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "supetutor_additional_input",
+                "source": "supetutor",
+                "target": "additional_input",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "supetutor_processing_indicators",
+                "source": "supetutor",
+                "target": "processing_indicators",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "supetutor_message_reactions",
+                "source": "supetutor",
+                "target": "message_reactions",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "supetutor_voice_chat_messages",
+                "source": "supetutor",
+                "target": "voice_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "supetutor_avatar",
+                "source": "supetutor",
+                "target": "avatar",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "supetutor_emoji_chat_message",
+                "source": "supetutor",
+                "target": "emoji_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "supetutor_information_stamps",
+                "source": "supetutor",
+                "target": "information_stamps",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "supetutor_help_system",
+                "source": "supetutor",
+                "target": "help_system",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "supetutor_text_chat_message",
+                "source": "supetutor",
+                "target": "text_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "supetutor_image_chat_messages",
+                "source": "supetutor",
+                "target": "image_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "talkpal_education",
+                "source": "talkpal",
+                "target": "education",
+                "relation": "partOf",
+                "label": "partOf"
+            }
+        },
+        {
+            "data": {
+                "id": "talkpal_persistent_menu",
+                "source": "talkpal",
+                "target": "persistent_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "talkpal_processing_indicators",
+                "source": "talkpal",
+                "target": "processing_indicators",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "talkpal_voice_chat_messages",
+                "source": "talkpal",
+                "target": "voice_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "talkpal_quick_replies",
+                "source": "talkpal",
+                "target": "quick_replies",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "talkpal_avatar",
+                "source": "talkpal",
+                "target": "avatar",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "talkpal_help_system",
+                "source": "talkpal",
+                "target": "help_system",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "talkpal_text_chat_message",
+                "source": "talkpal",
+                "target": "text_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "talkpal_message_reactions",
+                "source": "talkpal",
+                "target": "message_reactions",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "wysa_health",
+                "source": "wysa",
+                "target": "health",
+                "relation": "partOf",
+                "label": "partOf"
+            }
+        },
+        {
+            "data": {
+                "id": "wysa_system_information",
+                "source": "wysa",
+                "target": "system_information",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "wysa_gif_chat_message",
+                "source": "wysa",
+                "target": "gif_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "wysa_call_on_menu",
+                "source": "wysa",
+                "target": "call_on_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "wysa_help_system",
+                "source": "wysa",
+                "target": "help_system",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "wysa_processing_indicators",
+                "source": "wysa",
+                "target": "processing_indicators",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "wysa_quick_replies",
+                "source": "wysa",
+                "target": "quick_replies",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "wysa_emoji_chat_message",
+                "source": "wysa",
+                "target": "emoji_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "wysa_avatar",
+                "source": "wysa",
+                "target": "avatar",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "wysa_carousel_chat_message",
+                "source": "wysa",
+                "target": "carousel_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "wysa_text_chat_message",
+                "source": "wysa",
+                "target": "text_chat_message",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "wysa_message_reactions",
+                "source": "wysa",
+                "target": "message_reactions",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "quick_start_button_ui_features_type",
+                "source": "quick_start_button",
+                "target": "ui_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "quick_start_button_interactive_features_type",
+                "source": "quick_start_button",
+                "target": "interactive_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "sticker_chat_messages_chat_features_type",
+                "source": "sticker_chat_messages",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "input_adjustment_interactive_features_type",
+                "source": "input_adjustment",
+                "target": "interactive_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "web_preview_chat_message_chat_features_type",
+                "source": "web_preview_chat_message",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "avatar_ui_features_type",
+                "source": "avatar",
+                "target": "ui_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "accordion_ui_features_type",
+                "source": "accordion",
+                "target": "ui_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "accordion_chat_features_type",
+                "source": "accordion",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "interactive_canvas_interactive_features_type",
+                "source": "interactive_canvas",
+                "target": "interactive_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "conversation_recovery_ui_features_type",
+                "source": "conversation_recovery",
+                "target": "ui_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "call_on_menu_ui_features_type",
+                "source": "call_on_menu",
+                "target": "ui_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "emoji_chat_message_chat_features_type",
+                "source": "emoji_chat_message",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "request_message_completion_chat_features_type",
+                "source": "request_message_completion",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "persistent_menu_ui_features_type",
+                "source": "persistent_menu",
+                "target": "ui_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "additional_input_interactive_features_type",
+                "source": "additional_input",
+                "target": "interactive_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "system_information_ui_features_type",
+                "source": "system_information",
+                "target": "ui_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "gif_chat_message_chat_features_type",
+                "source": "gif_chat_message",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "video_chat_messages_chat_features_type",
+                "source": "video_chat_messages",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "voice_chat_messages_chat_features_type",
+                "source": "voice_chat_messages",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "help_system_ui_features_type",
+                "source": "help_system",
+                "target": "ui_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "help_system_interactive_features_type",
+                "source": "help_system",
+                "target": "interactive_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "message_reactions_interactive_features_type",
+                "source": "message_reactions",
+                "target": "interactive_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "image_chat_messages_chat_features_type",
+                "source": "image_chat_messages",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "dialogue_reload_ui_features_type",
+                "source": "dialogue_reload",
+                "target": "ui_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "processing_indicators_ui_features_type",
+                "source": "processing_indicators",
+                "target": "ui_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "functionality_introduction_ui_features_type",
+                "source": "functionality_introduction",
+                "target": "ui_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "quick_replies_interactive_features_type",
+                "source": "quick_replies",
+                "target": "interactive_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "quick_replies_chat_features_type",
+                "source": "quick_replies",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "information_stamps_ui_features_type",
+                "source": "information_stamps",
+                "target": "ui_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "carousel_chat_message_chat_features_type",
+                "source": "carousel_chat_message",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "carousel_chat_message_interactive_features_type",
+                "source": "carousel_chat_message",
+                "target": "interactive_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "text_chat_message_chat_features_type",
+                "source": "text_chat_message",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "image_chat_messages_text_chat_message_rel",
+                "source": "image_chat_messages",
+                "target": "text_chat_message",
+                "relation": "variantOf",
+                "label": "variantOf"
+            }
+        },
+        {
+            "data": {
+                "id": "video_chat_messages_text_chat_message_rel",
+                "source": "video_chat_messages",
+                "target": "text_chat_message",
+                "relation": "variantOf",
+                "label": "variantOf"
+            }
+        },
+        {
+            "data": {
+                "id": "gif_chat_message_text_chat_message_rel",
+                "source": "gif_chat_message",
+                "target": "text_chat_message",
+                "relation": "variantOf",
+                "label": "variantOf"
+            }
+        },
+        {
+            "data": {
+                "id": "sticker_chat_messages_text_chat_message_rel",
+                "source": "sticker_chat_messages",
+                "target": "text_chat_message",
+                "relation": "variantOf",
+                "label": "variantOf"
+            }
+        },
+        {
+            "data": {
+                "id": "voice_chat_messages_text_chat_message_rel",
+                "source": "voice_chat_messages",
+                "target": "text_chat_message",
+                "relation": "variantOf",
+                "label": "variantOf"
+            }
+        },
+        {
+            "data": {
+                "id": "web_preview_chat_message_text_chat_message_rel",
+                "source": "web_preview_chat_message",
+                "target": "text_chat_message",
+                "relation": "variantOf",
+                "label": "variantOf"
+            }
+        },
+        {
+            "data": {
+                "id": "emoji_chat_message_text_chat_message_rel",
+                "source": "emoji_chat_message",
+                "target": "text_chat_message",
+                "relation": "variantOf",
+                "label": "variantOf"
+            }
+        },
+        {
+            "data": {
+                "id": "carousel_chat_message_text_chat_message_rel",
+                "source": "carousel_chat_message",
+                "target": "text_chat_message",
+                "relation": "variantOf",
+                "label": "variantOf"
+            }
+        },
+        {
+            "data": {
+                "id": "accordion_text_chat_message_rel",
+                "source": "accordion",
+                "target": "text_chat_message",
+                "relation": "variantOf",
+                "label": "variantOf"
+            }
+        },
+        {
+            "data": {
+                "id": "call_on_menu_persistent_menu_rel",
+                "source": "call_on_menu",
+                "target": "persistent_menu",
+                "relation": "variantOf",
+                "label": "variantOf"
+            }
+        },
+        {
+            "data": {
+                "id": "functionality_introduction_text_chat_message_rel",
+                "source": "functionality_introduction",
+                "target": "text_chat_message",
+                "relation": "relatedTo",
+                "label": "relatedTo"
+            }
+        },
+        {
+            "data": {
+                "id": "help_system_call_on_menu_rel",
+                "source": "help_system",
+                "target": "call_on_menu",
+                "relation": "implementedBy",
+                "label": "implementedBy"
+            }
+        },
+        {
+            "data": {
+                "id": "quick_start_button_text_chat_message_rel",
+                "source": "quick_start_button",
+                "target": "text_chat_message",
+                "relation": "typeOf",
+                "label": "typeOf"
+            }
+        },
+        {
+            "data": {
+                "id": "conversation_recovery_call_on_menu_rel",
+                "source": "conversation_recovery",
+                "target": "call_on_menu",
+                "relation": "implementedBy",
+                "label": "implementedBy"
+            }
+        },
+        {
+            "data": {
+                "id": "dialogue_reload_conversation_recovery_rel",
+                "source": "dialogue_reload",
+                "target": "conversation_recovery",
+                "relation": "typeOf",
+                "label": "typeOf"
+            }
+        },
+        {
+            "data": {
+                "id": "input_adjustment_additional_input_rel",
+                "source": "input_adjustment",
+                "target": "additional_input",
+                "relation": "relatedTo",
+                "label": "relatedTo"
+            }
+        },
+        {
+            "data": {
+                "id": "user_send_text",
+                "source": "user",
+                "target": "text_chat_message",
+                "relation": "canSend",
+                "label": "canSend"
+            }
+        }
+    ]
+}

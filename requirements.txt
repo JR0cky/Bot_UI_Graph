@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+neo4j
+python-multipart
+networkx
+python-louvain
+scikit-learn
+scipy
