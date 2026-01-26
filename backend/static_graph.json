@@ -138,7 +138,11 @@
                 "id": "quick_start_button",
                 "nodeType": "ui_element",
                 "label": "Quick Start Button",
-                "description": "a set of action buttons to start a specific conversation that suggested possible topics/actions"
+                "description": "A set of action buttons to start a specific conversation by suggesting possible topics or actions.",
+                "screenshots": {
+                    "chatgpt": ["assets/screenshots/ChatGPT_Chat_Quickstart.png",
+                                 "ChatGPT_Quickstart_Image_Generation.png"]
+                }
             }
         },
         {
@@ -146,7 +150,11 @@
                 "id": "sticker_chat_messages",
                 "nodeType": "feature_class",
                 "label": "Sticker Chat Messages",
-                "description": ""
+                "description": "A message containing or only consisting of a Sticker.",
+                "screenshots": {
+                    "characterai": "assets/screenshots/characterai_Sticker.png",
+                    "chatgpt":"assets/screenshots/ChatGPT_Sticker_Emoji.png"
+                }
             }
         },
         {
@@ -154,7 +162,10 @@
                 "id": "input_adjustment",
                 "nodeType": "interaction",
                 "label": "Input adjustment",
-                "description": "request for how chatbot should reply/generate answers e.g. \"thinking\" mode vs quick mode etc"
+                "description": "A request for how a chatbot should reply or generate answers e.g. \"thinking\" mode versus responding fast.",
+                 "screenshots": {
+                    "chatgpt":"assets/screenshots/ChatGPT_Additional_Input.png"
+                }
             }
         },
         {
@@ -162,7 +173,10 @@
                 "id": "web_preview_chat_message",
                 "nodeType": "feature_class",
                 "label": "Web Preview Chat Message",
-                "description": "A preview on web content from other providers or the chatbot homepage itself. (1.)"
+                "description": "A preview on web content from other providers or the chatbot homepage itself.",
+                "screenshots": {
+                    "chatgpt": "assets/screenshots/ChatGPT_Webview.png"
+                }
             }
         },
         {
@@ -170,15 +184,24 @@
                 "id": "avatar",
                 "nodeType": "ui_element",
                 "label": "Avatar",
-                "description": ""
+                "description": "",
+                "screenshots": {
+                    "wysa": "assets/screenshots/Wysa_Chat_Message_Emoji_Quick_Reply.png",
+                    "characterai": "assets/screenshots/characterai_Chat_Message.png",
+                    "talkpal": "assets/screenshots/Talkpal_Chat_Message.png"
+                }
             }
-        },
+            },
+        
         {
             "data": {
                 "id": "accordion",
                 "nodeType": "ui_element",
                 "label": "Accordion",
-                "description": "The\u00a0Accordion\u00a0is a well known pattern from graphical user interfaces and is used to hide information to save space. In the analysed chatbots,\u00a0Accordions\u00a0are used either to shorten a very long chat message or to provide a short insight into several available search results. Some chatbots also include a similar option to show more\u00a0Quick Replies\u00a0for the users."
+                "description": "The Accordion is a well known pattern from graphical user interfaces and is used to hide information to save space. In the analysed chatbots, Accordions are used either to shorten a very long chat message or to provide a short insight into several available search results. Some chatbots also include a similar option to show more Quick Replies for the users.",
+                 "screenshots": {
+                    "chatgpt": "assets/screenshots/ChatGPT_Accordion.png"
+                }
             }
         },
         {
@@ -186,7 +209,10 @@
                 "id": "interactive_canvas",
                 "nodeType": "interaction",
                 "label": "Interactive canvas",
-                "description": "kind of like a canvas that both chatbot and user can edit/work on, can be text based (e.g. for writing code together) or possibly graphical or other"
+                "description": "kind of like a canvas that both chatbot and user can edit/work on, can be text based (e.g. for writing code together) or possibly graphical or other",
+                 "screenshots": {
+                    "chatgpt":"assets/screenshots/ChatGPT_Interactive_Canvas.png"
+                }
             }
         },
         {
@@ -194,7 +220,7 @@
                 "id": "conversation_recovery",
                 "nodeType": "ui_element",
                 "label": "Conversation Recovery",
-                "description": "Avoiding conversation breakdowns by providing possible actions or commands. (4., 7.)"
+                "description": "Avoiding conversation breakdowns by providing possible actions or commands."
             }
         },
         {
@@ -202,7 +228,10 @@
                 "id": "call_on_menu",
                 "nodeType": "ui_element",
                 "label": "Call- on Menu",
-                "description": "A dynamic representation of consistent information which was requested by the user. (1., 4., 6."
+                "description": "A dynamic representation of consistent information which was requested by the user. (1., 4., 6.",
+                "screenshots": {
+                    "wysa": "assets/screenshots/Wysa_Help_Message_Feedback.png"
+                }
             }
         },
         {
@@ -210,7 +239,11 @@
                 "id": "emoji_chat_message",
                 "nodeType": "feature_class",
                 "label": "Emoji Chat Message",
-                "description": ""
+                "description": "",
+                "screenshots": {
+                    "wysa": "assets/screenshots/Wysa_Chat_Message_Emoji_Quick_Reply.png",
+                    "chatgpt":"assets/screenshots/ChatGPT_Sticker_Emoji.png"
+                }
             }
         },
         {
@@ -218,7 +251,10 @@
                 "id": "request_message_completion",
                 "nodeType": "feature_class",
                 "label": "Request/Message Completion",
-                "description": "completion of chatmessage, inspired by Google and maybe motivated by chatbots taking over web search"
+                "description": "completion of chatmessage, inspired by Google and maybe motivated by chatbots taking over web search",
+                 "screenshots": {
+                    "chatgpt":"assets/screenshots/ChatGPT_Request_Completion.png"
+                }
             }
         },
         {
@@ -226,15 +262,26 @@
                 "id": "persistent_menu",
                 "nodeType": "ui_element",
                 "label": "Persistent Menu",
-                "description": "A constant menu in the chat window for important information or settings"
+                "description": "A constant menu in the chat window for important information or settings",
+                "screenshots": {
+                    "characterai": "assets/screenshots/characterai_Persistent_Menu.png",
+                    "talkpal": "assets/screenshots/Talkpal_Persistent_Menu.png",
+                    "chatgpt": "assets/screenshots/ChatGPT_Persistent_Menu.png"
+                }
             }
         },
         {
             "data": {
                 "id": "additional_input",
                 "nodeType": "interaction",
-                "label": "Additional input???",
-                "description": "e.g. upload of extra info, documents, media etc\ne.g. request specific actions of chatbot, like generate image, story etc.\npossible other stuff that is an action which goes beyond sending a kind of chat message to the chatbot"
+                "label": "Additional input",
+                "description": "A possibility to upload of extra information inf form of documents or media. It can also be a request for specific actions of chatbot, like generate image, story etc.\npossible other actions going beyond messaging.",
+                "screenshots": {
+                    "characterai": ["assets/screenshots/characterai_create_content.png",
+                     "assets/screenshots/characterai_create_holiday_moment.png",
+                     "assets/screenshots/characterai_create_holiday_moment_example.png"],
+                     "chatgpt":"assets/screenshots/ChatGPT_Additional_Input.png"
+                }
             }
         },
         {
@@ -242,7 +289,13 @@
                 "id": "system_information",
                 "nodeType": "ui_element",
                 "label": "System Information",
-                "description": "This pattern presents itself by offering information on the chatbot system outside of the conversation with the entity chatbot itself. It is provided as banners or like \u201cnews tickers\u201d above or underneath the respective footer or header of the chatbot, but can also be presented as a small pop-up or even span the complete area of the chatbot interface before access is given. As such, it mostly provides information on data protection, although the pattern can also inform on technical limitations of the chatbot. For this pattern we do not include any information provided via the persistent menu."
+                "description": "This pattern presents itself by offering information on the chatbot system outside of the conversation with the entity chatbot itself. It is provided as banners or like \u201cnews tickers\u201d above or underneath the respective footer or header of the chatbot, but can also be presented as a small pop-up or even span the complete area of the chatbot interface before access is given. As such, it mostly provides information on data protection, although the pattern can also inform on technical limitations of the chatbot. For this pattern we do not include any information provided via the persistent menu.",
+                "screenshots": {
+                    "wysa": "assets/screenshots/Wysa_Technical_Error.png",
+                    "characterai": "assets/screenshots/characterai_System_Author.png",
+                    "chatgpt":["assets/screenshots/ChatGPT_System_Information.png",
+                                "assets/screenshots/ChatGPT_System_Message.png"]
+                }
             }
         },
         {
@@ -252,7 +305,7 @@
                 "label": "Gif Chat Messages",
                 "description": "",
                 "screenshots": {
-                    "wysa": "assets/screenshots/wysa_feature.jpg"
+                    "wysa": "assets/screenshots/Wysa_GIF.png"
                 }
             }
         },
@@ -269,7 +322,14 @@
                 "id": "voice_chat_messages",
                 "nodeType": "feature_class",
                 "label": "Voice Chat Messages",
-                "description": ""
+                "description": "A voice-based message that can be either transferred invoice or voice-to-text mode or as a voice message",
+                "screenshots": {
+                    "characterai": "assets/screenshots/characterai_Voice_Call.png",
+                    "talkpal": "assets/screenshots/Talkpal_Voice_Chat_Message.png",
+                    "chatgpt":["assets/screenshots/ChatGPT_Voice_Mode.png",
+                                "assets/screenshots/ChatGPT_Voice_to_Text.png",
+                                "assets/screenshots/ChatGPT_Voice_Mode_Transcription.png"]
+                }
             }
         },
         {
@@ -277,7 +337,12 @@
                 "id": "help_system",
                 "nodeType": "ui_element",
                 "label": "Help System",
-                "description": "Offering assistance for users, either on request or proactively by the chatbot. (4., 6., 7., 11.)"
+                "description": "Offering assistance for users, either on request or proactively by the chatbot.",
+                "screenshots": {
+                    "talkpal": ["assets/screenshots/Talkpal_Help_System_Correction.png",
+                                "assets/screenshots/Talkpal_Help_System_Correction_Chat.png"],
+                    "chatgpt":"assets/screenshots/ChatGPT_Help_System.png"
+                }
             }
         },
         {
@@ -285,7 +350,13 @@
                 "id": "message_reactions",
                 "nodeType": "interaction",
                 "label": "Message Reactions",
-                "description": "Emojis\u00a0or symbol\u00a0beside or under a chat message to provide feedback or\u00a0allow for other actions (e.g. re-generate, change language)\u00a0on the answer of the chatbot. (1.)"
+                "description": "Emojis or symbolsbeside or under a chat message to provide feedback or allow for other actions (e.g. re-generate, change language) on the answer of the chatbot.",
+                "screenshots": {
+                    "wysa": "assets/screenshots/Wysa_Message_Reactions.png",
+                    "characterai": "assets/screenshots/characterai_Message_Reactions.png",
+                    "talkpal":"assets/screenshots/Talkpal_Message_Reactions.png",
+                    "chatgpt":"assets/screenshots/ChatGPT_Message_Reactions.png"
+                }
             }
         },
         {
@@ -293,7 +364,11 @@
                 "id": "image_chat_messages",
                 "nodeType": "feature_class",
                 "label": "Image Chat Messages",
-                "description": ""
+                "description": "A message containing or only consisting of an image.",
+                "screenshots": {
+                    "characterai": "assets/screenshots/characterai_Image_Upload.png",
+                    "chatgpt": "assets/screenshots/ChatGPT_Image_Chat_Message.png"
+                }
             }
         },
         {
@@ -309,7 +384,14 @@
                 "id": "processing_indicators",
                 "nodeType": "ui_element",
                 "label": "Processing Indicators",
-                "description": "A visual representation of the waiting time\u00a0(typing, thinking, generating, doing, ...)\u00a0for the reply of the chatbot. (1.)"
+                "description": "A visual representation of the waiting time\u00a0(typing, thinking, generating, doing, ...)\u00a0for the reply of the chatbot. (1.)",
+                "screenshots": {
+                    "wysa": "assets/screenshots/Wysa_Processing_Indicator.png",
+                      "characterai": "assets/screenshots/characterai_Processing_Indicator.png",
+                      "talkpal": "assets/screenshots/Talkpal_Processing_Indicator.png",
+                      "chatgpt": ["assets/screenshots/ChatGPT_Processing_Indicator.png",
+                                    "assets/screenshots/ChatGPT_Voice_Mode_Transcription.png"]
+                }
             }
         },
         {
@@ -317,7 +399,11 @@
                 "id": "functionality_introduction",
                 "nodeType": "ui_element",
                 "label": "Functionality Introduction",
-                "description": "Introducing the main functionalities or providing a tutorial in the first chat messages. (1.)"
+                "description": "Introducing the main functionalities or providing a tutorial in the first chat messages.",
+                "screenshots": {
+                      "chatgpt": ["assets/screenshots/ChatGPT_Quickstart.png",
+                                    "assets/screenshots/ChatGPT_Functionality_Introduction.png"]
+                }
             }
         },
         {
@@ -325,7 +411,11 @@
                 "id": "quick_replies",
                 "nodeType": "interaction",
                 "label": "Quick Replies",
-                "description": "A set of actions or functionalities under a chat message in the form of buttons. (1.)"
+                "description": "A set of actions or functionalities under a chat message in the form of buttons.",
+                "screenshots": {
+                    "wysa": "assets/screenshots/Wysa_Chat_Message_Emoji_Quick_Reply.png",
+                    "talkpal":"assets/screenshots/Talkpal_Quick_Reply.png"
+                }
             }
         },
         {
@@ -341,7 +431,11 @@
                 "id": "carousel_chat_message",
                 "nodeType": "feature_class",
                 "label": "Carousel Chat Message",
-                "description": ""
+                "description": "",
+                "screenshots": {
+                    "wysa": "assets/screenshots/Wysa_Carousel_Chat_Message.png",
+                    "chatgpt":"assets/screenshots/ChatGPT_Carousel.png"
+                }
             }
         },
         {
@@ -349,9 +443,11 @@
                 "id": "text_chat_message",
                 "nodeType": "feature_class",
                 "label": "Text Chat Messages",
-                "description": "",
+                "description": "Displaying outputs from chatbot and user, most often as speech bubbles.",
                 "screenshots": {
-                    "wysa": "assets/screenshots/wysa_feature.jpg"
+                    "wysa": "assets/screenshots/Wysa_Chat_Message_Emoji_Quick_Reply.png",
+                    "characterai": "assets/screenshots/characterai_Chat_Message.png",
+                    "chatgpt":"assets/screenshots/ChatGPT_Chat_Message.png"
                 }
             }
         },

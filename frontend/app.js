@@ -33,9 +33,12 @@ const colors = {
 
 
 
+
+let currentlySelectedNodeId = null;
+
 async function initGraph() {
     try {
-        const response = await fetch('/graph');
+        const response = await fetch('/graph?v=' + new Date().getTime());
         const elements = await response.json();
 
         if (elements.error) {
@@ -148,10 +151,19 @@ async function initGraph() {
             }
         });
 
-        cy.on('tap', 'node', function (evt) {
+        cy.on('tap', 'node', (evt) => {
             const node = evt.target;
+
+            // 🔥 IMPORTANT: set selected node FIRST
+            currentlySelectedNodeId = node.id();
+
+            // Clear old UI state
+            clearDetailsUI();
+
+            // Now show new node details
             showDetails(node.data());
         });
+
 
         cy.on('tap', function (evt) {
             if (evt.target === cy) {
@@ -183,6 +195,50 @@ async function initGraph() {
                 cy.elements().removeClass('faded highlighted');
             });
         });
+        // --- AUTO-REFRESH BOT SELECTOR WHEN GRAPH CHANGES (SAFE + DEBOUNCED) ---
+
+        let refreshTimeout = null;
+
+        function refreshDetailsIfNeeded() {
+            if (!currentlySelectedNodeId) return;
+            if (!cy) return;
+
+            const node = cy.getElementById(currentlySelectedNodeId);
+
+            // If node no longer exists or not visible → close panel
+            if (!node || !node.id() || !node.visible()) {
+                hideDetails();
+                return;
+            }
+
+            // Otherwise refresh selector + screenshot
+            updateBotSelector(currentlySelectedNodeId);
+        }
+
+        // Debounced wrapper (prevents flicker / spam)
+        function scheduleRefresh() {
+            if (refreshTimeout) clearTimeout(refreshTimeout);
+            refreshTimeout = setTimeout(() => {
+                refreshDetailsIfNeeded();
+            }, 50); // 50ms is plenty
+        }
+
+        // Structural or data changes (new bots, edges, screenshots added)
+        cy.on('add remove data', 'node, edge', () => {
+            scheduleRefresh();
+        });
+
+        // Visibility / filter changes (style updates)
+        cy.on('style', 'node', () => {
+            scheduleRefresh();
+        });
+
+        // After layouts finish (important after clustering / relayout)
+        cy.on('layoutstop', () => {
+            scheduleRefresh();
+        });
+
+
 
         generateDynamicFilters(elements);
         initWalkthroughUI(elements); // Init Walkthrough
@@ -599,50 +655,14 @@ function updateFilters(type, value, isChecked) {
     }
 
     applyFilters();
+    if (currentlySelectedNodeId) {
+        updateBotSelector(currentlySelectedNodeId);
+    }
 }
 
 function applyFilters() {
     cy.batch(() => {
         const visibleBots = new Set();
-
-        // 1. Calculate Visible Bots
-        // A bot is visible if:
-        // - It is checked in 'Bots' filter (activeFilters.ids)
-        // - Its Domain is checked in 'Domains' filter (activeFilters.ids)
-        // - It has at least ONE feature that is checked in 'Chat Features' (if applicable? User said "only bots having these features")
-        //   - Wait, if NO chat features are checked, do we hide all bots? Or just ignore that filter?
-        //   - Usually, if a category is partially filtered, we respect it. If ALL features are checked, effectively valid.
-        //   - Let's apply intersection logic: Only show bots that have at least one of the *currently active features*.
-        //     - But wait, "Feature Classes" are also filtered by nodeType.
-        //     - Let's simplify: Check intersection with 'activeFilters.ids' for Chat Features.
-        //     - If 'activeFilters.ids' contains ALL chat features, then any bot with a chat feature is fine.
-        //     - What if a bot has NO chat features? (e.g. only UI elements). Should it be hidden if we filter "Chat Messages"?
-        //     - User said: "If I click on the chat message types, only the bots having these features are shown."
-        //     - This implies: If I Enable "Gif", Show Bots with Gif.
-        //     - If I Enable "Gif" and "Text", Show Bots with Gif OR Text.
-        //     - If I have "Avatar" (uncontrolled), it doesn't help me be visible via Chat Feature filter.
-        //     - BUT: If I haven't unchecked ANY chat features, they are ALL active.
-        //     - So a bot with "Text" is visible.
-        //     - What about a bot with ONLY "Avatar"?
-        //     - If "Avatar" is not in controlled IDs, it won't match.
-        //     - So that bot would be HIDDEN if we strictly require `hasActiveFeature`.
-        //     - Fix: `hasActiveFeature` should be true if:
-        //       1. Bot has a feature in `activeFilters.ids`.
-        //       2. OR Bot has NO features that are "Controlled" (i.e. it doesn't participate in this filter group).
-        //          - This is complex.
-        //     - Let's assume for now the User cares about bots that HAVE these chat features. 
-        //     - If a bot doesn't have any chat features (e.g. purely menu based?), maybe it should be hidden?
-        //     - Or maybe we treat "No Match" as Visible?
-        //     - Let's stick to strict: `hasActiveFeature` is required if the bot has *any* potential features.
-        //     - If `botFeatures` is empty, easy.
-        //     - If `botFeatures` contains only "Avatar", and "Avatar" is NOT controlled... 
-        //     - We should probably allow it? 
-        //     - For this specific iteration, let's just check intersection with `activeFilters.ids`. 
-        //     - If a bot only has features that we aren't filtering, it might disappear. 
-        //     - User asked specifically about "Chat Message Types".
-
-        // Let's relax: If a bot has ANY feature `f` such that `controlledIDs.has(f)` is FALSE, we count that as a "match" (pass-through).
-        // IF `controlledIDs.has(f)` is TRUE, then we check `activeFilters.ids.has(f)`.
 
         cy.nodes().forEach(node => {
             const data = node.data();
@@ -652,14 +672,6 @@ function applyFilters() {
                 const domainId = lookup.botToDomain.get(data.id);
                 const isDomainChecked = domainId ? activeFilters.ids.has(domainId) : true; // Default true if no domain?
 
-                // Feature Intersection Check
-                // We need to know if this bot has any "Active" features.
-                // Which types of features? The user specifically mentioned "Chat Message Types".
-                // But logically this should apply to ANY feature filter.
-                // However, we only made checkboxes for "Chat Features".
-                // So let's check: Does this bot have any feature that is currently in 'activeFilters.ids'?
-                // NOTE: 'activeFilters.ids' contains Bot IDs, Domain IDs, and Chat Feature IDs.
-                // We need to separate them or just check overlap.
 
                 let hasActiveFeature = false;
                 const botFeatures = lookup.botFeatures.get(data.id);
@@ -677,10 +689,7 @@ function applyFilters() {
                         }
                     }
 
-                    // If the bot has controlled features (Chat msgs), it MUST match at least one.
-                    // If it has NO controlled features (only Avatar), then matchesFilters remains false,
-                    // but hasControlledFeatures is false.
-                    // If !hasControlledFeatures, we allow it (don't hide based on feature filter).
+
                     if (!hasControlledFeatures) matchesFilters = true;
 
                     hasActiveFeature = matchesFilters;
@@ -710,22 +719,25 @@ function applyFilters() {
 
             // Domain Visibility
             if (data.nodeType === 'domain') {
-                if (activeFilters.ids.has(data.id)) node.style('display', 'element');
-                else node.style('display', 'none');
+                // Check if any INCOMING 'partOf' edge comes from a VISIBLE bot
+                const connectedBots = node.incomers('edge[relation="partOf"]').sources();
+                const hasVisibleChild = connectedBots.some(b => visibleBots.has(b.id()));
+
+                // Show logic: Must be checked AND have visible children (or be manually checked while children are hidden? User wants clean view)
+                // If I uncheck all bots, visibleBots is empty -> hasVisibleChild false -> Hide Domain.
+                if (activeFilters.ids.has(data.id) && (connectedBots.length === 0 || hasVisibleChild)) {
+                    node.style('display', 'element');
+                } else {
+                    node.style('display', 'none');
+                }
                 return;
             }
 
             // Feature Visibility
-            // Is it controlled?
-            // If it's a Chat Feature (controlled), it must be in activeFilters.ids
             if (controlledIDs.has(data.id) && !activeFilters.ids.has(data.id)) {
                 node.style('display', 'none');
                 return;
             }
-
-            // AND: It must be connected to at least one VISIBLE Bot?
-            // "only the bot with its features is shown".
-            // If I hide all bots, features should assume hidden?
             // Check connected bots
             const connectedBots = lookup.featureBots.get(data.id);
             if (connectedBots) {
@@ -739,8 +751,42 @@ function applyFilters() {
                 if (connectedToVisible) node.style('display', 'element');
                 else node.style('display', 'none');
             } else {
-                // Standalone feature? Show it (e.g. Parent type or Group)
-                node.style('display', 'element');
+                // Standalone feature? 
+                // Specific check for Feature Groups (e.g. Chat Features)
+                if (data.nodeType === 'feature_group') {
+                    // Check if any INCOMING 'category' edge comes from a VISIBLE node
+                    // Note: In graph, Features -> category -> FeatureGroup.
+                    const connectedFeatures = node.incomers('edge[relation="category"]').sources();
+                    // A feature is visible if it is NOT hidden (style display !== none)
+                    // We can't easily check style here inside the batch/loop effectively if order matters,
+                    // but we can check if it WOULD be visible.
+                    // Simplified: Check if any connected feature has a visible provider bot.
+
+                    const hasVisibleChild = connectedFeatures.some(f => {
+                        // Is feature 'f' visible?
+                        // f is visible if: 
+                        // 1. !controlled or activeFilters includes it
+                        // 2. AND it has a visible bot provider
+
+                        const fData = f.data();
+                        // Filter check
+                        if (controlledIDs.has(fData.id) && !activeFilters.ids.has(fData.id)) return false;
+
+                        // Bot provider check
+                        const fProviders = lookup.featureBots.get(fData.id);
+                        if (!fProviders) return true; // Standalone feature?
+
+                        for (let botId of fProviders) {
+                            if (visibleBots.has(botId)) return true;
+                        }
+                        return false;
+                    });
+
+                    if (hasVisibleChild) node.style('display', 'element');
+                    else node.style('display', 'none');
+                } else {
+                    node.style('display', 'element');
+                }
             }
         });
     });
@@ -750,85 +796,237 @@ function applyFilters() {
 function showDetails(data) {
     const panel = document.getElementById('details-panel');
     const content = document.getElementById('details-content');
+
+    // Reset screenshot UI (using centralized helper)
+    clearDetailsUI();
+
+    let html = '';
+
+    // --- ALWAYS render description first if the field exists ---
+    if ('description' in data) {
+        const desc = data.description && data.description.trim() !== ''
+            ? data.description
+            : '<span style="color:#94a3b8;font-style:italic;">No description available</span>';
+
+        html += `
+            <div class="detail-item detail-description">
+                <div class="detail-label">Description</div>
+                <div class="detail-value">${desc}</div>
+            </div>
+        `;
+    }
+
+    // --- Render all other fields except screenshots + description ---
+    html += Object.entries(data)
+        .filter(([key]) => key !== 'screenshots' && key !== 'description')
+        .map(([key, value]) => {
+            if (value === '' || value === null || value === undefined) return '';
+
+            return `
+                <div class="detail-item">
+                    <div class="detail-label">${key.replace(/_/g, ' ')}</div>
+                    <div class="detail-value">${value}</div>
+                </div>
+            `;
+        }).join('');
+
+    content.innerHTML = html;
+
+    // Dynamic Bot Selection
+    currentlySelectedNodeId = data.id;
+    updateBotSelector(data.id);
+
+    // Show panel
+    panel.classList.remove('hidden');
+}
+
+
+
+// Helper to manage screenshot state
+let currentScreenshotIndex = 0;
+let currentScreenshots = [];
+
+function updateBotSelector(nodeId) {
     const selectorContainer = document.getElementById('bot-selector-container');
     const selector = document.getElementById('bot-selector');
     const screenshotContainer = document.getElementById('screenshot-container');
     const screenshotImg = document.getElementById('feature-screenshot');
+    const nextBtn = document.getElementById('screenshot-next-btn');
+    const prevBtn = document.getElementById('screenshot-prev-btn');
 
-    // Reset screenshot UI
-    selectorContainer.classList.add('hidden');
-    screenshotContainer.classList.add('hidden');
-    selector.innerHTML = '<option value="">Select a Bot...</option>';
-    screenshotImg.src = '';
-
-    // Show Details
-    content.innerHTML = Object.entries(data)
-        .filter(([key, value]) => key !== 'screenshots' && value !== '')
-        .map(([key, value]) => `
-            <div class="detail-item">
-                <div class="detail-label">${key.replace(/_/g, ' ')}</div>
-                <div class="detail-value">${value}</div>
-            </div>
-        `).join('');
-
-    // Dynamic Bot Selection: Find bots connected to this node
-    // Use the cy instance to traverse
-    const cyNode = cy.getElementById(data.id);
-    if (cyNode && cyNode.id()) {
-        // Find sources of incoming edges where source is a bot
-        const connectedBots = cyNode.incomers('edge')
-            .filter(edge => {
-                const source = edge.source();
-                return source.data('nodeType') === 'bot';
-            })
-            .map(edge => edge.source());
-
-        if (connectedBots.length > 0) {
-            selectorContainer.classList.remove('hidden');
-
-            // Sort bots alphabetically
-            connectedBots.sort((a, b) => a.data('label').localeCompare(b.data('label')));
-
-            connectedBots.forEach(bot => {
-                const botId = bot.id();
-                const option = document.createElement('option');
-                option.value = botId; // Store ID as value
-                option.textContent = bot.data('label');
-                selector.appendChild(option);
-            });
-
-            // Handle Selection
-            selector.onchange = (e) => {
-                const botId = e.target.value;
-                if (botId) {
-
-
-                    const hasScreenshot = data.screenshots && data.screenshots[botId];
-                    if (hasScreenshot) {
-                        screenshotImg.src = data.screenshots[botId];
-                        screenshotImg.style.display = 'block';
-                        // Add 'placeholder' handling if needed
-                    } else {
-                        // Show placeholder or hide image
-                        // Let's use a placeholder image or clear src
-                        screenshotImg.src = ''; // Or a "no-image.png"
-                        screenshotImg.alt = `No screenshot available for ${botId}`;
-                    }
-                    screenshotContainer.classList.remove('hidden');
-                } else {
-                    screenshotContainer.classList.add('hidden');
-                }
-            };
-        }
+    if (!cy || !nodeId) {
+        clearDetailsUI();
+        return;
     }
 
-    panel.classList.remove('hidden');
+    const cyNode = cy.getElementById(nodeId);
+    if (!cyNode || !cyNode.id()) return;
+
+    const data = cyNode.data();
+
+    // Node has no screenshots → force-hide everything
+    if (!data.screenshots || Object.keys(data.screenshots).length === 0) {
+        clearDetailsUI();
+        return;
+    }
+
+    // Find connected bots (incoming edges from bots)
+    const connectedBots = cyNode.incomers('edge')
+        .filter(edge => edge.source().data('nodeType') === 'bot')
+        .map(edge => edge.source());
+
+    if (connectedBots.length === 0) {
+        clearDetailsUI();
+        return;
+    }
+
+    // Keep ONLY bots that:
+    // 1. Are visible (pass left filters)
+    // 2. Have a screenshot for this node
+    const eligibleBots = connectedBots.filter(bot => {
+        const botId = bot.id();
+        return bot.visible() && data.screenshots[botId];
+    });
+
+    // No valid bots → keep UI hidden
+    if (eligibleBots.length === 0) {
+        clearDetailsUI();
+        return;
+    }
+
+    // --- SHOW SELECTOR ---
+    selectorContainer.classList.remove('hidden');
+
+    // Sort alphabetically
+    eligibleBots.sort((a, b) => a.data('label').localeCompare(b.data('label')));
+
+    // Capture current selection to restore if possible
+    const previousSelection = selector.value;
+
+    // Clear existing options to prevent duplication
+    selector.innerHTML = '';
+
+    // Populate dropdown
+    const addedBotIds = new Set();
+    eligibleBots.forEach(bot => {
+        const botId = bot.id();
+        if (addedBotIds.has(botId)) return; // Skip duplicates
+        addedBotIds.add(botId);
+
+        const option = document.createElement('option');
+        option.value = botId;
+        option.textContent = bot.data('label');
+        selector.appendChild(option);
+    });
+
+    // Restore selection if valid, otherwise select first
+    if (previousSelection && addedBotIds.has(previousSelection)) {
+        selector.value = previousSelection;
+    } else {
+        selector.value = eligibleBots[0].id();
+    }
+
+    // Function to render current screenshot state
+    const renderScreenshotState = (botId) => {
+        const ssData = data.screenshots[botId];
+
+        // Reset state
+        currentScreenshotIndex = 0;
+        currentScreenshots = [];
+
+        if (Array.isArray(ssData)) {
+            currentScreenshots = ssData;
+        } else {
+            currentScreenshots = [ssData];
+        }
+
+        // Show first image
+        if (currentScreenshots.length > 0) {
+            // Fix path if it's relative and missing assets/
+            let src = currentScreenshots[0];
+            if (!src.startsWith('assets/') && !src.startsWith('http')) {
+                src = 'assets/screenshots/' + src;
+            }
+            screenshotImg.src = src;
+
+            screenshotContainer.classList.remove('hidden');
+        } else {
+            screenshotImg.src = '';
+            screenshotContainer.classList.add('hidden');
+        }
+
+        // Toggle Buttons
+        if (currentScreenshots.length > 1) {
+            nextBtn.classList.remove('hidden');
+            prevBtn.classList.remove('hidden');
+        } else {
+            nextBtn.classList.add('hidden');
+            prevBtn.classList.add('hidden');
+        }
+    };
+
+    // Initialize view
+    renderScreenshotState(selector.value);
+
+    // Handle user changing bot
+    selector.onchange = (e) => {
+        const botId = e.target.value;
+        renderScreenshotState(botId);
+    };
+
+    // Click Handlers
+    nextBtn.onclick = () => {
+        if (currentScreenshots.length <= 1) return;
+        currentScreenshotIndex = (currentScreenshotIndex + 1) % currentScreenshots.length;
+
+        let src = currentScreenshots[currentScreenshotIndex];
+        if (!src.startsWith('assets/') && !src.startsWith('http')) src = 'assets/screenshots/' + src;
+        screenshotImg.src = src;
+    };
+
+    prevBtn.onclick = () => {
+        if (currentScreenshots.length <= 1) return;
+        // Wrap around logic: (index - 1 + length) % length
+        currentScreenshotIndex = (currentScreenshotIndex - 1 + currentScreenshots.length) % currentScreenshots.length;
+
+        let src = currentScreenshots[currentScreenshotIndex];
+        if (!src.startsWith('assets/') && !src.startsWith('http')) src = 'assets/screenshots/' + src;
+        screenshotImg.src = src;
+    };
 }
 
+
 function hideDetails() {
+    currentlySelectedNodeId = null;
     document.getElementById('details-panel').classList.add('hidden');
-    document.getElementById('bot-selector-container').classList.add('hidden');
-    document.getElementById('screenshot-container').classList.add('hidden');
+    clearDetailsUI();
+}
+
+/**
+ * Centralized function to clear screenshot and selector UI
+ */
+function clearDetailsUI() {
+    const selectorContainer = document.getElementById('bot-selector-container');
+    const selector = document.getElementById('bot-selector');
+    const screenshotContainer = document.getElementById('screenshot-container');
+    const screenshotImg = document.getElementById('feature-screenshot');
+    const nextBtn = document.getElementById('screenshot-next-btn');
+    const prevBtn = document.getElementById('screenshot-prev-btn');
+
+    if (selectorContainer) selectorContainer.classList.add('hidden');
+    if (screenshotContainer) screenshotContainer.classList.add('hidden');
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (prevBtn) prevBtn.classList.add('hidden');
+
+    if (selector) selector.innerHTML = '<option value="">Select a Bot...</option>';
+
+    if (screenshotImg) {
+        screenshotImg.src = '';
+        screenshotImg.removeAttribute('src'); // Ensure it's really gone
+    }
+
+    currentScreenshots = [];
+    currentScreenshotIndex = 0;
 }
 
 // Sidebar Toggle
