@@ -796,6 +796,12 @@ function applyFilters() {
 function showDetails(data) {
     const panel = document.getElementById('details-panel');
     const content = document.getElementById('details-content');
+    const title = document.getElementById('details-title');
+
+    // Update Title from "Node Details" to selected Node Label
+    if (title) {
+        title.innerText = data.label || 'Node Details';
+    }
 
     // Reset screenshot UI (using centralized helper)
     clearDetailsUI();

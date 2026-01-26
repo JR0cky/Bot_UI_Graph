@@ -140,8 +140,10 @@
                 "label": "Quick Start Button",
                 "description": "A set of action buttons to start a specific conversation by suggesting possible topics or actions.",
                 "screenshots": {
-                    "chatgpt": ["assets/screenshots/ChatGPT_Chat_Quickstart.png",
-                                 "ChatGPT_Quickstart_Image_Generation.png"]
+                    "chatgpt": [
+                        "assets/screenshots/ChatGPT_Chat_Quickstart.png",
+                        "ChatGPT_Quickstart_Image_Generation.png"
+                    ]
                 }
             }
         },
@@ -153,7 +155,7 @@
                 "description": "A message containing or only consisting of a Sticker.",
                 "screenshots": {
                     "characterai": "assets/screenshots/characterai_Sticker.png",
-                    "chatgpt":"assets/screenshots/ChatGPT_Sticker_Emoji.png"
+                    "chatgpt": "assets/screenshots/ChatGPT_Sticker_Emoji.png"
                 }
             }
         },
@@ -163,8 +165,8 @@
                 "nodeType": "interaction",
                 "label": "Input adjustment",
                 "description": "A request for how a chatbot should reply or generate answers e.g. \"thinking\" mode versus responding fast.",
-                 "screenshots": {
-                    "chatgpt":"assets/screenshots/ChatGPT_Additional_Input.png"
+                "screenshots": {
+                    "chatgpt": "assets/screenshots/ChatGPT_Additional_Input.png"
                 }
             }
         },
@@ -191,15 +193,14 @@
                     "talkpal": "assets/screenshots/Talkpal_Chat_Message.png"
                 }
             }
-            },
-        
+        },
         {
             "data": {
                 "id": "accordion",
                 "nodeType": "ui_element",
                 "label": "Accordion",
                 "description": "The Accordion is a well known pattern from graphical user interfaces and is used to hide information to save space. In the analysed chatbots, Accordions are used either to shorten a very long chat message or to provide a short insight into several available search results. Some chatbots also include a similar option to show more Quick Replies for the users.",
-                 "screenshots": {
+                "screenshots": {
                     "chatgpt": "assets/screenshots/ChatGPT_Accordion.png"
                 }
             }
@@ -210,8 +211,8 @@
                 "nodeType": "interaction",
                 "label": "Interactive canvas",
                 "description": "kind of like a canvas that both chatbot and user can edit/work on, can be text based (e.g. for writing code together) or possibly graphical or other",
-                 "screenshots": {
-                    "chatgpt":"assets/screenshots/ChatGPT_Interactive_Canvas.png"
+                "screenshots": {
+                    "chatgpt": "assets/screenshots/ChatGPT_Interactive_Canvas.png"
                 }
             }
         },
@@ -242,7 +243,7 @@
                 "description": "",
                 "screenshots": {
                     "wysa": "assets/screenshots/Wysa_Chat_Message_Emoji_Quick_Reply.png",
-                    "chatgpt":"assets/screenshots/ChatGPT_Sticker_Emoji.png"
+                    "chatgpt": "assets/screenshots/ChatGPT_Sticker_Emoji.png"
                 }
             }
         },
@@ -252,8 +253,8 @@
                 "nodeType": "feature_class",
                 "label": "Request/Message Completion",
                 "description": "completion of chatmessage, inspired by Google and maybe motivated by chatbots taking over web search",
-                 "screenshots": {
-                    "chatgpt":"assets/screenshots/ChatGPT_Request_Completion.png"
+                "screenshots": {
+                    "chatgpt": "assets/screenshots/ChatGPT_Request_Completion.png"
                 }
             }
         },
@@ -277,10 +278,12 @@
                 "label": "Additional input",
                 "description": "A possibility to upload of extra information inf form of documents or media. It can also be a request for specific actions of chatbot, like generate image, story etc.\npossible other actions going beyond messaging.",
                 "screenshots": {
-                    "characterai": ["assets/screenshots/characterai_create_content.png",
-                     "assets/screenshots/characterai_create_holiday_moment.png",
-                     "assets/screenshots/characterai_create_holiday_moment_example.png"],
-                     "chatgpt":"assets/screenshots/ChatGPT_Additional_Input.png"
+                    "characterai": [
+                        "assets/screenshots/characterai_create_content.png",
+                        "assets/screenshots/characterai_create_holiday_moment.png",
+                        "assets/screenshots/characterai_create_holiday_moment_example.png"
+                    ],
+                    "chatgpt": "assets/screenshots/ChatGPT_Additional_Input.png"
                 }
             }
         },
@@ -293,8 +296,10 @@
                 "screenshots": {
                     "wysa": "assets/screenshots/Wysa_Technical_Error.png",
                     "characterai": "assets/screenshots/characterai_System_Author.png",
-                    "chatgpt":["assets/screenshots/ChatGPT_System_Information.png",
-                                "assets/screenshots/ChatGPT_System_Message.png"]
+                    "chatgpt": [
+                        "assets/screenshots/ChatGPT_System_Information.png",
+                        "assets/screenshots/ChatGPT_System_Message.png"
+                    ]
                 }
             }
         },
@@ -326,9 +331,11 @@
                 "screenshots": {
                     "characterai": "assets/screenshots/characterai_Voice_Call.png",
                     "talkpal": "assets/screenshots/Talkpal_Voice_Chat_Message.png",
-                    "chatgpt":["assets/screenshots/ChatGPT_Voice_Mode.png",
-                                "assets/screenshots/ChatGPT_Voice_to_Text.png",
-                                "assets/screenshots/ChatGPT_Voice_Mode_Transcription.png"]
+                    "chatgpt": [
+                        "assets/screenshots/ChatGPT_Voice_Mode.png",
+                        "assets/screenshots/ChatGPT_Voice_to_Text.png",
+                        "assets/screenshots/ChatGPT_Voice_Mode_Transcription.png"
+                    ]
                 }
             }
         },
@@ -339,9 +346,11 @@
                 "label": "Help System",
                 "description": "Offering assistance for users, either on request or proactively by the chatbot.",
                 "screenshots": {
-                    "talkpal": ["assets/screenshots/Talkpal_Help_System_Correction.png",
-                                "assets/screenshots/Talkpal_Help_System_Correction_Chat.png"],
-                    "chatgpt":"assets/screenshots/ChatGPT_Help_System.png"
+                    "talkpal": [
+                        "assets/screenshots/Talkpal_Help_System_Correction.png",
+                        "assets/screenshots/Talkpal_Help_System_Correction_Chat.png"
+                    ],
+                    "chatgpt": "assets/screenshots/ChatGPT_Help_System.png"
                 }
             }
         },
@@ -353,9 +362,9 @@
                 "description": "Emojis or symbolsbeside or under a chat message to provide feedback or allow for other actions (e.g. re-generate, change language) on the answer of the chatbot.",
                 "screenshots": {
                     "wysa": "assets/screenshots/Wysa_Message_Reactions.png",
-                    "characterai": "assets/screenshots/characterai_Message_Reactions.png",
-                    "talkpal":"assets/screenshots/Talkpal_Message_Reactions.png",
-                    "chatgpt":"assets/screenshots/ChatGPT_Message_Reactions.png"
+                    "characterai": "assets/screenshots/characterai_Chat_Message.png",
+                    "talkpal": "assets/screenshots/Talkpal_Message_Reactions.png",
+                    "chatgpt": "assets/screenshots/ChatGPT_Message_Reactions.png"
                 }
             }
         },
@@ -387,10 +396,12 @@
                 "description": "A visual representation of the waiting time\u00a0(typing, thinking, generating, doing, ...)\u00a0for the reply of the chatbot. (1.)",
                 "screenshots": {
                     "wysa": "assets/screenshots/Wysa_Processing_Indicator.png",
-                      "characterai": "assets/screenshots/characterai_Processing_Indicator.png",
-                      "talkpal": "assets/screenshots/Talkpal_Processing_Indicator.png",
-                      "chatgpt": ["assets/screenshots/ChatGPT_Processing_Indicator.png",
-                                    "assets/screenshots/ChatGPT_Voice_Mode_Transcription.png"]
+                    "characterai": "assets/screenshots/characterai_Processing_Indicator.png",
+                    "talkpal": "assets/screenshots/Talkpal_Processing_Indicator.png",
+                    "chatgpt": [
+                        "assets/screenshots/ChatGPT_Processing_Indicator.png",
+                        "assets/screenshots/ChatGPT_Voice_Mode_Transcription.png"
+                    ]
                 }
             }
         },
@@ -401,8 +412,10 @@
                 "label": "Functionality Introduction",
                 "description": "Introducing the main functionalities or providing a tutorial in the first chat messages.",
                 "screenshots": {
-                      "chatgpt": ["assets/screenshots/ChatGPT_Quickstart.png",
-                                    "assets/screenshots/ChatGPT_Functionality_Introduction.png"]
+                    "chatgpt": [
+                        "assets/screenshots/ChatGPT_Quickstart.png",
+                        "assets/screenshots/ChatGPT_Functionality_Introduction.png"
+                    ]
                 }
             }
         },
@@ -414,7 +427,7 @@
                 "description": "A set of actions or functionalities under a chat message in the form of buttons.",
                 "screenshots": {
                     "wysa": "assets/screenshots/Wysa_Chat_Message_Emoji_Quick_Reply.png",
-                    "talkpal":"assets/screenshots/Talkpal_Quick_Reply.png"
+                    "talkpal": "assets/screenshots/Talkpal_Quick_Reply.png"
                 }
             }
         },
@@ -434,7 +447,7 @@
                 "description": "",
                 "screenshots": {
                     "wysa": "assets/screenshots/Wysa_Carousel_Chat_Message.png",
-                    "chatgpt":"assets/screenshots/ChatGPT_Carousel.png"
+                    "chatgpt": "assets/screenshots/ChatGPT_Carousel.png"
                 }
             }
         },
@@ -447,7 +460,7 @@
                 "screenshots": {
                     "wysa": "assets/screenshots/Wysa_Chat_Message_Emoji_Quick_Reply.png",
                     "characterai": "assets/screenshots/characterai_Chat_Message.png",
-                    "chatgpt":"assets/screenshots/ChatGPT_Chat_Message.png"
+                    "chatgpt": "assets/screenshots/ChatGPT_Chat_Message.png"
                 }
             }
         },
