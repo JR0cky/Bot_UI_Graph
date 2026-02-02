@@ -104,36 +104,69 @@
                         <input type="checkbox" id="toggle-edge-labels" checked>
                         Show Edge Labels
                     </label>
+                    <label class="filter-item">
+                        <input type="checkbox" id="toggle-show-edges-main" class="purple-checkbox" checked>
+                        Show Graph Edges
+                    </label>
                 </div>
                 <h3 class="filter-section-title" style="color: white !important;">Filters</h3>
 
                 <div class="filter-separator"></div>
                 <details class="filter-group">
-                    <summary>Bots</summary>
+                    <summary>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" class="category-toggle" data-target="filter-bots" checked>
+                            <span class="filter-color-dot" style="background-color: #D55E00;"></span>
+                            <span>Bots</span>
+                        </div>
+                    </summary>
                     <div id="filter-bots" class="filter-content"></div>
                 </details>
 
                 <details class="filter-group">
-                    <summary>Domains</summary>
+                    <summary>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" class="category-toggle" data-target="filter-domains" checked>
+                            <span class="filter-color-dot" style="background-color: #009E73;"></span>
+                            <span>Domains</span>
+                        </div>
+                    </summary>
                     <div id="filter-domains" class="filter-content"></div>
                 </details>
 
                 <details class="filter-group">
-                    <summary>Chat Features</summary>
+                    <summary>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" class="category-toggle" data-target="filter-chat-features" checked>
+                            <span class="filter-color-dot" style="background-color: #E69F00;"></span>
+                            <span>Chat Features</span>
+                        </div>
+                    </summary>
                     <div id="filter-chat-features" class="filter-content"></div>
                 </details>
 
                 <details class="filter-group">
-                    <summary>UI Features</summary>
+                    <summary>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" class="category-toggle" data-target="filter-ui-features" checked>
+                            <span class="filter-color-dot" style="background-color: #0072B2;"></span>
+                            <span>UI Features</span>
+                        </div>
+                    </summary>
                     <div id="filter-ui-features" class="filter-content"></div>
                 </details>
 
                 <details class="filter-group">
                     <summary>
-                        <span class="summary-text">
-                            Interactive<br><br>
-                            Features
-                        </span>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" class="category-toggle" data-target="filter-interactive-features"
+                                checked>
+                            <span class="filter-color-dot" style="background-color: #CC79A7;"></span>
+                            <span class="summary-text">
+                                Interactive<br><br>
+                                Features
+                            </span>
+                        </div>
                     </summary>
 
                     <div id="filter-interactive-features" class="filter-content"></div>

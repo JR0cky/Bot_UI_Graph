@@ -186,7 +186,7 @@
                 "id": "avatar",
                 "nodeType": "ui_element",
                 "label": "Avatar",
-                "description": "",
+                "description": "A digital representation of a human user that facilitates interaction with other users, entities, or the environment.",
                 "screenshots": {
                     "wysa": "assets/screenshots/Wysa_Chat_Message_Emoji_Quick_Reply.png",
                     "characterai": "assets/screenshots/characterai_Chat_Message.png",
@@ -197,7 +197,7 @@
         {
             "data": {
                 "id": "accordion",
-                "nodeType": "ui_element",
+                "nodeType": "feature_class",
                 "label": "Accordion",
                 "description": "The Accordion is a well known pattern from graphical user interfaces and is used to hide information to save space. In the analysed chatbots, Accordions are used either to shorten a very long chat message or to provide a short insight into several available search results. Some chatbots also include a similar option to show more Quick Replies for the users.",
                 "screenshots": {
@@ -240,7 +240,7 @@
                 "id": "emoji_chat_message",
                 "nodeType": "feature_class",
                 "label": "Emoji Chat Message",
-                "description": "",
+                "description": "A message containing or only consisting of an emoji or emoticon.",
                 "screenshots": {
                     "wysa": "assets/screenshots/Wysa_Chat_Message_Emoji_Quick_Reply.png",
                     "chatgpt": "assets/screenshots/ChatGPT_Sticker_Emoji.png"
@@ -308,7 +308,7 @@
                 "id": "gif_chat_message",
                 "nodeType": "feature_class",
                 "label": "Gif Chat Messages",
-                "description": "",
+                "description": "A message containing or only consisting of a GIF.",
                 "screenshots": {
                     "wysa": "assets/screenshots/Wysa_GIF.png"
                 }
@@ -319,7 +319,7 @@
                 "id": "video_chat_messages",
                 "nodeType": "feature_class",
                 "label": "Video Chat Messages",
-                "description": ""
+                "description": "A message containing or only consisting of a video."
             }
         },
         {
@@ -357,7 +357,7 @@
         {
             "data": {
                 "id": "message_reactions",
-                "nodeType": "interaction",
+                "nodeType": "feature_class",
                 "label": "Message Reactions",
                 "description": "Emojis or symbolsbeside or under a chat message to provide feedback or allow for other actions (e.g. re-generate, change language) on the answer of the chatbot.",
                 "screenshots": {
@@ -383,7 +383,7 @@
         {
             "data": {
                 "id": "dialogue_reload",
-                "nodeType": "ui_element",
+                "nodeType": "interaction",
                 "label": "dialogue reload",
                 "description": "Of the analysed chatbots, 5 offer the option to reload the dialogue and start the conversation again. As such, it can help to solve situations in which the chatbot does not understand the user which might lead to frustrations. This can be seen as a specific sub-pattern of\u00a0Conversation Recovery. The difference to that pattern is that\u00a0Conversation Recovery\u00a0is provided by the chatbot at best without a specific prompt from the user. The\u00a0Dialogue Reload\u00a0on the other hand is an action consciously taken by the user if they recognize that the chatbot either does not function as intended or cannot provide a satisfactory answer."
             }
@@ -422,7 +422,7 @@
         {
             "data": {
                 "id": "quick_replies",
-                "nodeType": "interaction",
+                "nodeType": "feature_class",
                 "label": "Quick Replies",
                 "description": "A set of actions or functionalities under a chat message in the form of buttons.",
                 "screenshots": {
@@ -444,7 +444,7 @@
                 "id": "carousel_chat_message",
                 "nodeType": "feature_class",
                 "label": "Carousel Chat Message",
-                "description": "",
+                "description": "A set of similar items in a horizontal list.",
                 "screenshots": {
                     "wysa": "assets/screenshots/Wysa_Carousel_Chat_Message.png",
                     "chatgpt": "assets/screenshots/ChatGPT_Carousel.png"
@@ -853,263 +853,11 @@
         },
         {
             "data": {
-                "id": "deepseek_persistent_menu",
-                "source": "deepseek",
-                "target": "persistent_menu",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "deepseek_additional_input",
-                "source": "deepseek",
-                "target": "additional_input",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "deepseek_input_adjustment",
-                "source": "deepseek",
-                "target": "input_adjustment",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "deepseek_system_information",
-                "source": "deepseek",
-                "target": "system_information",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "deepseek_processing_indicators",
-                "source": "deepseek",
-                "target": "processing_indicators",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "deepseek_message_reactions",
-                "source": "deepseek",
-                "target": "message_reactions",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "deepseek_voice_chat_messages",
-                "source": "deepseek",
-                "target": "voice_chat_messages",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "deepseek_emoji_chat_message",
-                "source": "deepseek",
-                "target": "emoji_chat_message",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "deepseek_accordion",
-                "source": "deepseek",
-                "target": "accordion",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "deepseek_text_chat_message",
-                "source": "deepseek",
-                "target": "text_chat_message",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "deepseek_image_chat_messages",
-                "source": "deepseek",
-                "target": "image_chat_messages",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
                 "id": "gemini_open_domain",
                 "source": "gemini",
                 "target": "open_domain",
                 "relation": "partOf",
                 "label": "partOf"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_interactive_canvas",
-                "source": "gemini",
-                "target": "interactive_canvas",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_quick_start_button",
-                "source": "gemini",
-                "target": "quick_start_button",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_persistent_menu",
-                "source": "gemini",
-                "target": "persistent_menu",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_additional_input",
-                "source": "gemini",
-                "target": "additional_input",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_input_adjustment",
-                "source": "gemini",
-                "target": "input_adjustment",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_system_information",
-                "source": "gemini",
-                "target": "system_information",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_request_message_completion",
-                "source": "gemini",
-                "target": "request_message_completion",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_video_chat_messages",
-                "source": "gemini",
-                "target": "video_chat_messages",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_processing_indicators",
-                "source": "gemini",
-                "target": "processing_indicators",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_message_reactions",
-                "source": "gemini",
-                "target": "message_reactions",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_voice_chat_messages",
-                "source": "gemini",
-                "target": "voice_chat_messages",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_functionality_introduction",
-                "source": "gemini",
-                "target": "functionality_introduction",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_quick_replies",
-                "source": "gemini",
-                "target": "quick_replies",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_emoji_chat_message",
-                "source": "gemini",
-                "target": "emoji_chat_message",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_avatar",
-                "source": "gemini",
-                "target": "avatar",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_text_chat_message",
-                "source": "gemini",
-                "target": "text_chat_message",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "gemini_image_chat_messages",
-                "source": "gemini",
-                "target": "image_chat_messages",
-                "relation": "hasFeature",
-                "label": "hasFeature"
             }
         },
         {
@@ -1123,27 +871,27 @@
         },
         {
             "data": {
-                "id": "paradot_quick_start_button",
+                "id": "paradot_input_adjustment",
                 "source": "paradot",
-                "target": "quick_start_button",
+                "target": "input_adjustment",
                 "relation": "hasFeature",
                 "label": "hasFeature"
             }
         },
         {
             "data": {
-                "id": "paradot_sticker_chat_messages",
+                "id": "paradot_web_preview_chat_message",
                 "source": "paradot",
-                "target": "sticker_chat_messages",
+                "target": "web_preview_chat_message",
                 "relation": "hasFeature",
                 "label": "hasFeature"
             }
         },
         {
             "data": {
-                "id": "paradot_persistent_menu",
+                "id": "paradot_avatar",
                 "source": "paradot",
-                "target": "persistent_menu",
+                "target": "avatar",
                 "relation": "hasFeature",
                 "label": "hasFeature"
             }
@@ -1159,36 +907,18 @@
         },
         {
             "data": {
-                "id": "paradot_system_information",
+                "id": "paradot_request_message_completion",
                 "source": "paradot",
-                "target": "system_information",
+                "target": "request_message_completion",
                 "relation": "hasFeature",
                 "label": "hasFeature"
             }
         },
         {
             "data": {
-                "id": "paradot_gif_chat_message",
+                "id": "paradot_additional_input",
                 "source": "paradot",
-                "target": "gif_chat_message",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "paradot_input_adjustment",
-                "source": "paradot",
-                "target": "input_adjustment",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "paradot_call_on_menu",
-                "source": "paradot",
-                "target": "call_on_menu",
+                "target": "additional_input",
                 "relation": "hasFeature",
                 "label": "hasFeature"
             }
@@ -1204,36 +934,9 @@
         },
         {
             "data": {
-                "id": "paradot_message_reactions",
+                "id": "paradot_functionality_introduction",
                 "source": "paradot",
-                "target": "message_reactions",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "paradot_voice_chat_messages",
-                "source": "paradot",
-                "target": "voice_chat_messages",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "paradot_quick_replies",
-                "source": "paradot",
-                "target": "quick_replies",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "paradot_emoji_chat_message",
-                "source": "paradot",
-                "target": "emoji_chat_message",
+                "target": "functionality_introduction",
                 "relation": "hasFeature",
                 "label": "hasFeature"
             }
@@ -1243,15 +946,6 @@
                 "id": "paradot_information_stamps",
                 "source": "paradot",
                 "target": "information_stamps",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "paradot_avatar",
-                "source": "paradot",
-                "target": "avatar",
                 "relation": "hasFeature",
                 "label": "hasFeature"
             }
@@ -1285,45 +979,18 @@
         },
         {
             "data": {
-                "id": "replika_persistent_menu",
+                "id": "replika_sticker_chat_messages",
                 "source": "replika",
-                "target": "persistent_menu",
+                "target": "sticker_chat_messages",
                 "relation": "hasFeature",
                 "label": "hasFeature"
             }
         },
         {
             "data": {
-                "id": "replika_system_information",
+                "id": "replika_web_preview_chat_message",
                 "source": "replika",
-                "target": "system_information",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "replika_processing_indicators",
-                "source": "replika",
-                "target": "processing_indicators",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "replika_message_reactions",
-                "source": "replika",
-                "target": "message_reactions",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "replika_voice_chat_messages",
-                "source": "replika",
-                "target": "voice_chat_messages",
+                "target": "web_preview_chat_message",
                 "relation": "hasFeature",
                 "label": "hasFeature"
             }
@@ -1339,9 +1006,81 @@
         },
         {
             "data": {
-                "id": "replika_emoji_chat_message",
+                "id": "replika_conversation_recovery",
                 "source": "replika",
-                "target": "emoji_chat_message",
+                "target": "conversation_recovery",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_request_message_completion",
+                "source": "replika",
+                "target": "request_message_completion",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_persistent_menu",
+                "source": "replika",
+                "target": "persistent_menu",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_additional_input",
+                "source": "replika",
+                "target": "additional_input",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_video_chat_messages",
+                "source": "replika",
+                "target": "video_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_voice_chat_messages",
+                "source": "replika",
+                "target": "voice_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_message_reactions",
+                "source": "replika",
+                "target": "message_reactions",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_image_chat_messages",
+                "source": "replika",
+                "target": "image_chat_messages",
+                "relation": "hasFeature",
+                "label": "hasFeature"
+            }
+        },
+        {
+            "data": {
+                "id": "replika_processing_indicators",
+                "source": "replika",
+                "target": "processing_indicators",
                 "relation": "hasFeature",
                 "label": "hasFeature"
             }
@@ -1366,54 +1105,27 @@
         },
         {
             "data": {
-                "id": "replika_image_chat_messages",
-                "source": "replika",
-                "target": "image_chat_messages",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "rocky_education",
+                "id": "rocky_health",
                 "source": "rocky",
-                "target": "education",
+                "target": "health",
                 "relation": "partOf",
                 "label": "partOf"
             }
         },
         {
             "data": {
-                "id": "rocky_quick_start_button",
+                "id": "rocky_input_adjustment",
                 "source": "rocky",
-                "target": "quick_start_button",
+                "target": "input_adjustment",
                 "relation": "hasFeature",
                 "label": "hasFeature"
             }
         },
         {
             "data": {
-                "id": "rocky_persistent_menu",
+                "id": "rocky_additional_input",
                 "source": "rocky",
-                "target": "persistent_menu",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "rocky_system_information",
-                "source": "rocky",
-                "target": "system_information",
-                "relation": "hasFeature",
-                "label": "hasFeature"
-            }
-        },
-        {
-            "data": {
-                "id": "rocky_call_on_menu",
-                "source": "rocky",
-                "target": "call_on_menu",
+                "target": "additional_input",
                 "relation": "hasFeature",
                 "label": "hasFeature"
             }
@@ -1933,7 +1645,7 @@
         },
         {
             "data": {
-                "id": "quick_start_button_ui_features_type",
+                "id": "quick_start_button_cat",
                 "source": "quick_start_button",
                 "target": "ui_features",
                 "relation": "category",
@@ -1942,43 +1654,7 @@
         },
         {
             "data": {
-                "id": "quick_start_button_interactive_features_type",
-                "source": "quick_start_button",
-                "target": "interactive_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "sticker_chat_messages_chat_features_type",
-                "source": "sticker_chat_messages",
-                "target": "chat_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "input_adjustment_interactive_features_type",
-                "source": "input_adjustment",
-                "target": "interactive_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "web_preview_chat_message_chat_features_type",
-                "source": "web_preview_chat_message",
-                "target": "chat_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "avatar_ui_features_type",
+                "id": "avatar_cat",
                 "source": "avatar",
                 "target": "ui_features",
                 "relation": "category",
@@ -1987,34 +1663,7 @@
         },
         {
             "data": {
-                "id": "accordion_ui_features_type",
-                "source": "accordion",
-                "target": "ui_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "accordion_chat_features_type",
-                "source": "accordion",
-                "target": "chat_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "interactive_canvas_interactive_features_type",
-                "source": "interactive_canvas",
-                "target": "interactive_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "conversation_recovery_ui_features_type",
+                "id": "conversation_recovery_cat",
                 "source": "conversation_recovery",
                 "target": "ui_features",
                 "relation": "category",
@@ -2023,7 +1672,7 @@
         },
         {
             "data": {
-                "id": "call_on_menu_ui_features_type",
+                "id": "call_on_menu_cat",
                 "source": "call_on_menu",
                 "target": "ui_features",
                 "relation": "category",
@@ -2032,25 +1681,7 @@
         },
         {
             "data": {
-                "id": "emoji_chat_message_chat_features_type",
-                "source": "emoji_chat_message",
-                "target": "chat_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "request_message_completion_chat_features_type",
-                "source": "request_message_completion",
-                "target": "chat_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "persistent_menu_ui_features_type",
+                "id": "persistent_menu_cat",
                 "source": "persistent_menu",
                 "target": "ui_features",
                 "relation": "category",
@@ -2059,16 +1690,7 @@
         },
         {
             "data": {
-                "id": "additional_input_interactive_features_type",
-                "source": "additional_input",
-                "target": "interactive_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "system_information_ui_features_type",
+                "id": "system_information_cat",
                 "source": "system_information",
                 "target": "ui_features",
                 "relation": "category",
@@ -2077,34 +1699,7 @@
         },
         {
             "data": {
-                "id": "gif_chat_message_chat_features_type",
-                "source": "gif_chat_message",
-                "target": "chat_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "video_chat_messages_chat_features_type",
-                "source": "video_chat_messages",
-                "target": "chat_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "voice_chat_messages_chat_features_type",
-                "source": "voice_chat_messages",
-                "target": "chat_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "help_system_ui_features_type",
+                "id": "help_system_cat",
                 "source": "help_system",
                 "target": "ui_features",
                 "relation": "category",
@@ -2113,52 +1708,7 @@
         },
         {
             "data": {
-                "id": "help_system_interactive_features_type",
-                "source": "help_system",
-                "target": "interactive_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "message_reactions_interactive_features_type",
-                "source": "message_reactions",
-                "target": "interactive_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "image_chat_messages_chat_features_type",
-                "source": "image_chat_messages",
-                "target": "chat_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "dialogue_reload_ui_features_type",
-                "source": "dialogue_reload",
-                "target": "ui_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "processing_indicators_ui_features_type",
-                "source": "processing_indicators",
-                "target": "ui_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "functionality_introduction_ui_features_type",
+                "id": "functionality_introduction_cat",
                 "source": "functionality_introduction",
                 "target": "ui_features",
                 "relation": "category",
@@ -2167,25 +1717,16 @@
         },
         {
             "data": {
-                "id": "quick_replies_interactive_features_type",
-                "source": "quick_replies",
-                "target": "interactive_features",
+                "id": "processing_indicators_cat",
+                "source": "processing_indicators",
+                "target": "ui_features",
                 "relation": "category",
                 "label": "category"
             }
         },
         {
             "data": {
-                "id": "quick_replies_chat_features_type",
-                "source": "quick_replies",
-                "target": "chat_features",
-                "relation": "category",
-                "label": "category"
-            }
-        },
-        {
-            "data": {
-                "id": "information_stamps_ui_features_type",
+                "id": "information_stamps_cat",
                 "source": "information_stamps",
                 "target": "ui_features",
                 "relation": "category",
@@ -2194,7 +1735,97 @@
         },
         {
             "data": {
-                "id": "carousel_chat_message_chat_features_type",
+                "id": "sticker_chat_messages_cat",
+                "source": "sticker_chat_messages",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "web_preview_chat_message_cat",
+                "source": "web_preview_chat_message",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "accordion_cat",
+                "source": "accordion",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "emoji_chat_message_cat",
+                "source": "emoji_chat_message",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "request_message_completion_cat",
+                "source": "request_message_completion",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "gif_chat_message_cat",
+                "source": "gif_chat_message",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "video_chat_messages_cat",
+                "source": "video_chat_messages",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "voice_chat_messages_cat",
+                "source": "voice_chat_messages",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "message_reactions_cat",
+                "source": "message_reactions",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "image_chat_messages_cat",
+                "source": "image_chat_messages",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "carousel_chat_message_cat",
                 "source": "carousel_chat_message",
                 "target": "chat_features",
                 "relation": "category",
@@ -2203,8 +1834,26 @@
         },
         {
             "data": {
-                "id": "carousel_chat_message_interactive_features_type",
-                "source": "carousel_chat_message",
+                "id": "text_chat_message_cat",
+                "source": "text_chat_message",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "quick_replies_cat",
+                "source": "quick_replies",
+                "target": "chat_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "interactive_canvas_cat",
+                "source": "interactive_canvas",
                 "target": "interactive_features",
                 "relation": "category",
                 "label": "category"
@@ -2212,9 +1861,27 @@
         },
         {
             "data": {
-                "id": "text_chat_message_chat_features_type",
-                "source": "text_chat_message",
-                "target": "chat_features",
+                "id": "input_adjustment_cat",
+                "source": "input_adjustment",
+                "target": "interactive_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "additional_input_cat",
+                "source": "additional_input",
+                "target": "interactive_features",
+                "relation": "category",
+                "label": "category"
+            }
+        },
+        {
+            "data": {
+                "id": "dialogue_reload_cat",
+                "source": "dialogue_reload",
+                "target": "interactive_features",
                 "relation": "category",
                 "label": "category"
             }

@@ -170,6 +170,15 @@ details[open] summary::after {
     accent-color: white;
 }
 
+.filter-color-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
 /* Sidebar Elements (New Classes) */
 .sidebar-select {
     padding: 5px;
@@ -461,4 +470,20 @@ main {
 
 .screenshot-nav-btn.hidden {
     display: none !important;
+}
+
+/* Custom Checkbox Colors */
+.purple-checkbox {
+    accent-color: #CC79A7;
+}
+
+/* Ensure filter items align well */
+.filter-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #e2e8f0;
+    margin-bottom: 5px;
 }

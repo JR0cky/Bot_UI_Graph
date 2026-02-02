@@ -1,0 +1,22 @@
+
+improve bot walkthrough: one connection at a time, for each level
+
+
+id in node sidebar can go
+clustering is not working
+hovering after clustering not working
+circle around bots and domains after clustering
+white circles around colors in left sidebar for filters
+Disable filters for clustering (easier to implement)
+Screenshots also visible in upper levels connected to feature, e.g. call-on menu as a help system?
+
+add screenshot to nodes
+only cluster for domains?
+check clustering params in backend for better results (especially agglomerative), otherwise out
+check out params for clustering to identify optimal results and useful alorithms
+
+clean up repo, only keep what is needed, remove old files
+
+
+
+

@@ -259,6 +259,21 @@ async function initGraph() {
             });
         }
 
+        // Show Main Edges Toggle
+        const showMainEdgesToggle = document.getElementById('toggle-show-edges-main');
+        if (showMainEdgesToggle) {
+            showMainEdgesToggle.addEventListener('change', (e) => {
+                const isChecked = e.target.checked;
+                if (isChecked) {
+                    cy.edges().removeStyle('opacity');
+                    cy.edges().removeStyle('events');
+                } else {
+                    cy.edges().style('opacity', 0);
+                    cy.edges().style('events', 'no');
+                }
+            });
+        }
+
     } catch (error) {
         console.error('Fetch error:', error);
     }
@@ -551,7 +566,7 @@ function generateDynamicFilters(elements) {
     });
 
     // 1. Bots
-    const bots = nodes.filter(n => n.nodeType === 'bot').map(n => ({ id: n.id, label: n.label }));
+    const bots = nodes.filter(n => n.nodeType === 'bot').map(n => ({ id: n.id, label: n.label, nodeType: n.nodeType }));
     bots.sort((a, b) => a.label.localeCompare(b.label));
     renderFilterGroup('filter-bots', bots, 'id');
     bots.forEach(b => {
@@ -560,7 +575,7 @@ function generateDynamicFilters(elements) {
     });
 
     // 2. Domains
-    const domains = nodes.filter(n => n.nodeType === 'domain').map(n => ({ id: n.id, label: n.label }));
+    const domains = nodes.filter(n => n.nodeType === 'domain').map(n => ({ id: n.id, label: n.label, nodeType: n.nodeType }));
     domains.sort((a, b) => a.label.localeCompare(b.label));
     renderFilterGroup('filter-domains', domains, 'id');
     domains.forEach(d => {
@@ -570,6 +585,7 @@ function generateDynamicFilters(elements) {
 
     // 3. Feature Categories
     // Helper to find features by parent category ID
+    // UPDATED: Use the refactored 'category' edges directly
     const getFeaturesByCategory = (catId) => {
         const featureIds = edges
             .filter(e => e.target === catId && e.relation === 'category')
@@ -580,7 +596,7 @@ function generateDynamicFilters(elements) {
         const featureNodes = uniqueIds
             .map(id => nodes.find(n => n.id === id))
             .filter(n => n)
-            .map(n => ({ id: n.id, label: n.label }));
+            .map(n => ({ id: n.id, label: n.label, nodeType: n.nodeType }));
 
         featureNodes.sort((a, b) => a.label.localeCompare(b.label));
         return featureNodes;
@@ -626,164 +642,92 @@ function renderFilterGroup(containerId, items, filterType) {
     });
 }
 
-function updateFilters(type, value, isChecked) {
+// Split update logic for batching
+function updateFilterState(type, value, isChecked) {
     if (type === 'id') {
         if (isChecked) activeFilters.ids.add(value);
         else activeFilters.ids.delete(value);
 
-        // SYNC LOGIC for Multi-Category Items (e.g. Accordion in Chat & UI)
-        // Find ALL checkboxes with this value and update them
+        // SYNC LOGIC for Multi-Category Items
         const sameValueCheckboxes = document.querySelectorAll(`input[data-value="${value}"]`);
         sameValueCheckboxes.forEach(cb => {
             if (cb.checked !== isChecked) cb.checked = isChecked;
         });
 
-        // Domain Sync Logic
-        // If this value is a Domain ID, we need to update all Bots in this domain
-        if (lookup.domainToBots && lookup.domainToBots.has(value)) {
-            const botIds = lookup.domainToBots.get(value);
-            botIds.forEach(botId => {
-                // Update internal state
-                if (isChecked) activeFilters.ids.add(botId);
-                else activeFilters.ids.delete(botId);
-
-                // Update UI Checkboxes for these bots
-                const cb = document.querySelector(`input[data-value="${botId}"]`);
-                if (cb) cb.checked = isChecked;
-            });
-        }
+        // Domain Sync Logic REMOVED (No longer forcing domains to follow bots)
     }
+}
 
+function updateFilters(type, value, isChecked) {
+    updateFilterState(type, value, isChecked);
     applyFilters();
     if (currentlySelectedNodeId) {
         updateBotSelector(currentlySelectedNodeId);
     }
 }
 
-function applyFilters() {
-    cy.batch(() => {
-        const visibleBots = new Set();
-
-        cy.nodes().forEach(node => {
-            const data = node.data();
-            if (data.nodeType === 'bot') {
-                const isBotChecked = activeFilters.ids.has(data.id);
-
-                const domainId = lookup.botToDomain.get(data.id);
-                const isDomainChecked = domainId ? activeFilters.ids.has(domainId) : true; // Default true if no domain?
-
-
-                let hasActiveFeature = false;
-                const botFeatures = lookup.botFeatures.get(data.id);
-                if (botFeatures) {
-                    let matchesFilters = false;
-                    let hasControlledFeatures = false;
-
-                    for (let featId of botFeatures) {
-                        if (controlledIDs.has(featId)) {
-                            hasControlledFeatures = true;
-                            if (activeFilters.ids.has(featId)) {
-                                matchesFilters = true;
-                                break;
-                            }
-                        }
-                    }
-
-
-                    if (!hasControlledFeatures) matchesFilters = true;
-
-                    hasActiveFeature = matchesFilters;
-                } else {
-                    hasActiveFeature = true; // No features to filter by
-                }
-
-                if (isBotChecked && isDomainChecked && hasActiveFeature) {
-                    visibleBots.add(data.id);
-                    node.style('display', 'element');
-                } else {
-                    node.style('display', 'none');
-                }
-            }
+function initCategoryToggles() {
+    document.querySelectorAll('.category-toggle').forEach(toggle => {
+        // Prevent details toggle
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
         });
 
-        // 2. Visibilty of other nodes (Domains, Features, etc)
+        toggle.addEventListener('change', (e) => {
+            const targetId = e.target.dataset.target;
+            const isChecked = e.target.checked;
+
+            // Find specific filters in this group
+            const container = document.getElementById(targetId);
+            if (!container) return;
+
+            const inputs = container.querySelectorAll('input[type="checkbox"]');
+
+            // Batch Update
+            // We do NOT use cy.batch() here because updateFilterState doesn't touch cy.
+            // But applyFilters DOES use cy.batch internally.
+
+            inputs.forEach(input => {
+                input.checked = isChecked;
+                updateFilterState(input.dataset.filterType, input.dataset.value, isChecked);
+            });
+
+            applyFilters();
+        });
+    });
+}
+
+function applyFilters() {
+    cy.batch(() => {
         cy.nodes().forEach(node => {
             const data = node.data();
-            if (data.nodeType === 'bot') return; // Handled
 
-            // Check Type filter
+            // 1. Check Node Type Filter
             if (!activeFilters.nodeType.has(data.nodeType)) {
                 node.style('display', 'none');
                 return;
             }
 
-            // Domain Visibility
-            if (data.nodeType === 'domain') {
-                // Check if any INCOMING 'partOf' edge comes from a VISIBLE bot
-                const connectedBots = node.incomers('edge[relation="partOf"]').sources();
-                const hasVisibleChild = connectedBots.some(b => visibleBots.has(b.id()));
+            // 2. Check Feature ID Filter
+            // If it's a controlled ID (present in the sidebar checkboxes), respect the checkbox.
+            // Features, Bots, Domains are all controlled.
+            // UI Elements? "quick_start_button" is in the filters?
+            // "controlledIDs" logic handles this.
 
-                // Show logic: Must be checked AND have visible children (or be manually checked while children are hidden? User wants clean view)
-                // If I uncheck all bots, visibleBots is empty -> hasVisibleChild false -> Hide Domain.
-                if (activeFilters.ids.has(data.id) && (connectedBots.length === 0 || hasVisibleChild)) {
+            if (controlledIDs.has(data.id)) {
+                if (activeFilters.ids.has(data.id)) {
                     node.style('display', 'element');
                 } else {
                     node.style('display', 'none');
                 }
-                return;
-            }
-
-            // Feature Visibility
-            if (controlledIDs.has(data.id) && !activeFilters.ids.has(data.id)) {
-                node.style('display', 'none');
-                return;
-            }
-            // Check connected bots
-            const connectedBots = lookup.featureBots.get(data.id);
-            if (connectedBots) {
-                let connectedToVisible = false;
-                for (let botId of connectedBots) {
-                    if (visibleBots.has(botId)) {
-                        connectedToVisible = true;
-                        break;
-                    }
-                }
-                if (connectedToVisible) node.style('display', 'element');
-                else node.style('display', 'none');
             } else {
-                // Standalone feature? 
-                // Specific check for Feature Groups (e.g. Chat Features)
+                // Not controlled (e.g. some implicit node? or Feature Group nodes?)
+                // Feature Group nodes (e.g. Chat Features parent node)
                 if (data.nodeType === 'feature_group') {
-                    // Check if any INCOMING 'category' edge comes from a VISIBLE node
-                    // Note: In graph, Features -> category -> FeatureGroup.
-                    const connectedFeatures = node.incomers('edge[relation="category"]').sources();
-                    // A feature is visible if it is NOT hidden (style display !== none)
-                    // We can't easily check style here inside the batch/loop effectively if order matters,
-                    // but we can check if it WOULD be visible.
-                    // Simplified: Check if any connected feature has a visible provider bot.
-
-                    const hasVisibleChild = connectedFeatures.some(f => {
-                        // Is feature 'f' visible?
-                        // f is visible if: 
-                        // 1. !controlled or activeFilters includes it
-                        // 2. AND it has a visible bot provider
-
-                        const fData = f.data();
-                        // Filter check
-                        if (controlledIDs.has(fData.id) && !activeFilters.ids.has(fData.id)) return false;
-
-                        // Bot provider check
-                        const fProviders = lookup.featureBots.get(fData.id);
-                        if (!fProviders) return true; // Standalone feature?
-
-                        for (let botId of fProviders) {
-                            if (visibleBots.has(botId)) return true;
-                        }
-                        return false;
-                    });
-
-                    if (hasVisibleChild) node.style('display', 'element');
-                    else node.style('display', 'none');
+                    // Show if any children are visible? Or always show?
+                    // User said "don't hide whole sections".
+                    // Let's keep them visible unless explicitly filtered (but we don't filter groups).
+                    node.style('display', 'element');
                 } else {
                     node.style('display', 'element');
                 }
@@ -1047,6 +991,8 @@ sidebarToggle.addEventListener('click', () => {
 document.getElementById('close-details').addEventListener('click', hideDetails);
 
 // Start
+// Start
+initCategoryToggles();
 initGraph();
 
 // --- Bot Walkthrough Feature ---
