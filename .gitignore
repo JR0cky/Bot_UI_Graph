@@ -38,8 +38,7 @@ Thumbs.db
 
 # Docker
 .Dockerfile
-#CSV files
-*.csv
+
 
 #Utils
 backend/utils.py
@@ -48,3 +47,10 @@ backend/update_graph_data.py
 backend/data.json
 
 CHECKS
+
+backend/main_old.py
+backend/analysis_report.md
+backend/analysis_results.csv
+
+
+todo.txt

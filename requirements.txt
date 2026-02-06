@@ -1,8 +1,9 @@
 fastapi
 uvicorn
-neo4j
-python-multipart
+numpy
+pandas
 networkx
-python-louvain
 scikit-learn
 scipy
+matplotlib
+seaborn
