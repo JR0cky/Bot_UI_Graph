@@ -1,0 +1,162 @@
+Bot,Class,Screenshots
+Ada,Text Chat Message,Ada_Chat_Message.png
+Ada,Quick Reply,Ada_Quick_Reply.png
+Ada,Call-on Menu,"Ada_call-on-menu-help.PNG, Ada_call-on-menu-help2.PNG"
+Ada,Message Reaction,"Ada_Help_System1.png, Ada_Message_Reaction2.png"
+Ada,Help System,"Ada_Help_System1.png, Ada_Help_System2.png"
+Ada,System Information,"Ada_Disclaimer1.png, Ada_Disclaimer2.png, Ada_Disclaimer_popup.png"
+Ada,Avatar,Ada_Chat_Message.png
+ChatGPT,Accordion,ChatGPT_Accordion.png
+ChatGPT,Carousel Chat Message,ChatGPT_Carousel_Chat_Message.png
+ChatGPT,Emoji Chat Message,Chat_GPT_Sticker_Emoji.png
+ChatGPT,Extended Input,ChatGPT_Additional_Input.png
+ChatGPT,Functionality Introduction,"ChatGPT_Chat_Quickstart.png, ChatGPT_Functionality_Introduction.png"
+ChatGPT,Help System,ChatGPT_Help_System.png
+ChatGPT,Image Chat Message,ChatGPT_Image_Chat_Message.png
+ChatGPT,Input Adjustment,ChatGPT_Additional_Input.png
+ChatGPT,Interactive Canvas,ChatGPT_Interactive_Canvas.png
+ChatGPT,Message Reaction,ChatGPT_Message_Reactions.png
+ChatGPT,Message Action,Chat_GPT_Sticker_Emoji.png
+ChatGPT,Persistent Menu,ChatGPT_Persistent_Menu.png
+ChatGPT,Processing Indicator,"ChatGPT_Processing_Indicator.png, ChatGPT_Voice_Mode_Transcription.png"
+ChatGPT,Quick Start Button,"ChatGPT_Chat_Quickstart.png, ChatGPT_Quickstart_Image_Generation.png"
+ChatGPT,Message Completion,ChatGPT_Request_Completion.png
+ChatGPT,Sticker Chat Message,Chat_GPT_Sticker_Emoji.png
+ChatGPT,System Information,"ChatGPT_System_Information.png, ChatGPT_System_Message.png"
+ChatGPT,Text Chat Message,ChatGPT_Chat_Message.png
+ChatGPT,Voice Chat Messages,"ChatGPT_Voice_Mode.png, ChatGPT_Voice_to_Text.png, ChatGPT_Voice_Mode_Transcription.png"
+ChatGPT,Video Chat Message,ChatGPT_Video_Chat_Message.png
+ChatGPT,Web Preview Chat Message,ChatGPT_Webview.png
+Talkpal,Text Chat Message,Talkpal_Chat_Message.png
+Talkpal,Avatar,Talkpal_Chat_Message.png
+Talkpal,Help System,"Talkpal_Help_System_Correction.png, Talkpal_Help_System_Correction_Chat.png"
+Talkpal,Message Reaction,Talkpal_Message_Reactions.png
+Talkpal,Message Action,Talkpal_Message_Reactions.png
+Talkpal,Persistent Menu,Talkpal_Persistent_Menu.png
+Talkpal,Processing Indicator,Talkpal_Processing_Indicator.png
+Talkpal,Quick Reply,Talkpal_Quick_Reply.png
+Talkpal,Voice Chat Message,Talkpal_Voice_Chat_Message.png
+Wysa,Avatar,Wysa_Chat_Message_Emoji_Quick_Reply.png
+Wysa,Accordion,Wysa_Chat_Message_Emoji_Quick_Reply.png
+Wysa,Call-on Menu,Wysa_Help_Message_Feedback.png
+Wysa,Carousel Chat Message,Wysa_Carousel_Chat_Message.png
+Wysa,Emoji Chat Message,Wysa_Chat_Message_Emoji_Quick_Reply.png
+Wysa,GIF Chat Message,Wysa_GIF.png
+Wysa,Message Reaction,Wysa_Message_Reactions.png
+Wysa,Processing Indicator,Wysa_Processing_Indicator.png
+Wysa,Quick Reply,Wysa_Chat_Message_Emoji_Quick_Reply.png
+Wysa,System Information,Wysa_Technical_Error.png
+Wysa,Text Chat Message,Wysa_Chat_Message_Emoji_Quick_Reply.png
+Wysa,Help System,Wysa_Help_Message_Feedback.png
+characterAI,Avatar,characterai_Chat_Message.png
+characterAI,Extended Input,"characterai_create_content.png, characterai_create_holiday_moment.png, characterai_create_holiday_moment_example.png"
+characterAI,Image Chat Message,characterai_Image_Upload.png
+characterAI,Message Reaction,characterai_Chat_Message.png
+characterAI,Persistent Menu,characterai_Persistent_Menu.png
+characterAI,Processing Indicator,characterai_Processing_Indicator.png
+characterAI,Sticker Chat Message,characterai_Sticker.png
+characterAI,System Information,characterai_System_Author.png
+characterAI,Text Chat Message,characterai_Chat_Message.png
+characterAI,Voice Chat Message,characterai_Voice_Call.png
+characterAI,Message Action,characterai_Chat_Message.png
+characterAI,Dialog Reload,characterai_Persistent_Menu.png
+Deepseek,Text Chat Message,Deepseek_chat-message.PNG
+Deepseek,Image Chat Message,"Deepseek_Image_Chat_Message1.png, Deepseek_Image_Chat_Message2.png"
+Deepseek,Voice Chat Message,Deepseek_Voice_Chat_Message.png
+Deepseek,Emoji Chat Message,Deepseek_Emoji_Chat_Message.png
+Deepseek,Accordion,"Deepseek_Accordion2.png, Deepseek_Accordion1.png"
+Deepseek,Message Action,Deepseek_Chat_Message.png
+Deepseek,Processing Indicator,"Deepseek_Processing_Indicator2.png, Deepseek_Processing_Indicator1.png"
+Deepseek,Persistent Menu,Deepseek_Persistent_Menu.png
+Deepseek,Message Reaction,"Deepseek_Message_Reaction_Export_Chat.png, Deepseek_Chat_Message.png"
+Deepseek,System Information,Deepseek_Disclaimer_Export_Chat.png
+Deepseek,Extended Input,Deepseek_Additional_Input.png
+Deepseek,Input Adjustment,Deepseek_Input_Adjustment.png
+Gemini,Text Chat Message,gemini_nina_text.png
+Gemini,Accordion,gemini_nina_emoticon.png
+Gemini,Image Chat Message,gemini_nina_images.png
+Gemini,Video Chat Message,Gemini_Web_Preview_Chat_Message.png
+Gemini,Voice Chat Message,gemini_nina_images.png
+Gemini,Web Preview Chat Message,gemini_nina_weblinks.png
+Gemini,Emoji Chat Message,gemini_nina_emoticon.png
+Gemini,Quick Reply,gemini_nina_quickreplies.png
+Gemini,Message Action,gemini_nina_reaction.png
+Gemini,Processing Indicator,"gemini_nina_progress.png, gemini_nina_progress2.png"
+Gemini,Persistent Menu,"gemini_nina_settings.png, gemini_nina_menu.png"
+Gemini,Message Reaction,gemini_nina_image.png
+Gemini,Functionality Introduction,gemini_nina_start.png
+Gemini,Quick Start Button ,gemini_nina_start.png
+Gemini,System Information,gemini_nina_images.png
+Gemini,Avatar,gemini_nina_progress.png
+Gemini,Extended Input,gemini_nina_data.png
+Gemini,Input Adjustment,gemini_nina_onscreen.png
+Gemini,Interactive Canvas,"gemini_nina_onscreen.png, Gemini_Interactive_Canvas.png"
+Gemini,Message Completion,Gemini_Message_Completion.png
+Paradot,Text Chat Message,Paradot_Chat_Message.png
+Paradot,Image Chat Message,"Paradot_Chat_Message.png, paradot_nina_image2.png"
+Paradot,GIF Chat Message,paradot_nina_gif.png
+Paradot,Sticker Chat Message,"paradot_nina_present.png, Paradot_Gifts.png"
+Paradot,Voice Chat Message,"paradot_nina_voice.png, paradot_nina_voicemodel.png"
+Paradot,Emoji Chat Message,paradot_nina_emoticon.png
+Paradot,Quick Reply,paradot_nina_image2.png
+Paradot,Message Action,Paradot_System_Information.png
+Paradot,Processing Indicator,Paradot_Processing_Indicator.png
+Paradot,Persistent Menu,"paradot_nina_model.png, paradot_nina_knowledge.png, Paradot_Voice_Settings.png"
+Paradot,Call-on Menu,Paradot_Call_On_Menu.png
+Paradot,Message Reaction,paradot_nina_interface.png
+Paradot,Quick Start Button ,Paradot_Chat_Message.png
+Paradot,Conversation Recovery,paradot_nina_breakdown.png
+Paradot,Information Stamp,paradot_nina_today.png
+Paradot,System Information,Paradot_System_Information.png
+Paradot,Avatar,paradot_nina_interface.png
+Paradot,Input Adjustment,paradot_nina_breakdown.png
+Replika,Text Chat Message,Replika_chat-message.PNG
+Replika,Image Chat Message,replika_nina_avatar.png
+Replika,Voice Chat Message,"Replika_voice-message_PRO.PNG, replika_nina_voice.png"
+Replika,Emoji Chat Message,"Replika_emoji-chat-message.PNG, Replika_emoji-chat-message2.PNG"
+Replika,Message Action,Replika_emoji-chat-message.PNG
+Replika,Processing Indicator,Replika_processing-indicator.PNG
+Replika,Persistent Menu,replika_nina_settings.png
+Replika,Message Reaction,"Replika_message-reactions.PNG, replika_nina_myreactions.png"
+Replika,Information Stamp,replika_nina_today.png
+Replika,System Information,"E65FB7EE-06D9-4C05-88DF-8C4B30CE33D0.PNG, replika_nina_supscription.png, replika_nina_menu2.png"
+Replika,Avatar,replika_nina_avatar.png
+Rocky,Text Chat Message,RockyAI_Chat_Messages.png
+Rocky,Voice Chat Message,"RockyAI_Chat_Messages.png, RockyAI_Processing_Indicator.png"
+Rocky,Web Preview Chat Message,rocky_nina_card.png
+Rocky,Emoji Chat Message,RockyAI_Emoji_Chat_Message.png
+Rocky,Carousel Chat Message,RockyAI_Chat_Messages.png
+Rocky,Quick Reply,rocky_nina_buttons.png
+Rocky,Message Action,RockyAI_Chat_Messages.png
+Rocky,Processing Indicator,rocky_nina_typing_indicator.png
+Rocky,Persistent Menu,rocky_nina_persistent_menu.png
+Rocky,Call-on Menu,"rocky_nina_call_on_menu.png, rocky_nina_call_on_menu_open.png"
+Rocky,Help System,"RockyAI_Chat_Messages.png, RockyAI_Help_System.png"
+Rocky,Quick Start Button ,RockyAI_Quick_Start.png
+Rocky,System Information,"RockyAI_System_Information.png, RockyAI_System_Information2.png"
+Rocky,Avatar,RockyAI_Emoji_Chat_Message.png
+SeniorTalk,Text Chat Message,SeniorTalk_Chat_Message.png
+SeniorTalk,Image Chat Message,"seniortalk_nina_imagereaction.png, SeniorTalk_Voice_Chat_Message.png"
+SeniorTalk,GIF Chat Message,SeniorTalk_GIF_Chat_Message.png
+SeniorTalk,Voice Chat Message,"seniortalk_nina_voiceoutput.png, SeniorTalk_Voice_Chat_Message.png, SeniorTalk_Phone_Call.png"
+SeniorTalk,Emoji Chat Message,seniortalk_nina_emoticons.png
+SeniorTalk,Accordion,SeniorTalk_Intro_Accordion.png
+SeniorTalk,Quick Reply,SeniorTalk_Quick_Reply.png
+SeniorTalk,Message Action,"SeniorTalk_Forward_Chat_Message.png, SeniorTalk_Message_Action.png"
+SeniorTalk,Persistent Menu,"SeniorTalk_Persistent_Menu.png, SeniorTalk_Avatar.png"
+SeniorTalk,Message Reaction,seniortalk_nina_message_reaction.png
+SeniorTalk,Functionality Introduction,seniortalk_nina_start.png
+SeniorTalk,Quick Start Button ,seniortalk_nina_start.png
+SeniorTalk,Information Stamp,SeniorTalk_Information_Stamp.png
+SeniorTalk,Avatar,SeniorTalk_Avatar.png
+Supetutor,Text Chat Message,Supertutor_chat-message.PNG
+Supetutor,Image Chat Message,"Supertutor_image-chat-message.PNG, Super_Tutor_Meme.png"
+Supetutor,Voice Chat Message,"Super_Tutor_Voice_Message.png, Super_Tutor_Voice_Message2.png"
+Supetutor,Emoji Chat Message,Supertutor_emoji-chat-message.PNG
+Supetutor,Message Action,Supertutor_message-reactions.PNG
+Supetutor,Processing Indicator,"Supertutor_Processing_Indicator1.png, Supertutor_Processing_Indicator2.png"
+Supetutor,Persistent Menu,"Supertutor_persistent-menu.PNG, Super_Tutor_Settings.png, Super_Tutor_Chat_Design.png"
+Supetutor,Help System,Super_Tutor_Hint.png
+Supetutor,Information Stamp,Super_Tutor_Sidebar_Timestamp.png
+Supetutor,Avatar,Supertutor_avatar.PNG
+Supetutor,Extended Input,Super_Tutor_Attachment.png
