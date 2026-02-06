@@ -31,7 +31,7 @@
     <div id="app">
         <aside id="sidebar">
             <div class="sidebar-header">
-                <h1>Bot Feature<br>Capability Graph</h1>
+                <h1>Chatbot Feature Graph</h1>
             </div>
             <div class="sidebar-content">
 
@@ -42,10 +42,8 @@
                     <label class="filter-item">
                         <span class="sidebar-label-text">Algorithm:</span>
                         <select id="cluster-algo-select" class="sidebar-select">
-                            <option value="louvain">Louvain (Modularity)</option>
-                            <option value="greedy_modularity">Greedy Modularity</option>
-                            <option value="spectral">Spectral Clustering</option>
-                            <option value="agglomerative">Agglomerative (Hierarchical)</option>
+                            <option value="domain">Domain (Structure)</option>
+                            <option value="agglomerative">Bot Types (Agglomerative)</option>
                         </select>
                     </label>
 
@@ -62,40 +60,18 @@
                         </div>
                     </details>
 
-                    <div style="margin-bottom: 10px; display: none;" id="remove-edges-container">
-                        <label class="filter-item">
-                            <input type="checkbox" id="remove-edges-checkbox">
-                            <span class="sidebar-label-text">Remove Edges</span>
-                        </label>
-                    </div>
-
                     <button id="run-clustering-btn" class="cluster-btn">Run Clustering</button>
                     <button id="reset-clustering-btn" class="cluster-btn secondary" style="display: none;">Reset
                         Graph</button>
 
+                    <div class="filter-separator" style="margin-top: 1rem;"></div>
+                    <button id="export-btn" class="cluster-btn" style="background-color: #334155;">Export Graph
+                        Snapshot</button>
+
 
                 </div>
 
-                <div class="filter-separator" style="margin-top: 2rem;"></div>
-
-                <!-- Bot Walkthrough Section -->
-                <div class="filter-section" style="margin-bottom: 2rem;">
-                    <h3 class="filter-section-title">Bot Walkthrough</h3>
-                    <div style="margin-bottom: 10px;">
-                        <select id="walkthrough-bot-select" class="sidebar-select">
-                            <option value="">Select a bot to start...</option>
-                            <!-- Options populated by JS -->
-                        </select>
-                    </div>
-
-                    <button id="start-walkthrough-btn" class="cluster-btn">Start Walkthrough</button>
-                    <button id="reset-walkthrough-btn" class="cluster-btn secondary" style="display: none;">Reset
-                        View</button>
-                </div>
-
-                <div class="filter-separator" style="margin-bottom: 1rem;"></div>
-
-                <div class="sidebar-controls">
+                <div class="sidebar-controls" style="margin-top: 1rem; margin-bottom: 1rem;">
                     <label class="filter-item">
                         <input type="checkbox" id="toggle-node-labels" checked>
                         Show Node Labels
@@ -106,71 +82,93 @@
                     </label>
                     <label class="filter-item">
                         <input type="checkbox" id="toggle-show-edges-main" class="purple-checkbox" checked>
-                        Show Graph Edges
+                        Show Edges
                     </label>
                 </div>
-                <h3 class="filter-section-title" style="color: white !important;">Filters</h3>
 
-                <div class="filter-separator"></div>
-                <details class="filter-group">
-                    <summary>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <input type="checkbox" class="category-toggle" data-target="filter-bots" checked>
-                            <span class="filter-color-dot" style="background-color: #D55E00;"></span>
-                            <span>Bots</span>
-                        </div>
-                    </summary>
-                    <div id="filter-bots" class="filter-content"></div>
-                </details>
+                <div class="filter-separator" style="margin-top: 1rem;"></div>
 
-                <details class="filter-group">
-                    <summary>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <input type="checkbox" class="category-toggle" data-target="filter-domains" checked>
-                            <span class="filter-color-dot" style="background-color: #009E73;"></span>
-                            <span>Domains</span>
-                        </div>
-                    </summary>
-                    <div id="filter-domains" class="filter-content"></div>
-                </details>
+                <!-- Walkthrough Removed -->
 
-                <details class="filter-group">
-                    <summary>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <input type="checkbox" class="category-toggle" data-target="filter-chat-features" checked>
-                            <span class="filter-color-dot" style="background-color: #E69F00;"></span>
-                            <span>Chat Features</span>
-                        </div>
-                    </summary>
-                    <div id="filter-chat-features" class="filter-content"></div>
-                </details>
+                <div class="filter-separator" style="margin-bottom: 1rem;"></div>
+                <div id="all-filters-container">
+                    <h3 class="filter-section-title" style="color: white !important;">Filters</h3>
 
-                <details class="filter-group">
-                    <summary>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <input type="checkbox" class="category-toggle" data-target="filter-ui-features" checked>
-                            <span class="filter-color-dot" style="background-color: #0072B2;"></span>
-                            <span>UI Features</span>
-                        </div>
-                    </summary>
-                    <div id="filter-ui-features" class="filter-content"></div>
-                </details>
+                    <div class="filter-separator"></div>
+                    <details class="filter-group">
+                        <summary>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <!-- Removed Toggle for Bots -->
+                                <span class="filter-color-dot" style="background-color: #D55E00;"></span>
+                                <span>Bots</span>
+                            </div>
+                        </summary>
+                        <div id="filter-bots" class="filter-content"></div>
+                    </details>
 
-                <details class="filter-group">
-                    <summary>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <input type="checkbox" class="category-toggle" data-target="filter-interactive-features"
-                                checked>
-                            <span class="filter-color-dot" style="background-color: #CC79A7;"></span>
-                            <span class="summary-text">
-                                Interactive<br><br>
-                                Features
-                            </span>
-                        </div>
-                    </summary>
+                    <details class="filter-group">
+                        <summary>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <!-- Removed Toggle for Domains -->
+                                <span class="filter-color-dot" style="background-color: #009E73;"></span>
+                                <span>Domains</span>
+                            </div>
+                        </summary>
+                        <div id="filter-domains" class="filter-content"></div>
+                    </details>
 
-                    <div id="filter-interactive-features" class="filter-content"></div>
-                </details>
+                    <div class="filter-separator"></div>
+
+                    <details class="filter-group">
+                        <summary>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" class="category-toggle" data-target="filter-chat-features"
+                                    checked>
+                                <span class="filter-color-dot" style="background-color: #E69F00;"></span>
+                                <span>Chat Content</span>
+                            </div>
+                        </summary>
+                        <div id="filter-chat-features" class="filter-content"></div>
+                    </details>
+
+                    <details class="filter-group">
+                        <summary>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" class="category-toggle" data-target="filter-ui-features" checked>
+                                <span class="filter-color-dot" style="background-color: #CC79A7;"></span>
+                                <span>System Features</span>
+                            </div>
+                        </summary>
+                        <div id="filter-ui-features" class="filter-content"></div>
+                    </details>
+
+                    <details class="filter-group">
+                        <summary>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" class="category-toggle" data-target="filter-extended-features"
+                                    checked>
+                                <span class="filter-color-dot" style="background-color: #0072B2;"></span>
+                                <span>Extended Interactions</span>
+                            </div>
+                        </summary>
+                        <div id="filter-extended-features" class="filter-content"></div>
+                    </details>
+
+                    <details class="filter-group">
+                        <summary>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" class="category-toggle" data-target="filter-meta-features"
+                                    checked>
+                                <span class="filter-color-dot" style="background-color: #F0E442;"></span>
+                                <span>Meta Conversation</span>
+                            </div>
+                        </summary>
+                        <div id="filter-meta-features" class="filter-content"></div>
+                    </details>
+
+                    <!-- Dynamic Container Fallback (unused in restored version but kept for safety) -->
+                    <div id="dynamic-filters-container" style="display:none;"></div>
+                </div>
             </div>
         </aside>
 
@@ -208,7 +206,35 @@
             </div>
         </main>
     </div>
-    <script src="app.js?v=24"></script>
+    <!-- Tutorial Modal -->
+    <div id="tutorial-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="media-container" id="tutorial-media">
+                <!-- Image or Animation Placeholder -->
+                <div class="tutorial-placeholder"></div>
+            </div>
+            <div class="content-area">
+                <h2 id="tutorial-title">Welcome</h2>
+                <p id="tutorial-body">Welcome to the Bot Feature Graph.</p>
+            </div>
+            <div class="step-indicator" id="step-indicator">
+                <!-- Dots -->
+            </div>
+            <div class="navigation-footer">
+                <div class="footer-left">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="tutorial-dont-show">
+                        Don't show again
+                    </label>
+                </div>
+                <div class="footer-right">
+                    <button id="tutorial-skip-btn" class="tutorial-btn secondary">Skip</button>
+                    <button id="tutorial-next-btn" class="tutorial-btn primary">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js?v=27"></script>
 </body>
 
 </html>

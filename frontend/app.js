@@ -1,40 +1,55 @@
 let cy;
 
+// Helper to generate shades (defined early for use in colors)
+function adjustColor(hex, amount) {
+    if (!hex) return '#999999';
+    return '#' + hex.replace(/^#/, '').replace(/../g, color => ('0' + Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
+}
+
 const colors = {
     // Accessible Okabe-Ito Palette for Distinct Node Types
+    // https://jfly.uni-koeln.de/color/
 
-    // Bot: Vermilion (Action/Agent)
-    bot: ['#FF8533', '#D55E00', '#A04000'],
+    // Bot: Vermilion (Action/Agent) -> #D55E00
+    bot: ['#E37640', '#D55E00', '#A34600'],
 
-    // Domain: Bluish Green (Structure/Area)
+    // Domain: Bluish Green (Structure/Area) -> #009E73
     domain: ['#33C297', '#009E73', '#00664A'],
 
-    // User: Sky Blue (Friendly/Distinct from Bot)
+    // User: Sky Blue (Friendly/Distinct) -> #56B4E9
     user: ['#8ACDF2', '#56B4E9', '#3080B0'],
 
-    // Feature Group: Grey (Neutral Container)
-    feature_group: ['#AAAAAA', '#888888', '#555555'],
+    // Feature Group: Grey (Neutral) -> #999999
+    feature_group: ['#BBBBBB', '#999999', '#666666'],
+    feature: ['#BBBBBB', '#999999', '#666666'], // Default
 
-    // Feature Class: Orange (Warm/Category)
-    feature_class: ['#FFBF40', '#E69F00', '#B37500'],
+    // --- Hardcoded Feature Groups (Data-Driven) ---
 
-    // Feature Subclass: Yellow (Bright/Sub-category)
-    feature_subclass: ['#F9EF85', '#F0E442', '#BDB115'],
+    // Chat Content -> Orange (#E69F00)
+    'chat__content': ['#F0B940', '#E69F00', '#B57D00'],
 
-    // UI Element: Blue (Strong/Cool)
-    ui_element: ['#3399E6', '#0072B2', '#004D80'],
+    // System Features -> Reddish Purple (#CC79A7) - Replaces "Pink"
+    'system_features': ['#DD94BE', '#CC79A7', '#99597B'],
 
-    // Interaction: Reddish Purple (Distinct Action)
-    interaction: ['#E0A3C2', '#CC79A7', '#994D73'],
+    // Extended Interactions -> Blue (#0072B2) - Distinct from Sky Blue
+    'extended_interactions': ['#4DA3E6', '#0072B2', '#004D80'],
 
-    // Fallback
-    unknown: ['#999999', '#666666', '#333333']
+    // Meta Conversation -> Yellow (#F0E442) - High visibility
+    'meta_conversation': ['#F9EF85', '#F0E442', '#BDB115'],
+
+    // Fallback: Dark Grey
+    unknown: ['#777777', '#555555', '#333333']
 };
 
-
-
-
 let currentlySelectedNodeId = null;
+let currentScreenshotIndex = 0;
+let currentScreenshots = [];
+
+// Helper to get group color safely
+function getGroupColor(gid) {
+    if (colors[gid]) return colors[gid][1]; // Return middle shade
+    return '#999999';
+}
 
 async function initGraph() {
     try {
@@ -56,7 +71,7 @@ async function initGraph() {
                     style: {
                         'label': 'data(label)',
                         'color': '#334155',
-                        'font-size': '10px', // Smaller font
+                        'font-size': '10px',
                         'font-weight': '600',
                         'text-valign': 'center',
                         'text-margin-y': '35px',
@@ -66,15 +81,33 @@ async function initGraph() {
                         'transition-duration': '0.3s',
                         'background-fill': 'linear-gradient',
                         'background-gradient-stop-colors': (node) => {
-                            const c = colors[node.data('nodeType')] || colors.unknown;
-                            return `${c[0]} ${c[1]} ${c[2]}`; // 3 Shades
+                            const data = node.data();
+                            const type = data.nodeType;
+
+                            // 1. Check if node ID matches a known color group (e.g. feature groups)
+                            if (colors[data.id]) {
+                                const c = colors[data.id];
+                                return `${c[0]} ${c[1]} ${c[2]}`;
+                            }
+
+                            // 2. Check if node has a groupId that matches a known color group (Feature -> Group)
+                            if (data.groupId && colors[data.groupId]) {
+                                const c = colors[data.groupId];
+                                return `${c[0]} ${c[1]} ${c[2]}`;
+                            }
+
+                            // 3. Fallback to Type
+                            const c = colors[type] || colors.unknown;
+                            return `${c[0]} ${c[1]} ${c[2]}`;
                         },
                         'background-gradient-stop-positions': '0% 50% 100%',
-                        'background-gradient-direction': 'to-bottom-right', // Lower Right
-                        'border-width': 0,
+                        'background-gradient-direction': 'to-bottom-right',
+                        'border-width': 0, // Default no border
                         'border-color': (node) => {
-                            const c = colors[node.data('nodeType')] || colors.unknown;
-                            return c[1]; // Use the base dark shade for border
+                            const data = node.data();
+                            // Optional: Add border for clarity
+                            if (data.nodeType === 'feature') return 'white';
+                            return '#666';
                         },
                         'shadow-blur': 8,
                         'shadow-color': 'rgba(0,0,0,0.15)',
@@ -82,11 +115,18 @@ async function initGraph() {
                     }
                 },
                 {
+                    selector: 'node[nodeType="feature"]',
+                    style: {
+                        'border-width': 2,
+                        'border-color': 'white'
+                    }
+                },
+                {
                     selector: 'node[nodeType="bot"]',
                     style: {
                         'width': 75,
                         'height': 75,
-                        'font-size': '12px', // Smaller font
+                        'font-size': '12px',
                         'font-weight': 'bold',
                         'text-margin-y': '50px'
                     }
@@ -109,14 +149,22 @@ async function initGraph() {
                         'target-arrow-shape': 'triangle',
                         'curve-style': 'bezier',
                         'label': 'data(label)',
-                        'font-size': '9px', // Smaller font
+                        'font-size': '9px',
                         'text-background-opacity': 1,
                         'text-background-color': '#f8fafc',
                         'text-background-padding': '3px',
                         'text-background-shape': 'roundrectangle',
                         'edge-text-rotation': 'autorotate',
-                        'text-margin-y': '0px', // Centered on the line
+                        'text-margin-y': '0px',
                         'text-opacity': 1
+                    }
+                },
+                {
+                    selector: '.clustered-border',
+                    style: {
+                        'border-width': 1, // Thinner static border
+                        'border-color': '#000000',
+                        'border-style': 'solid'
                     }
                 },
                 {
@@ -133,17 +181,24 @@ async function initGraph() {
                         'text-opacity': 1,
                         'z-index': 9999
                     }
+                },
+                {
+                    selector: '.clustered-border.highlighted',
+                    style: {
+                        'border-width': 3, // Thinner hover border
+                        'border-color': '#000000'
+                    }
                 }
             ],
             layout: {
                 name: 'cose',
                 animate: true,
-                animationDuration: 1000, // Smooth 1s animation
+                animationDuration: 1000,
                 randomize: true,
                 padding: 50,
-                componentSpacing: 250, // Push disconnected components apart
-                nodeRepulsion: (node) => 800000, // Strong repulsion to push nodes apart
-                idealEdgeLength: (edge) => 150, // Longer edges
+                componentSpacing: 250,
+                nodeRepulsion: (node) => 800000,
+                idealEdgeLength: (edge) => 150,
                 nodeOverlap: 20,
                 refresh: 20,
                 fit: true,
@@ -151,19 +206,14 @@ async function initGraph() {
             }
         });
 
+        window.cy = cy; // Expose for debugging/automation
+
+        // Event Handling
         cy.on('tap', 'node', (evt) => {
             const node = evt.target;
-
-            // 🔥 IMPORTANT: set selected node FIRST
             currentlySelectedNodeId = node.id();
-
-            // Clear old UI state
-            clearDetailsUI();
-
-            // Now show new node details
             showDetails(node.data());
         });
-
 
         cy.on('tap', function (evt) {
             if (evt.target === cy) {
@@ -173,24 +223,31 @@ async function initGraph() {
 
         // Hover Highlighting
         cy.on('mouseover', 'node', (e) => {
-            // Disable if clustering is active (Reset button is visible)
-            if (document.getElementById('reset-clustering-btn').style.display !== 'none') return;
+            // Rule 1: Disable hover effect if edges are hidden (Global Rule)
+            const edgesToggle = document.getElementById('toggle-show-edges-main');
+            if (edgesToggle && !edgesToggle.checked) return;
 
             const node = e.target;
+
+            // Ignore if hovering over an invisible cluster group parent
+            if (node.id().startsWith('cluster_group_')) return;
+
             cy.batch(() => {
-                // Fade everything
-                cy.elements().addClass('faded');
+                // Fade everything EXCEPT cluster groups (to prevent simple grey rectangles)
+                cy.elements().not('[id^="cluster_group_"]').addClass('faded');
 
                 // Highlight neighborhood
                 const neighborhood = node.neighborhood().add(node);
-                neighborhood.removeClass('faded').addClass('highlighted');
+                neighborhood.not('[id^="cluster_group_"]').removeClass('faded').addClass('highlighted');
             });
         });
 
         cy.on('mouseout', 'node', (e) => {
-            // Disable if clustering is active
-            if (document.getElementById('reset-clustering-btn').style.display !== 'none') return;
+            // Rule 1 check not strictly needed for reset, but safe
+            const edgesToggle = document.getElementById('toggle-show-edges-main');
+            if (edgesToggle && !edgesToggle.checked) return;
 
+            // Remove classes from everything
             cy.batch(() => {
                 cy.elements().removeClass('faded highlighted');
             });
@@ -238,94 +295,59 @@ async function initGraph() {
             scheduleRefresh();
         });
 
-
-
         generateDynamicFilters(elements);
-        initWalkthroughUI(elements); // Init Walkthrough
-        applyFilters(); // Apply initial state
-
-        // Label Toggles
-        const nodeLabelToggle = document.getElementById('toggle-node-labels');
-        if (nodeLabelToggle) {
-            nodeLabelToggle.addEventListener('change', (e) => {
-                cy.style().selector('node').style('text-opacity', e.target.checked ? 1 : 0).update();
-            });
-        }
-
-        const edgeLabelToggle = document.getElementById('toggle-edge-labels');
-        if (edgeLabelToggle) {
-            edgeLabelToggle.addEventListener('change', (e) => {
-                cy.style().selector('edge').style('text-opacity', e.target.checked ? 1 : 0).update();
-            });
-        }
-
-        // Show Main Edges Toggle
-        const showMainEdgesToggle = document.getElementById('toggle-show-edges-main');
-        if (showMainEdgesToggle) {
-            showMainEdgesToggle.addEventListener('change', (e) => {
-                const isChecked = e.target.checked;
-                if (isChecked) {
-                    cy.edges().removeStyle('opacity');
-                    cy.edges().removeStyle('events');
-                } else {
-                    cy.edges().style('opacity', 0);
-                    cy.edges().style('events', 'no');
-                }
-            });
-        }
+        // initWalkthroughUI(elements); // Removed
+        initTutorial(); // New Tutorial
+        initDisplayToggles(); // New Toggles
+        applyFilters();
 
     } catch (error) {
         console.error('Fetch error:', error);
     }
 }
 
-// Clustering Logic
+
+
+// --- Clustering Logic ---
+
 const clusterBtn = document.getElementById('run-clustering-btn');
 const resetClusterBtn = document.getElementById('reset-clustering-btn');
 const algoSelect = document.getElementById('cluster-algo-select');
-const algoInfoContent = document.getElementById('algo-info-content'); // Content inside detail
-const removeEdgesContainer = document.getElementById('remove-edges-container');
-const removeEdgesCheck = document.getElementById('remove-edges-checkbox');
+const algoInfoContent = document.getElementById('algo-info-content');
 
 // Descriptions
 const algoDescriptions = {
-    louvain: "<strong>Louvain:</strong> Optimizes modularity. Best for finding distinct, tightly-knit communities in large networks.",
-    greedy_modularity: "<strong>Greedy Modularity:</strong> Merges pairs of communities that increase modularity the most. Good for well-defined structures.",
-    spectral: "<strong>Spectral Clustering:</strong> Uses the eigenvalues of the graph Laplacian. Good for identifying clusters with complex shapes (non-convex). Slower on very large graphs.",
-    agglomerative: "<strong>Agglomerative:</strong> Bottom-up hierarchical clustering. Pairs nodes based on similarity distances. Good for creating a hierarchy of clusters."
+    domain: "<strong>Domain:</strong> Groups nodes strictly by the Domain structure relative to Bots. Features are assigned to the Domain with the most connected Bots.",
+    agglomerative: "<strong>Bot Types (Agglomerative):</strong> Groups bots by feature similarity. Reveals hidden structures like 'Generalist LLMs' vs 'Specialized Tools' (Data-Driven)."
 };
 
 // Update info on selection change
 if (algoSelect) {
     const updateInfo = () => {
-        if (algoInfoContent) algoInfoContent.innerHTML = algoDescriptions[algoSelect.value] || "Select an algorithm.";
+        if (algoInfoContent) {
+            algoInfoContent.innerHTML = algoDescriptions[algoSelect.value] || "Select an algorithm.";
+        }
     };
     algoSelect.addEventListener('change', updateInfo);
-    updateInfo(); // Init
+    // Init on load
+    updateInfo();
 }
 
 // Helper to adjust color brightness
 function adjustColor(hex, amount) {
+    if (!hex) return '#999999';
     return '#' + hex.replace(/^#/, '').replace(/../g, color => ('0' + Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
 }
 
 // Generate 3D plastic look shades
 function generatePlasticShades(hexColor) {
-    // 1. Highlight (Top Left) - Lighter
-    // 2. Base (Center) - Normal
-    // 3. Shadow (Bottom Right) - Darker
-    // We assume hexColor is standard 6-digit hex
-
-    // We need a robust lighten/darken.
-    // Since we don't have a library, we do a simple shift.
+    if (!hexColor) return '#999999 #999999 #999999';
     // Ensure hex is valid 6 char
     if (hexColor.length === 4) { // #123 -> #112233
         hexColor = '#' + hexColor[1] + hexColor[1] + hexColor[2] + hexColor[2] + hexColor[3] + hexColor[3];
     }
-
     const highlight = adjustColor(hexColor, 40); // Lighter
     const shadow = adjustColor(hexColor, -40);   // Darker
-
     return `${highlight} ${hexColor} ${shadow}`;
 }
 
@@ -346,23 +368,11 @@ const clusterColors = [
     '#AA4499'  // Purple
 ];
 
-// Handle Remove Edges Toggle (Post-Clustering)
-if (removeEdgesCheck) {
-    removeEdgesCheck.addEventListener('change', (e) => {
-        if (e.target.checked) {
-            cy.edges().style('opacity', 0);
-            cy.edges().style('events', 'no');
-        } else {
-            cy.edges().removeStyle('opacity');
-            cy.edges().removeStyle('events');
-        }
-    });
-}
 
 if (clusterBtn) {
     clusterBtn.addEventListener('click', async () => {
         const algorithm = algoSelect.value;
-        const shouldRemoveEdges = removeEdgesCheck ? removeEdgesCheck.checked : false;
+        // const shouldRemoveEdges = removeEdgesCheck ? removeEdgesCheck.checked : false; // REMOVED
 
         clusterBtn.disabled = true;
         clusterBtn.textContent = 'Running...';
@@ -376,104 +386,95 @@ if (clusterBtn) {
                 return;
             }
 
+            // HIDE UI Sections
+            // 1. Hide entire filters container (Includes Title + Subsections)
+            const allFilters = document.getElementById('all-filters-container');
+            if (allFilters) allFilters.style.display = 'none';
+
+            // 2. Hide Walkthrough Section
+            const wtSection = document.getElementById('walkthrough-section');
+            if (wtSection) wtSection.style.display = 'none';
+
+
+            const sidebarContent = document.querySelector('.sidebar-content');
+            if (sidebarContent) sidebarContent.classList.add('clustering-active');
+
+
             // Apply colors and create invisible groups
             cy.batch(() => {
-                // CLEANUP: Remove ANY existing cluster groups first to prevent "ghost" repulsion
+                // CLEANUP existing
                 cy.nodes().forEach(n => {
                     if (n.isChild()) {
-                        const parent = n.parent();
-                        if (parent.id().startsWith('cluster_group_')) {
-                            n.move({ parent: null });
-                        }
+                        n.move({ parent: null });
                     }
                 });
                 cy.remove('node[id^="cluster_group_"]');
 
-                // Create parent nodes for each cluster
+                // Create parent nodes
                 const uniqueClusters = new Set(Object.values(clusters));
                 uniqueClusters.forEach(clusterId => {
                     const groupId = `cluster_group_${clusterId}`;
-                    // We just removed them, so safe to add
                     cy.add({
                         group: 'nodes',
                         data: { id: groupId },
                         style: {
-                            'background-opacity': 0,
-                            'border-opacity': 0,
-                            'text-opacity': 0,
-                            'events': 'no' // Let clicks pass through if possible
+                            'background-opacity': 0, 'border-opacity': 0, 'text-opacity': 0, 'events': 'no'
                         }
                     });
                 });
 
                 cy.nodes().forEach(node => {
                     const id = node.id();
-                    // Skip our new parents
                     if (id.startsWith('cluster_group_')) return;
 
                     if (clusters[id] !== undefined) {
                         const clusterId = clusters[id];
                         const color = clusterColors[clusterId % clusterColors.length];
 
-                        // PRESERVE PLASTIC GRADIENT STYLE:
+                        // PRESERVE PLASTIC GRADIENT STYLE
                         const gradientStops = generatePlasticShades(color);
 
                         node.style('background-fill', 'linear-gradient');
                         node.style('background-gradient-stop-colors', gradientStops);
                         node.style('background-gradient-direction', 'to-bottom-right');
 
-                        // Also update border
-                        node.style('border-color', adjustColor(color, -20)); // Slightly darker border
+                        // Border - Standard
+                        node.style('border-color', adjustColor(color, -20));
+                        node.style('border-width', 0); // Reset width first
 
-                        // Store for reference
                         node.data('clusterColor', color);
-
-                        // Move to invisible parent group
                         node.move({ parent: `cluster_group_${clusterId}` });
                     }
                 });
 
-                // Init edges state if checked
-                if (shouldRemoveEdges) {
-                    cy.edges().style('opacity', 0);
-                    cy.edges().style('events', 'no');
-                }
+                // --- ADD DARK BORDER TO BOTS & DOMAINS (Clustering Mode) ---
+                const specializedNodes = cy.nodes('[nodeType="bot"], [nodeType="domain"]');
+                specializedNodes.removeStyle('border-width'); // Clear inline override so class works
+                specializedNodes.removeStyle('border-color'); // Clear inline override
+                specializedNodes.addClass('clustered-border');
             });
 
-            // Show reset and extra controls IMMEDIATELY (in case layout fails)
+            // Show reset
             resetClusterBtn.style.display = 'block';
-            if (removeEdgesContainer) {
-                removeEdgesContainer.style.display = 'block';
-            }
 
-            // Run Layout to spatially organize the groups
-            // We use 'fcose' - Fast Compound Spring Embedder
+            // Layout
             cy.layout({
-                name: 'fcose',
-                quality: 'proof',
-                randomize: false,        // If false, incremental. True for full reset.
-                animate: true,
-                animationDuration: 1000,
-                fit: true,
-                padding: 30,
-                nodeSeparation: 75,      // Separation between nodes
-                idealEdgeLength: 50,     // Ideal edge length
-                edgeElasticity: 0.45,
-                nestingFactor: 0.1,      // Nesting factor (separation between parent and child)
-                gravity: 0.25,           // Gravity to pull disconnected components
-                numIter: 2500,
-                tilingPaddingVertical: 20,
-                tilingPaddingHorizontal: 20,
-                initialEnergyOnIncremental: 0.3
+                name: 'fcose', quality: 'proof', randomize: false, animate: true, animationDuration: 1000,
+                fit: true, padding: 30, nodeSeparation: 75, idealEdgeLength: 50, edgeElasticity: 0.45, nestingFactor: 0.1,
+                gravity: 0.25, numIter: 2500, tilingPaddingVertical: 20, tilingPaddingHorizontal: 20, initialEnergyOnIncremental: 0.3
             }).run();
 
 
         } catch (err) {
             console.error(err);
             alert('Failed to run clustering');
-        } finally {
             clusterBtn.disabled = false;
             clusterBtn.textContent = 'Run Clustering';
+        } finally {
+            if (clusterBtn.textContent === 'Running...') {
+                clusterBtn.disabled = false;
+                clusterBtn.textContent = 'Run Clustering';
+            }
         }
     });
 }
@@ -481,65 +482,64 @@ if (clusterBtn) {
 if (resetClusterBtn) {
     resetClusterBtn.addEventListener('click', () => {
         cy.batch(() => {
-            // 0. Restore Edges
+            // Restore Edges
             cy.edges().removeStyle('opacity');
             cy.edges().removeStyle('events');
 
-            // 1. Remove styles and ungroup
+            // Restore Nodes
             cy.nodes().forEach(node => {
-                if (node.isChild()) {
-                    node.move({ parent: null });
-                }
+                if (node.isChild()) node.move({ parent: null });
 
                 node.removeStyle('background-gradient-stop-colors');
                 node.removeStyle('background-fill');
                 node.removeStyle('border-color');
+                node.removeStyle('border-width'); // Remove clustering borders
+                node.removeStyle('border-style');
+                node.removeClass('clustered-border'); // Remove class
             });
 
-            // 2. Remove the group nodes themselves
+            // Remove groups
             cy.nodes('[id^="cluster_group_"]').remove();
         });
 
+        // Restore UI Visibility
+        // 1. Filters Container
+        const allFilters = document.getElementById('all-filters-container');
+        if (allFilters) allFilters.style.display = '';
+
+        // 2. Walkthrough
+        const wtSection = document.getElementById('walkthrough-section');
+        if (wtSection) wtSection.style.display = '';
+
+        const sidebarContent = document.querySelector('.sidebar-content');
+        if (sidebarContent) sidebarContent.classList.remove('clustering-active');
+
         // Hide controls
         resetClusterBtn.style.display = 'none';
-        if (removeEdgesContainer) removeEdgesContainer.style.display = 'none';
-        if (removeEdgesCheck) removeEdgesCheck.checked = false; // Reset toggle
 
-        // Rerun layout using the EXACT CONFIG from initGraph
+        // Rerun Layout based on updated constraints (if filters changed)
+        // We use 'cose' for main view
         cy.layout({
-            name: 'cose',
-            animate: true,
-            animationDuration: 1000,
-            randomize: true,
-            padding: 50,
-            componentSpacing: 250, // Match init
-            nodeRepulsion: (node) => 800000, // Match init
-            idealEdgeLength: (edge) => 150, // Match init
-            nodeOverlap: 20,
-            refresh: 20,
-            fit: true,
-            gravity: 1
+            name: 'cose', animate: true, animationDuration: 1000, randomize: true, padding: 50, componentSpacing: 400,
+            nodeRepulsion: (node) => 2000000, idealEdgeLength: (edge) => 250, nodeOverlap: 20, refresh: 20, fit: true, gravity: 1
         }).run();
     });
 }
 
+// --- Filters Logic (Corrected for New Data) ---
 
-// Store active filters
 const activeFilters = {
-    nodeType: new Set(['bot', 'domain', 'feature_group', 'feature_class', 'feature_subclass', 'ui_element', 'interaction', 'user']),
-    ids: new Set() // For specific bot/domain/feature IDs
+    nodeType: new Set(['bot', 'domain', 'feature_group', 'feature', 'user']),
+    ids: new Set()
 };
 
-// IDs that have explicit checkboxes (bots, domains, chat features)
 const controlledIDs = new Set();
-
-// Lookup maps for efficient filtering
+// Lookups
 const lookup = {
     botToDomain: new Map(),
     botFeatures: new Map(),
     featureBots: new Map()
 };
-
 
 function generateDynamicFilters(elements) {
     const nodes = elements.nodes.map(n => n.data);
@@ -547,16 +547,20 @@ function generateDynamicFilters(elements) {
 
     // Build Lookups
     lookup.domainToBots = new Map();
+    lookup.botToDomain = new Map();
+    lookup.botFeatures = new Map();
+    lookup.featureBots = new Map();
 
     edges.forEach(e => {
         // Bot -> Domain (partOf)
-        if (e.relation === 'partOf') {
+        if (e.relation === 'partOf' && nodes.find(n => n.id === e.source && n.nodeType === 'bot')) {
             lookup.botToDomain.set(e.source, e.target);
             if (!lookup.domainToBots.has(e.target)) lookup.domainToBots.set(e.target, new Set());
             lookup.domainToBots.get(e.target).add(e.source);
         }
         // Bot -> Feature (hasFeature)
         if (e.relation === 'hasFeature') {
+            // Source is Bot, Target is Feature
             if (!lookup.botFeatures.has(e.source)) lookup.botFeatures.set(e.source, new Set());
             lookup.botFeatures.get(e.source).add(e.target);
 
@@ -566,60 +570,90 @@ function generateDynamicFilters(elements) {
     });
 
     // 1. Bots
-    const bots = nodes.filter(n => n.nodeType === 'bot').map(n => ({ id: n.id, label: n.label, nodeType: n.nodeType }));
+    const bots = nodes.filter(n => n.nodeType === 'bot').map(n => ({ id: n.id, label: n.label, nodeType: 'bot' }));
     bots.sort((a, b) => a.label.localeCompare(b.label));
     renderFilterGroup('filter-bots', bots, 'id');
-    bots.forEach(b => {
-        activeFilters.ids.add(b.id);
-        controlledIDs.add(b.id);
-    });
+    bots.forEach(b => { activeFilters.ids.add(b.id); controlledIDs.add(b.id); });
 
     // 2. Domains
-    const domains = nodes.filter(n => n.nodeType === 'domain').map(n => ({ id: n.id, label: n.label, nodeType: n.nodeType }));
+    const domains = nodes.filter(n => n.nodeType === 'domain').map(n => ({ id: n.id, label: n.label, nodeType: 'domain' }));
     domains.sort((a, b) => a.label.localeCompare(b.label));
     renderFilterGroup('filter-domains', domains, 'id');
-    domains.forEach(d => {
-        activeFilters.ids.add(d.id);
-        controlledIDs.add(d.id);
-    });
+    domains.forEach(d => { activeFilters.ids.add(d.id); controlledIDs.add(d.id); });
 
-    // 3. Feature Categories
-    // Helper to find features by parent category ID
-    // UPDATED: Use the refactored 'category' edges directly
-    const getFeaturesByCategory = (catId) => {
+    // 3. Feature Groups (Hardcoded map based on static_graph.json to match user preference slots)
+
+    // Helper to get features for a group
+    // RELATION IS 'partOf'. Source = Feature, Target = Group.
+    const getFeaturesByGroup = (groupId) => {
         const featureIds = edges
-            .filter(e => e.target === catId && e.relation === 'category')
+            .filter(e => e.target === groupId && e.relation === 'partOf')
             .map(e => e.source);
 
-        // Unique nodes
         const uniqueIds = [...new Set(featureIds)];
         const featureNodes = uniqueIds
             .map(id => nodes.find(n => n.id === id))
             .filter(n => n)
-            .map(n => ({ id: n.id, label: n.label, nodeType: n.nodeType }));
-
+            .map(n => ({
+                id: n.id,
+                label: n.label,
+                nodeType: 'feature',
+                color: getGroupColor(groupId) // Pass group color
+            }));
         featureNodes.sort((a, b) => a.label.localeCompare(b.label));
         return featureNodes;
     };
 
-    // Chat Features
-    const chatFeatures = getFeaturesByCategory('chat_features');
+    // --- Category Toggles ---
+    document.querySelectorAll('.category-toggle').forEach(toggle => {
+        toggle.addEventListener('change', (e) => {
+            const targetId = e.target.dataset.target;
+            const isChecked = e.target.checked;
+            const container = document.getElementById(targetId);
+
+            if (container) {
+                // 1. Toggle all child inputs visually and update state
+                container.querySelectorAll('input[type="checkbox"]').forEach(input => {
+                    input.checked = isChecked;
+                    const val = input.dataset.value;
+                    const type = input.dataset.filterType;
+                    // Proactively update the activeFilters set
+                    if (type === 'id') {
+                        if (isChecked) activeFilters.ids.add(val);
+                        else activeFilters.ids.delete(val);
+                    }
+                });
+
+                // 2. Re-apply graph filters
+                applyFilters();
+            }
+        });
+    });
+
+    // Chat Content
+    const chatFeatures = getFeaturesByGroup('chat__content');
     renderFilterGroup('filter-chat-features', chatFeatures, 'id');
     chatFeatures.forEach(f => { activeFilters.ids.add(f.id); controlledIDs.add(f.id); });
 
-    // UI Features
-    const uiFeatures = getFeaturesByCategory('ui_features');
-    renderFilterGroup('filter-ui-features', uiFeatures, 'id');
-    uiFeatures.forEach(f => { activeFilters.ids.add(f.id); controlledIDs.add(f.id); });
+    // System Features (Mapped to UI slot)
+    const sysFeatures = getFeaturesByGroup('system_features');
+    renderFilterGroup('filter-ui-features', sysFeatures, 'id');
+    sysFeatures.forEach(f => { activeFilters.ids.add(f.id); controlledIDs.add(f.id); });
 
-    // Interactive Features
-    const intFeatures = getFeaturesByCategory('interactive_features');
-    renderFilterGroup('filter-interactive-features', intFeatures, 'id');
-    intFeatures.forEach(f => { activeFilters.ids.add(f.id); controlledIDs.add(f.id); });
+    // Interactive / Extended
+    const extFeatures = getFeaturesByGroup('extended_interactions');
+    renderFilterGroup('filter-extended-features', extFeatures, 'id');
+    extFeatures.forEach(f => { activeFilters.ids.add(f.id); controlledIDs.add(f.id); });
+
+    // Meta Conversation
+    const metaFeatures = getFeaturesByGroup('meta_conversation');
+    renderFilterGroup('filter-meta-features', metaFeatures, 'id');
+    metaFeatures.forEach(f => { activeFilters.ids.add(f.id); controlledIDs.add(f.id); });
 }
 
 function renderFilterGroup(containerId, items, filterType) {
     const container = document.getElementById(containerId);
+    if (!container) return; // Guard
     container.innerHTML = '';
 
     items.forEach(item => {
@@ -631,111 +665,110 @@ function renderFilterGroup(containerId, items, filterType) {
         input.checked = true;
         input.dataset.filterType = filterType;
         input.dataset.value = item.id;
-
         input.addEventListener('change', (e) => {
             updateFilters(e.target.dataset.filterType, e.target.dataset.value, e.target.checked);
         });
 
+        // Dot (Removed for features as requested)
+        // const dot = document.createElement('span');
+        // dot.style.display = 'inline-block';
+        // dot.style.width = '8px';
+        // dot.style.height = '8px';
+        // dot.style.borderRadius = '50%';
+        // dot.style.marginRight = '8px';
+
+        // // Color logic
+        // if (item.nodeType === 'bot') dot.style.backgroundColor = colors.bot[1];
+        // else if (item.nodeType === 'domain') dot.style.backgroundColor = colors.domain[1];
+        // else dot.style.backgroundColor = item.color || '#999';
+
         label.appendChild(input);
+        // label.appendChild(dot);
         label.appendChild(document.createTextNode(item.label));
         container.appendChild(label);
     });
 }
 
-// Split update logic for batching
-function updateFilterState(type, value, isChecked) {
+function updateFilters(type, value, isChecked) {
     if (type === 'id') {
         if (isChecked) activeFilters.ids.add(value);
         else activeFilters.ids.delete(value);
 
-        // SYNC LOGIC for Multi-Category Items
-        const sameValueCheckboxes = document.querySelectorAll(`input[data-value="${value}"]`);
-        sameValueCheckboxes.forEach(cb => {
-            if (cb.checked !== isChecked) cb.checked = isChecked;
-        });
+        // Sync checkboxes
+        document.querySelectorAll(`input[data-value="${value}"]`).forEach(cb => cb.checked = isChecked);
 
-        // Domain Sync Logic REMOVED (No longer forcing domains to follow bots)
-    }
-}
-
-function updateFilters(type, value, isChecked) {
-    updateFilterState(type, value, isChecked);
-    applyFilters();
-    if (currentlySelectedNodeId) {
-        updateBotSelector(currentlySelectedNodeId);
-    }
-}
-
-function initCategoryToggles() {
-    document.querySelectorAll('.category-toggle').forEach(toggle => {
-        // Prevent details toggle
-        toggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
-
-        toggle.addEventListener('change', (e) => {
-            const targetId = e.target.dataset.target;
-            const isChecked = e.target.checked;
-
-            // Find specific filters in this group
-            const container = document.getElementById(targetId);
-            if (!container) return;
-
-            const inputs = container.querySelectorAll('input[type="checkbox"]');
-
-            // Batch Update
-            // We do NOT use cy.batch() here because updateFilterState doesn't touch cy.
-            // But applyFilters DOES use cy.batch internally.
-
-            inputs.forEach(input => {
-                input.checked = isChecked;
-                updateFilterState(input.dataset.filterType, input.dataset.value, isChecked);
+        // Domain Sync
+        if (lookup.domainToBots && lookup.domainToBots.has(value)) {
+            const botIds = lookup.domainToBots.get(value);
+            botIds.forEach(botId => {
+                if (isChecked) activeFilters.ids.add(botId);
+                else activeFilters.ids.delete(botId);
+                const cb = document.querySelector(`input[data-value="${botId}"]`);
+                if (cb) cb.checked = isChecked;
             });
-
-            applyFilters();
-        });
-    });
+        }
+    }
+    applyFilters();
 }
 
 function applyFilters() {
     cy.batch(() => {
+        const visibleBots = new Set();
+
+        // 1. Bots
+        cy.nodes('[nodeType="bot"]').forEach(node => {
+            const data = node.data();
+            const isChecked = activeFilters.ids.has(data.id);
+            if (isChecked) {
+                visibleBots.add(data.id);
+                node.style('display', 'element');
+            } else {
+                node.style('display', 'none');
+            }
+        });
+
+        // 2. Others
         cy.nodes().forEach(node => {
             const data = node.data();
+            if (data.nodeType === 'bot') return;
 
-            // 1. Check Node Type Filter
-            if (!activeFilters.nodeType.has(data.nodeType)) {
-                node.style('display', 'none');
-                return;
-            }
-
-            // 2. Check Feature ID Filter
-            // If it's a controlled ID (present in the sidebar checkboxes), respect the checkbox.
-            // Features, Bots, Domains are all controlled.
-            // UI Elements? "quick_start_button" is in the filters?
-            // "controlledIDs" logic handles this.
-
-            if (controlledIDs.has(data.id)) {
-                if (activeFilters.ids.has(data.id)) {
-                    node.style('display', 'element');
+            // Simple Visibility Check based on ID filter
+            if (activeFilters.ids.has(data.id)) {
+                // Check connectivity to visible bot if it's a feature
+                if (data.nodeType === 'feature') {
+                    const providers = lookup.featureBots.get(data.id);
+                    let connected = false;
+                    if (providers) {
+                        for (let p of providers) {
+                            if (visibleBots.has(p)) { connected = true; break; }
+                        }
+                    }
+                    if (connected) node.style('display', 'element');
+                    else node.style('display', 'none');
                 } else {
-                    node.style('display', 'none');
+                    node.style('display', 'element');
                 }
             } else {
-                // Not controlled (e.g. some implicit node? or Feature Group nodes?)
-                // Feature Group nodes (e.g. Chat Features parent node)
-                if (data.nodeType === 'feature_group') {
-                    // Show if any children are visible? Or always show?
-                    // User said "don't hide whole sections".
-                    // Let's keep them visible unless explicitly filtered (but we don't filter groups).
-                    node.style('display', 'element');
+                // If explicitly unchecked (controlled)
+                if (controlledIDs.has(data.id)) {
+                    node.style('display', 'none');
                 } else {
+                    // Non-controlled nodes (like User, Groups) -> Keep visible usually
                     node.style('display', 'element');
                 }
+            }
+
+            // Domain special case: Hide if no children bots visible? 
+            if (data.nodeType === 'domain') {
+                if (activeFilters.ids.has(data.id)) node.style('display', 'element'); // Allow strict toggle
+                else node.style('display', 'none');
             }
         });
     });
 }
 
+
+// --- Details Panel ---
 
 function showDetails(data) {
     const panel = document.getElementById('details-panel');
@@ -766,9 +799,9 @@ function showDetails(data) {
         `;
     }
 
-    // --- Render all other fields except screenshots + description ---
+    // --- Render all other fields except screenshots + description + id ---
     html += Object.entries(data)
-        .filter(([key]) => key !== 'screenshots' && key !== 'description')
+        .filter(([key]) => key !== 'screenshots' && key !== 'description' && key !== 'id')
         .map(([key, value]) => {
             if (value === '' || value === null || value === undefined) return '';
 
@@ -790,11 +823,11 @@ function showDetails(data) {
     panel.classList.remove('hidden');
 }
 
-
-
-// Helper to manage screenshot state
-let currentScreenshotIndex = 0;
-let currentScreenshots = [];
+function hideDetails() {
+    currentlySelectedNodeId = null;
+    document.getElementById('details-panel').classList.add('hidden');
+    clearDetailsUI();
+}
 
 function updateBotSelector(nodeId) {
     const selectorContainer = document.getElementById('bot-selector-container');
@@ -945,13 +978,6 @@ function updateBotSelector(nodeId) {
     };
 }
 
-
-function hideDetails() {
-    currentlySelectedNodeId = null;
-    document.getElementById('details-panel').classList.add('hidden');
-    clearDetailsUI();
-}
-
 /**
  * Centralized function to clear screenshot and selector UI
  */
@@ -979,167 +1005,168 @@ function clearDetailsUI() {
     currentScreenshotIndex = 0;
 }
 
-// Sidebar Toggle
-const sidebar = document.getElementById('sidebar');
-const sidebarToggle = document.getElementById('sidebar-toggle');
-
-sidebarToggle.addEventListener('click', () => {
-    sidebar.classList.toggle('collapsed');
-    sidebarToggle.innerText = sidebar.classList.contains('collapsed') ? '❯' : '❮';
-});
-
-document.getElementById('close-details').addEventListener('click', hideDetails);
-
-// Start
-// Start
-initCategoryToggles();
-initGraph();
-
-// --- Bot Walkthrough Feature ---
-const walkthroughSelect = document.getElementById('walkthrough-bot-select');
-const startWalkthroughBtn = document.getElementById('start-walkthrough-btn');
-const resetWalkthroughBtn = document.getElementById('reset-walkthrough-btn');
-
-function initWalkthroughUI(elements) {
-    if (!walkthroughSelect) return;
-
-    // Check if we already have options
-    if (walkthroughSelect.options.length > 1) return;
-
-    const bots = elements.nodes.filter(n => n.data.nodeType === 'bot')
-        .map(n => ({ id: n.data.id, label: n.data.label }));
-    bots.sort((a, b) => a.label.localeCompare(b.label));
-
-    // Clear and Populate Dropdown
-    walkthroughSelect.innerHTML = '<option value="">Select a bot to start...</option>';
-    bots.forEach(bot => {
-        const option = document.createElement('option');
-        option.value = bot.id;
-        option.textContent = bot.label;
-        walkthroughSelect.appendChild(option);
-    });
-}
-
-
-if (startWalkthroughBtn) {
-    startWalkthroughBtn.addEventListener('click', () => {
-        const botId = walkthroughSelect.value;
-
-        if (!botId) {
-            alert('Please select a bot from the dropdown.');
-            return;
-        }
-
-        // UI Updates
-        startWalkthroughBtn.style.display = 'none';
-        resetWalkthroughBtn.style.display = 'block';
-        if (walkthroughSelect) walkthroughSelect.disabled = true;
-
-        const botIds = [botId];
-
-        const rootBot = cy.getElementById(botIds[0]);
-
-        // 1. "Empty at first": Hide EVERYTHING
-        cy.elements().addClass('dimmed').style('opacity', 0);
-
-        // 2. Identify the Tree to Reveal (BFS Traversal)
-        // We want to verify we only show connected nodes, avoiding other bots.
-
-        const layers = []; // Array of arrays (generations)
-        const visited = new Set();
-
-        // Layer 0: The Bot
-        layers.push([rootBot]);
-        visited.add(rootBot.id());
-
-        // Perform BFS to build layers
-        let currentLayer = [rootBot];
-
-        // We'll go e.g. 3 levels deep or until exhaustion
-        for (let i = 0; i < 3; i++) {
-            const nextLayer = [];
-            currentLayer.forEach(node => {
-                const outgoers = node.outgoers();
-                outgoers.forEach(ele => {
-                    if (!visited.has(ele.id())) {
-                        // Filter: Don't traverse into other BOTS
-                        if (ele.isNode() && ele.data('nodeType') === 'bot') return;
-
-                        visited.add(ele.id());
-                        nextLayer.push(ele);
-                    }
-                });
-            });
-            if (nextLayer.length === 0) break;
-            layers.push(nextLayer);
-            currentLayer = nextLayer.filter(ele => ele.isNode());
-        }
-
-        // 3. Highlight Subgraph & Zoom
-        const allInWalkthrough = cy.collection();
-        layers.forEach(layer => layer.forEach(ele => allInWalkthrough.merge(ele)));
-
-        // Bring them to "highlighted" class state but keep opacity 0 for animation
-        allInWalkthrough.removeClass('dimmed').addClass('walkthrough-highlight');
-
-        // 4. ANIMATION SEQUENCE
-        // Iterate layers
-        let delay = 0;
-
-        layers.forEach((layer, index) => {
-            setTimeout(() => {
-                layer.forEach(ele => {
-                    ele.style('opacity', 1);
-                    if (ele.isNode()) {
-                        // Pop effect for nodes
-                        ele.animation({
-                            style: { 'width': ele.width() * 1.2, 'height': ele.height() * 1.2 },
-                            duration: 300
-                        }).play().promise('complete').then(() => {
-                            ele.animation({
-                                style: { 'width': ele.width() / 1.2, 'height': ele.height() / 1.2 },
-                                duration: 300
-                            }).play();
-                        });
-                    }
-                });
-            }, delay);
-
-            // Dynamic Timing Logic:
-            // - After Bot (Layer 0): Short wait (2s)
-            // - After deeper layers: Long wait (6s)
-            if (index === 0) {
-                delay += 2000;
+// --- Display Toggles ---
+function initDisplayToggles() {
+    // 1. Node Labels
+    const nodeLabelToggle = document.getElementById('toggle-node-labels');
+    if (nodeLabelToggle) {
+        nodeLabelToggle.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                cy.style().selector('node').style('text-opacity', 1).update();
             } else {
-                delay += 6000;
+                cy.style().selector('node').style('text-opacity', 0).update();
             }
         });
+    }
 
-        // 5. Fit View to Subgraph
-        cy.animate({
-            fit: {
-                eles: allInWalkthrough,
-                padding: 100
-            },
-            duration: 1500,
-            easing: 'ease-out-cubic'
+    // 2. Edge Labels
+    const edgeLabelToggle = document.getElementById('toggle-edge-labels');
+    if (edgeLabelToggle) {
+        edgeLabelToggle.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                cy.style().selector('edge').style('text-opacity', 1).style('text-background-opacity', 1).update();
+            } else {
+                cy.style().selector('edge').style('text-opacity', 0).style('text-background-opacity', 0).update();
+            }
         });
-    });
+    }
+
+    // 3. Show Graph Edges
+    const edgesToggle = document.getElementById('toggle-show-edges-main');
+    if (edgesToggle) {
+        edgesToggle.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                cy.edges().style('display', 'element');
+            } else {
+                cy.edges().style('display', 'none');
+            }
+        });
+    }
 }
 
-if (resetWalkthroughBtn) {
-    resetWalkthroughBtn.addEventListener('click', () => {
-        startWalkthroughBtn.style.display = 'block';
-        resetWalkthroughBtn.style.display = 'none';
-        if (walkthroughSelect) walkthroughSelect.disabled = false;
+// Sidebars
+document.getElementById('sidebar-toggle').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+});
+document.getElementById('close-details').addEventListener('click', hideDetails);
 
-        // Restore All
-        cy.elements().removeClass('dimmed walkthrough-highlight');
-        cy.elements().removeStyle('opacity width height');
 
-        // Clean up edge opacity specifically if it was set
-        cy.edges().removeStyle('opacity');
 
-        cy.fit();
+// --- Tutorial Logic ---
+const tutorialSteps = [
+    {
+        title: "Welcome to Chatbot Feature Graph",
+        content: "Explore the connections between 12 chatbots from 4 different domains and explore their features. This interactive graph visualizes how features are distributed across different chatbot platforms.",
+        media: '<img src="assets/tutorial/tutorial_welcome.png?v=2" alt="Graph Overview" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">'
+    },
+    {
+        title: "Understanding the Graph",
+        content: "<strong>Nodes</strong> represent Chatbots (Large Circles), their Features and their Domains (Small Circles).<br><strong>Colors</strong> indicate categories: Orange for Chatbots, Green for Domains, Pink for System Features, and more.",
+        media: '<img src="assets/tutorial/tutorial_nodes.png?v=2" alt="Node Types" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">'
+    },
+    {
+        title: "Interacting with Nodes",
+        content: "<strong>Hover</strong> over a node to highlight its connections.<br><strong>Click</strong> on a node to open the Detail Panel. For feature nodes, <strong>screenshots</strong> of the UI implementation are included.",
+        media: '<img src="assets/tutorial/tutorial_interaction.png?v=2" alt="Interaction" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">'
+    },
+    {
+        title: "Sidebar & Filters",
+        content: "Use the Left Sidebar to filter visible nodes by category. You can toggle Bots, Domains, and various Feature Groups to focus your analysis.",
+        media: '<img src="assets/tutorial/tutorial_sidebar.png?v=2" alt="Sidebar Filters" style="width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 8px;">'
+    },
+    {
+        title: "Analysis Tools",
+        content: "Use the Analysis Tool at the top of the left sidebar to run clustering algorithms to find communities within the graph. Use the checkboxes to hide edges and labels for edges and nodes to get a cleaner view. You can also export snaphots of the graph in high-resoltuion pngs.",
+        media: '<img src="assets/tutorial/tutorial_analysis.png?v=2" alt="Clustering Analysis" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">'
+    }
+];
+
+let currentStep = 0;
+
+function initTutorial() {
+    const modal = document.getElementById('tutorial-modal');
+    if (!modal) return;
+
+    // Check LocalStorage
+    const seen = localStorage.getItem('tutorial_seen');
+    if (seen === 'true') {
+        return; // Don't show
+    }
+
+    // Show Modal
+    modal.classList.remove('hidden');
+    renderStep(currentStep);
+
+    // Event Listeners
+    document.getElementById('tutorial-next-btn').addEventListener('click', nextStep);
+    document.getElementById('tutorial-skip-btn').addEventListener('click', closeTutorial);
+}
+
+function renderStep(index) {
+    const step = tutorialSteps[index];
+    document.getElementById('tutorial-title').textContent = step.title;
+    document.getElementById('tutorial-body').innerHTML = step.content;
+    document.getElementById('tutorial-media').innerHTML = step.media;
+
+    // Step Indicators
+    const indicator = document.getElementById('step-indicator');
+    indicator.innerHTML = '';
+    tutorialSteps.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = `step-dot ${i === index ? 'active' : ''}`;
+        indicator.appendChild(dot);
+    });
+
+    // Button Text
+    const nextBtn = document.getElementById('tutorial-next-btn');
+    if (index === tutorialSteps.length - 1) {
+        nextBtn.textContent = 'Finish';
+    } else {
+        nextBtn.textContent = 'Next';
+    }
+}
+
+function nextStep() {
+    if (currentStep < tutorialSteps.length - 1) {
+        currentStep++;
+        renderStep(currentStep);
+    } else {
+        closeTutorial();
+    }
+}
+
+function closeTutorial() {
+    const modal = document.getElementById('tutorial-modal');
+    modal.classList.add('hidden');
+
+    const dontShow = document.getElementById('tutorial-dont-show').checked;
+    if (dontShow) {
+        localStorage.setItem('tutorial_seen', 'true');
+    }
+}
+
+
+
+// --- Export Logic ---
+const exportBtn = document.getElementById('export-btn');
+if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+        if (!cy) return;
+
+        // 1. Export High-Res PNG (Scale 3 = ~300 DPI for typical screens)
+        const pngContent = cy.png({
+            output: 'blob',
+            scale: 3,
+            full: true, // Export full graph, not just current viewport
+            bg: 'white' // White background for papers
+        });
+
+        // 2. Trigger Download
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(pngContent);
+        a.download = 'graph_visualization_high_res.png';
+        a.click();
     });
 }
+// Start
+initGraph();
