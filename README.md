@@ -1,75 +1,91 @@
-# Graph Cyto Neo
+# Chatbot Feature Graph
 
-Graph Cyto Neo is a web-based tool designed to visualize and analyze relationships between chatbot features. It parses structured feature data from CSV files to build an interactive network graph, enabling users to explore connections and apply various clustering algorithms to identify feature groupings.
+The **Chatbot Feature Graph** is an interactive visualization tool designed to explore the functional landscape of 12 popular chatbots across varying domains. It maps chatbots to their specific features and core domains using a force-directed graph, where nodes representing bots, domains, and features are color-coded by category for intuitive distinction.
 
-## Features
+Users can actively query the dataset through a dynamic sidebar to filter views, hover over nodes to highlight network connections, and click to access detailed metadata and implementation screenshots. The tool further supports advanced exploratory analysis through customizable clustering algorithms (currently exposing **Agglomerative** and **Domain-based** models) that reveal latent community structures.
 
-- **Interactive Graph Visualization**: Visualize relationships between Bots, Domains, and Features using a dynamic Cytoscape.js graph.
-- **Clustering Algorithms**: Apply advanced community detection algorithms directly from the UI:
-  - Louvain
-  - Greedy Modularity
-  - Spectral Clustering
-  - Agglomerative Clustering
-- **Backend API**: FastAPI-powered backend to handle graph data serving and complex clustering computations.
+To ensure a smooth user experience, the system includes a comprehensive **interactive tutorial** that launches automatically for first-time users, providing a guided walkthrough of the graph’s visual encoding, navigation controls, and key analytical capabilities.
 
-## Prerequisites
+---
 
-- Python 3.8+
-- Node.js (optional, for frontend development, though frontend is currently served statically via FastAPI)
+## Key Features
 
-## Installation
-
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository_url>
-    cd graph_cyto_neo
-    ```
-
-2.  **Create and activate a virtual environment:**
-    ```bash
-    python -m venv .venv
-    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-    ```
-
-3.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-## Usage
-
-### 1. Update Graph Data
-You can update the graph data by editing `backend/static_graph.json`.
-
-
-### 2. Start the Server
-Run the FastAPI backend server:
-
-```bash
-vicorn backend.main:app --host 0.0.0.0 --port 8000
-```
-
-### 3. Access the Application
-Open your web browser and navigate to:
-
-```
-http://localhost:8000
-```
+*   **Interactive Force-Directed Graph**: Visualizes relationships between chatbots, features, and domains using Cytoscape.js.
+*   **Dynamic Filtering**: Filter graph nodes by Bots, Domains, System Features, UI Features, and Chat Content via the sidebar.
+*   **Clustering Analysis**:
+    *   **Domain**: Clusters nodes based on their structural domain relationships.
+    *   **Bot Types (Agglomerative)**: Uses agglomerative clustering to group bots based on feature similarity.
+*   **Interactive Tutorial**: A step-by-step modal guide for new users, explaining graph concepts, navigation, and interactions.
+*   **Detail View & Screenshots**: Click on feature nodes to view implementation details and actual screenshots of the feature in the chatbot UI.
+*   **High-Resolution Export**: Export the current graph view as a high-quality PNG snapshot.
 
 ## Project Structure
 
-- **backend/**
-  - `main.py`: The FastAPI application entry point. Serves the API endpoints and the static frontend.
-  - `static_graph.json`: Generated graph data file used by the frontend.
+```
+├── backend/
+│   ├── main.py                 # FastAPI backend server
+│   ├── analyze_rq.py           # Analysis scripts (Silhouette analysis, etc.)
+│   ├── build_graph.py          # Script to build JSON graph from CSV data
+│   ├── data/                   # Source CSV data and screenshots mapping
+│   │   ├── final_annotation_bot_description.csv
+│   │   ├── final_annotation_features.csv
+│   │   ├── final_annotation_messages.csv
+│   │   └── screenshots.csv
+│   └── static_graph.json       # Generated graph data
+├── frontend/
+│   ├── index.html              # Main application entry point
+│   ├── app.js                  # Frontend logic (Graph init, events, UI)
+│   └── assets/
+│       ├── style.css           # Application styling
+│       ├── cytoscape.min.js    # Core graph library
+│       ├── cytoscape-fcose.js  # Layout extension
+│       ├── screenshots/        # Feature screenshots
+│       └── tutorial/           # Tutorial images
+└── requirements.txt            # Python dependencies
+```
 
-- **frontend/**
-  - `index.html`: Main entry point for the web interface.
-  - `app.js`: Frontend logic for graph rendering and interaction.
-  - `assets/`: Static styles and resources.
+## Setup & Installation
 
-## Dependencies
+### Prerequisites
 
-- **FastAPI**: Web framework for building APIs.
-- **NetworkX**: Python package for the creation, manipulation, and study of the structure, dynamics, and functions of complex networks.
-- **Python-Louvain**: Community detection for NetworkX.
-- **Scikit-learn**: Machine learning tools used here for Spectral and Agglomerative clustering.
+*   Python 3.8+
+*   Node.js (optional, only for development tools)
+
+### 1. Install Dependencies
+
+Navigate to the project root and install the required Python packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Run the Application
+
+Start the FastAPI backend server:
+
+```bash
+uvicorn backend.main:app --reload --port 8000
+```
+
+The application will be available at [http://localhost:8000](http://localhost:8000).
+
+## Usage
+
+1.  **Open the Graph**: Go to [http://localhost:8000](http://localhost:8000) in your browser.
+2.  **Tutorial**: Follow the on-screen tutorial to understand the interface.
+3.  **Explore**:
+    *   **Zoom/Pan**: Use your mouse to navigate the graph.
+    *   **Hover**: Hover over a node to see its connections.
+    *   **Click**: Click a node to open the Right Sidebar with details.
+4.  **Filter**: Use the Left Sidebar to show/hide specific categories.
+5.  **Cluster**: Select an algorithm in the Analysis section and click "Run Clustering".
+
+## Technologies
+
+*   **Frontend**: HTML5, CSS3, JavaScript, Cytoscape.js
+*   **Backend**: Python, FastAPI, NetworkX, Scikit-learn, Pandas, SciPy
+*   **Data**: CSV-based annotations converted to JSON graph format
+
+---
+
+*Generated by [Antigravity](https://deepmind.google/technologies/antigravity/)*
