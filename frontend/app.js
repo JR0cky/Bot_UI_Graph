@@ -1099,6 +1099,7 @@ function initTutorial() {
 
     // Event Listeners
     document.getElementById('tutorial-next-btn').addEventListener('click', nextStep);
+    document.getElementById('tutorial-back-btn').addEventListener('click', prevStep);
     document.getElementById('tutorial-skip-btn').addEventListener('click', closeTutorial);
 }
 
@@ -1117,8 +1118,18 @@ function renderStep(index) {
         indicator.appendChild(dot);
     });
 
-    // Button Text
+    // Button and Indicator Logic
     const nextBtn = document.getElementById('tutorial-next-btn');
+    const backBtn = document.getElementById('tutorial-back-btn');
+
+    // Toggle Back Button Visibility
+    if (index === 0) {
+        backBtn.classList.add('hidden');
+    } else {
+        backBtn.classList.remove('hidden');
+    }
+
+    // Toggle Next/Finish Text
     if (index === tutorialSteps.length - 1) {
         nextBtn.textContent = 'Finish';
     } else {
@@ -1132,6 +1143,13 @@ function nextStep() {
         renderStep(currentStep);
     } else {
         closeTutorial();
+    }
+}
+
+function prevStep() {
+    if (currentStep > 0) {
+        currentStep--;
+        renderStep(currentStep);
     }
 }
 
