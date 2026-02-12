@@ -274,7 +274,8 @@ main {
     right: 20px;
     top: 20px;
     bottom: 20px;
-    width: 320px;
+    width: 450px;
+    /* Increased from 320px */
     background-color: var(--panel-bg);
     backdrop-filter: blur(8px);
     border: 1px solid var(--border-color);
@@ -288,7 +289,8 @@ main {
 }
 
 #details-panel.hidden {
-    transform: translateX(360px);
+    transform: translateX(500px);
+    /* Adjusted for wider panel */
     opacity: 0;
 }
 
@@ -300,10 +302,19 @@ main {
     padding-bottom: 0.75rem;
 }
 
-#details-content {
+#panel-scroll-area {
     flex: 1;
-    font-size: 0.875rem;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding-right: 5px;
+    /* prevent scrollbar from hitting content */
+}
+
+#details-content {
+    flex: 0 0 auto;
+    /* Don't grow, take natural height */
+    font-size: 0.875rem;
 }
 
 .detail-item {
@@ -402,6 +413,11 @@ main {
     .sidebar-content {
         padding: 1.5rem 1rem 1rem 1rem;
     }
+
+    /* Auto-adjust details panel on small screens */
+    #details-panel {
+        width: 350px;
+    }
 }
 
 /* Screenshot Navigation Button */
@@ -424,8 +440,8 @@ main {
 }
 
 #feature-screenshot {
-    max-height: 450px;
-    /* Increased from 350px as requested */
+    max-height: 600px;
+    /* Increased from 450px as requested */
     width: auto;
     max-width: 100%;
     border-radius: 0.5rem;
@@ -498,6 +514,7 @@ main {
     pointer-events: none;
     transition: opacity 0.3s;
 }
+
 /* --- Tutorial Modal --- */
 .modal {
     position: fixed;
@@ -534,8 +551,15 @@ main {
 }
 
 @keyframes modalSlideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .media-container {

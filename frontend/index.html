@@ -178,27 +178,30 @@
             <div id="cy"></div>
             <div id="details-panel" class="hidden">
                 <h2 id="details-title">Node Details</h2>
-                <div id="details-content"></div>
 
-                <!-- Bot Selector for Feature Nodes -->
-                <div id="bot-selector-container" class="hidden">
-                    <div class="detail-label">Bot View</div>
-                    <select id="bot-selector">
-                        <option value="">Select a Bot...</option>
-                    </select>
-                </div>
+                <div id="panel-scroll-area">
+                    <div id="details-content"></div>
 
-                <!-- Screenshot Area -->
-                <div id="screenshot-container" class="hidden">
-                    <div class="detail-label">Interface Screenshot</div>
-                    <div class="screenshot-outer-wrapper">
-                        <button id="screenshot-prev-btn" class="screenshot-nav-btn hidden"
-                            title="Previous Screenshot">❮</button>
-                        <div class="screenshot-wrapper">
-                            <img id="feature-screenshot" src="" alt="Feature Screenshot">
+                    <!-- Bot Selector for Feature Nodes -->
+                    <div id="bot-selector-container" class="hidden">
+                        <div class="detail-label">Bot View</div>
+                        <select id="bot-selector">
+                            <option value="">Select a Bot...</option>
+                        </select>
+                    </div>
+
+                    <!-- Screenshot Area -->
+                    <div id="screenshot-container" class="hidden">
+                        <div class="detail-label">Interface Screenshot</div>
+                        <div class="screenshot-outer-wrapper">
+                            <button id="screenshot-prev-btn" class="screenshot-nav-btn hidden"
+                                title="Previous Screenshot">❮</button>
+                            <div class="screenshot-wrapper">
+                                <img id="feature-screenshot" src="" alt="Feature Screenshot">
+                            </div>
+                            <button id="screenshot-next-btn" class="screenshot-nav-btn hidden"
+                                title="Next Screenshot">❯</button>
                         </div>
-                        <button id="screenshot-next-btn" class="screenshot-nav-btn hidden"
-                            title="Next Screenshot">❯</button>
                     </div>
                 </div>
 
@@ -235,7 +238,7 @@
             </div>
         </div>
     </div>
-    <script src="app.js?v=27"></script>
+    <script src="app.js?v=30"></script>
 </body>
 
 </html>

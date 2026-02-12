@@ -799,16 +799,30 @@ function showDetails(data) {
         `;
     }
 
-    // --- Render all other fields except screenshots + description + id ---
+    // --- Render all other fields except screenshots + description + id + duplicates ---
     html += Object.entries(data)
-        .filter(([key]) => key !== 'screenshots' && key !== 'description' && key !== 'id')
+        .filter(([key]) => {
+            const normalizedKey = key.trim().toLowerCase();
+            return key !== 'screenshots' &&
+                key !== 'description' &&
+                key !== 'id' &&
+                normalizedKey !== 'class';
+        })
         .map(([key, value]) => {
             if (value === '' || value === null || value === undefined) return '';
+
+            // Format value if it's a string and not an ID or URL
+            let formattedValue = value;
+            if (typeof value === 'string' && key !== 'id' && !value.startsWith('http')) {
+                formattedValue = value
+                    .replace(/_+/g, ' ')  // Replace _ or __ with space
+                    .replace(/\b\w/g, c => c.toUpperCase()); // Title Case
+            }
 
             return `
                 <div class="detail-item">
                     <div class="detail-label">${key.replace(/_/g, ' ')}</div>
-                    <div class="detail-value">${value}</div>
+                    <div class="detail-value">${formattedValue}</div>
                 </div>
             `;
         }).join('');
