@@ -688,7 +688,8 @@
         "class": "Input Adjustment",
         "screenshots": {
           "chatgpt": [
-            "ChatGPT_Additional_Input.png"
+            "ChatGPT_Additional_Input.png",
+            "ChatGPT_Persona_Popup.png"
           ],
           "deepseek": [
             "Deepseek_Input_Adjustment.png"
