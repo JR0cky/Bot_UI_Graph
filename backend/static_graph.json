@@ -241,6 +241,11 @@
         "groupId": "chat__content",
         "class": "Voice Chat Message",
         "screenshots": {
+          "chatgpt": [
+            "ChatGPT_Voice_Mode.png",
+            "ChatGPT_Voice_to_Text.png",
+            "ChatGPT_Voice_Mode_Transcription.png"
+          ],
           "talkpal": [
             "Talkpal_Voice_Chat_Message.png"
           ],

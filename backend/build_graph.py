@@ -159,7 +159,7 @@ for fid, row in features.items():
 screenshots = defaultdict(lambda: defaultdict(list))
 
 with SCREENSHOTS_CSV.open(mode="r", encoding="utf-8", newline="") as f:
-    reader = csv.DictReader(f)
+    reader = csv.DictReader(f, delimiter=";")
     for row in reader:
         fid = slugify(row["Class"])
         bid = slugify(row["Bot"])
