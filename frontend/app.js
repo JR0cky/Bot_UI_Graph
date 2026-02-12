@@ -833,6 +833,12 @@ function showDetails(data) {
     currentlySelectedNodeId = data.id;
     updateBotSelector(data.id);
 
+    // Reset scroll position to top
+    const scrollArea = document.getElementById('panel-scroll-area');
+    if (scrollArea) {
+        scrollArea.scrollTop = 0;
+    }
+
     // Show panel
     panel.classList.remove('hidden');
 }
