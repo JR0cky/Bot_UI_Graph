@@ -424,8 +424,8 @@ main {
 }
 
 #feature-screenshot {
-    max-height: 350px;
-    /* Slightly reduced for safety */
+    max-height: 450px;
+    /* Increased from 350px as requested */
     width: auto;
     max-width: 100%;
     border-radius: 0.5rem;
