@@ -71,7 +71,7 @@ async function initGraph() {
                     style: {
                         'label': 'data(label)',
                         'color': '#334155',
-                        'font-size': '10px',
+                        'font-size': '12px',
                         'font-weight': '600',
                         'text-valign': 'center',
                         'text-margin-y': '35px',
@@ -126,7 +126,7 @@ async function initGraph() {
                     style: {
                         'width': 75,
                         'height': 75,
-                        'font-size': '12px',
+                        'font-size': '14px',
                         'font-weight': 'bold',
                         'text-margin-y': '50px'
                     }
@@ -149,7 +149,7 @@ async function initGraph() {
                         'target-arrow-shape': 'triangle',
                         'curve-style': 'bezier',
                         'label': 'data(label)',
-                        'font-size': '9px',
+                        'font-size': '11px',
                         'text-background-opacity': 1,
                         'text-background-color': '#f8fafc',
                         'text-background-padding': '3px',

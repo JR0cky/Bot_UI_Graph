@@ -83,7 +83,7 @@ body {
 }
 
 .filter-section-title {
-    font-size: 0.75rem;
+    font-size: 0.95rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -211,8 +211,8 @@ details[open] summary::after {
     width: 100%;
     margin-top: 15px;
     font-weight: 700;
-    font-size: 0.6em;
-    /* Reduced size */
+    font-size: 0.8rem;
+    /* Increased size */
     transition: background 0.2s, opacity 0.2s;
 }
 
@@ -440,8 +440,8 @@ main {
 }
 
 #feature-screenshot {
-    max-height: 600px;
-    /* Increased from 450px as requested */
+    max-height: 500px;
+    /* Adjusted to 500px as requested */
     width: auto;
     max-width: 100%;
     border-radius: 0.5rem;
