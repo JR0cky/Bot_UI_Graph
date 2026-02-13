@@ -40,10 +40,10 @@ SeniorTalk,GIF Chat Message,o,x
 SeniorTalk,Voice Chat Message,x,x
 SeniorTalk,Emoji Chat Message,x,x
 SeniorTalk,Emoji Chat Message,x,x
-Supetutor,Text Chat Message,x,x
-Supetutor,Image Chat Message,x,x
-Supetutor,Voice Chat Message,x,o
-Supetutor,Emoji Chat Message,x,o
+Supertutor,Text Chat Message,x,x
+Supertutor,Image Chat Message,x,x
+Supertutor,Voice Chat Message,x,o
+Supertutor,Emoji Chat Message,x,o
 Talkpal,Text Chat Message,x,x
 Talkpal,Voice Chat Message,x,x
 Wysa,GIF Chat Message,x,o

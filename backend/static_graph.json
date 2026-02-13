@@ -102,9 +102,9 @@
     },
     {
       "data": {
-        "id": "supetutor",
+        "id": "supertutor",
         "nodeType": "bot",
-        "label": "Supetutor",
+        "label": "Supertutor",
         "description": "An educational chatbot focused on tutoring, explaining concepts, and helping students learn or practice academic subjects."
       }
     },
@@ -164,7 +164,7 @@
             "seniortalk_nina_imagereaction.png",
             "SeniorTalk_Voice_Chat_Message.png"
           ],
-          "supetutor": [
+          "supertutor": [
             "Supertutor_image-chat-message.PNG",
             "Super_Tutor_Meme.png"
           ]
@@ -275,7 +275,7 @@
             "SeniorTalk_Voice_Chat_Message.png",
             "SeniorTalk_Phone_Call.png"
           ],
-          "supetutor": [
+          "supertutor": [
             "Super_Tutor_Voice_Message.png",
             "Super_Tutor_Voice_Message2.png"
           ]
@@ -337,7 +337,7 @@
           "seniortalk": [
             "seniortalk_nina_emoticons.png"
           ],
-          "supetutor": [
+          "supertutor": [
             "Supertutor_emoji-chat-message.PNG"
           ]
         }
@@ -436,7 +436,7 @@
             "SeniorTalk_Forward_Chat_Message.png",
             "SeniorTalk_Message_Action.png"
           ],
-          "supetutor": [
+          "supertutor": [
             "Supertutor_message-reactions.PNG"
           ]
         }
@@ -488,7 +488,7 @@
           "rocky": [
             "rocky_nina_typing_indicator.png"
           ],
-          "supetutor": [
+          "supertutor": [
             "Supertutor_Processing_Indicator1.png",
             "Supertutor_Processing_Indicator2.png"
           ]
@@ -535,7 +535,7 @@
             "SeniorTalk_Persistent_Menu.png",
             "SeniorTalk_Avatar.png"
           ],
-          "supetutor": [
+          "supertutor": [
             "Supertutor_persistent-menu.PNG",
             "Super_Tutor_Settings.png",
             "Super_Tutor_Chat_Design.png"
@@ -648,7 +648,7 @@
           "seniortalk": [
             "SeniorTalk_Information_Stamp.png"
           ],
-          "supetutor": [
+          "supertutor": [
             "Super_Tutor_Sidebar_Timestamp.png"
           ]
         }
@@ -677,7 +677,7 @@
           "gemini": [
             "gemini_nina_data.png"
           ],
-          "supetutor": [
+          "supertutor": [
             "Super_Tutor_Attachment.png"
           ]
         }
@@ -787,7 +787,7 @@
           "seniortalk": [
             "SeniorTalk_Chat_Message.png"
           ],
-          "supetutor": [
+          "supertutor": [
             "Supertutor_chat-message.PNG"
           ]
         }
@@ -924,7 +924,7 @@
             "RockyAI_Chat_Messages.png",
             "RockyAI_Help_System.png"
           ],
-          "supetutor": [
+          "supertutor": [
             "Super_Tutor_Hint.png"
           ]
         }
@@ -1011,7 +1011,7 @@
           "seniortalk": [
             "SeniorTalk_Avatar.png"
           ],
-          "supetutor": [
+          "supertutor": [
             "Supertutor_avatar.PNG"
           ]
         }
@@ -1102,8 +1102,8 @@
     },
     {
       "data": {
-        "id": "supetutor_education_partOf",
-        "source": "supetutor",
+        "id": "supertutor_education_partOf",
+        "source": "supertutor",
         "target": "education",
         "relation": "partOf",
         "label": "partOf"
@@ -5388,8 +5388,8 @@
     },
     {
       "data": {
-        "id": "supetutor_text_chat_message_hasFeature",
-        "source": "supetutor",
+        "id": "supertutor_text_chat_message_hasFeature",
+        "source": "supertutor",
         "target": "text_chat_message",
         "relation": "hasFeature",
         "label": "Exchange \u21c4",
@@ -5399,8 +5399,8 @@
     },
     {
       "data": {
-        "id": "supetutor_image_chat_message_hasFeature",
-        "source": "supetutor",
+        "id": "supertutor_image_chat_message_hasFeature",
+        "source": "supertutor",
         "target": "image_chat_message",
         "relation": "hasFeature",
         "label": "Exchange \u21c4",
@@ -5410,8 +5410,8 @@
     },
     {
       "data": {
-        "id": "supetutor_voice_chat_message_hasFeature",
-        "source": "supetutor",
+        "id": "supertutor_voice_chat_message_hasFeature",
+        "source": "supertutor",
         "target": "voice_chat_message",
         "relation": "hasFeature",
         "label": "Bot Output \ud83e\udd16",
@@ -5421,8 +5421,8 @@
     },
     {
       "data": {
-        "id": "supetutor_emoji_chat_message_hasFeature",
-        "source": "supetutor",
+        "id": "supertutor_emoji_chat_message_hasFeature",
+        "source": "supertutor",
         "target": "emoji_chat_message",
         "relation": "hasFeature",
         "label": "Bot Output \ud83e\udd16",
@@ -5432,8 +5432,8 @@
     },
     {
       "data": {
-        "id": "supetutor_message_action_hasFeature",
-        "source": "supetutor",
+        "id": "supertutor_message_action_hasFeature",
+        "source": "supertutor",
         "target": "message_action",
         "relation": "hasFeature",
         "label": "hasFeature"
@@ -5441,8 +5441,8 @@
     },
     {
       "data": {
-        "id": "supetutor_processing_indicator_hasFeature",
-        "source": "supetutor",
+        "id": "supertutor_processing_indicator_hasFeature",
+        "source": "supertutor",
         "target": "processing_indicator",
         "relation": "hasFeature",
         "label": "hasFeature"
@@ -5450,8 +5450,8 @@
     },
     {
       "data": {
-        "id": "supetutor_persistent_menu_hasFeature",
-        "source": "supetutor",
+        "id": "supertutor_persistent_menu_hasFeature",
+        "source": "supertutor",
         "target": "persistent_menu",
         "relation": "hasFeature",
         "label": "hasFeature"
@@ -5459,8 +5459,8 @@
     },
     {
       "data": {
-        "id": "supetutor_help_system_hasFeature",
-        "source": "supetutor",
+        "id": "supertutor_help_system_hasFeature",
+        "source": "supertutor",
         "target": "help_system",
         "relation": "hasFeature",
         "label": "hasFeature"
@@ -5468,8 +5468,8 @@
     },
     {
       "data": {
-        "id": "supetutor_information_stamp_hasFeature",
-        "source": "supetutor",
+        "id": "supertutor_information_stamp_hasFeature",
+        "source": "supertutor",
         "target": "information_stamp",
         "relation": "hasFeature",
         "label": "hasFeature"
@@ -5477,8 +5477,8 @@
     },
     {
       "data": {
-        "id": "supetutor_avatar_hasFeature",
-        "source": "supetutor",
+        "id": "supertutor_avatar_hasFeature",
+        "source": "supertutor",
         "target": "avatar",
         "relation": "hasFeature",
         "label": "hasFeature"
@@ -5486,8 +5486,8 @@
     },
     {
       "data": {
-        "id": "supetutor_extended_input_hasFeature",
-        "source": "supetutor",
+        "id": "supertutor_extended_input_hasFeature",
+        "source": "supertutor",
         "target": "extended_input",
         "relation": "hasFeature",
         "label": "hasFeature"
