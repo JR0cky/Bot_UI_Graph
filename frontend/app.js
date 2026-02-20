@@ -44,6 +44,7 @@ const colors = {
 let currentlySelectedNodeId = null;
 let currentScreenshotIndex = 0;
 let currentScreenshots = [];
+let originalNodePositions = {};
 
 // Helper to get group color safely
 function getGroupColor(gid) {
@@ -386,6 +387,13 @@ if (clusterBtn) {
                 return;
             }
 
+            // Save original node positions if not already saved during this session
+            if (Object.keys(originalNodePositions).length === 0) {
+                cy.nodes().forEach(node => {
+                    originalNodePositions[node.id()] = { ...node.position() };
+                });
+            }
+
             // HIDE UI Sections
             // 1. Hide entire filters container (Includes Title + Subsections)
             const allFilters = document.getElementById('all-filters-container');
@@ -444,6 +452,8 @@ if (clusterBtn) {
 
                         node.data('clusterColor', color);
                         node.move({ parent: `cluster_group_${clusterId}` });
+                    } else if (node.data('nodeType') === 'feature_group') {
+                        node.style('display', 'none');
                     }
                 });
 
@@ -496,6 +506,9 @@ if (resetClusterBtn) {
                 node.removeStyle('border-width'); // Remove clustering borders
                 node.removeStyle('border-style');
                 node.removeClass('clustered-border'); // Remove class
+                if (node.data('nodeType') === 'feature_group') {
+                    node.removeStyle('display');
+                }
             });
 
             // Remove groups
@@ -517,12 +530,18 @@ if (resetClusterBtn) {
         // Hide controls
         resetClusterBtn.style.display = 'none';
 
-        // Rerun Layout based on updated constraints (if filters changed)
-        // We use 'cose' for main view
-        cy.layout({
-            name: 'cose', animate: true, animationDuration: 1000, randomize: true, padding: 50, componentSpacing: 400,
-            nodeRepulsion: (node) => 2000000, idealEdgeLength: (edge) => 250, nodeOverlap: 20, refresh: 20, fit: true, gravity: 1
-        }).run();
+        // Ensure nodes return to proper visibility
+        applyFilters();
+
+        // Restore node positions immediately
+        cy.nodes().forEach(node => {
+            if (originalNodePositions[node.id()]) {
+                node.position(originalNodePositions[node.id()]);
+            }
+        });
+
+        // Fit the restored layout within the viewport, without re-running random physics Layout
+        cy.fit(cy.elements(), 50);
     });
 }
 
@@ -762,6 +781,27 @@ function applyFilters() {
             if (data.nodeType === 'domain') {
                 if (activeFilters.ids.has(data.id)) node.style('display', 'element'); // Allow strict toggle
                 else node.style('display', 'none');
+            }
+        });
+
+        // 3. Feature Groups
+        // Hide a feature group node if ALL of its connected feature nodes are hidden
+        cy.nodes('[nodeType="feature_group"]').forEach(groupNode => {
+            // Find all feature nodes that point to this group via a 'partOf' edge
+            const connectedFeatures = groupNode.connectedEdges('[relation="partOf"][target="' + groupNode.id() + '"]').sources();
+
+            let hasVisibleFeature = false;
+            connectedFeatures.forEach(featureNode => {
+                if (featureNode.style('display') !== 'none') {
+                    hasVisibleFeature = true;
+                }
+            });
+
+            // Even if it's explicitly allowed to show, ONLY show if it has visible features
+            if (hasVisibleFeature) {
+                groupNode.style('display', 'element');
+            } else {
+                groupNode.style('display', 'none');
             }
         });
     });
