@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bot Feature Graph Visualization</title>
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/cluster_styles.css">
     <!-- Error Handler -->
     <script>
         window.onerror = function (msg, url, line, col, error) {
@@ -64,6 +65,16 @@
                     <button id="reset-clustering-btn" class="cluster-btn secondary" style="display: none;">Reset
                         Graph</button>
 
+                    <!-- Dynamic Cluster Analysis Container -->
+                    <div id="cluster-analysis-container" class="hidden"
+                        style="margin-top: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 10px; border: 1px solid rgba(255,255,255,0.1);">
+                        <h4 style="font-size: 0.85rem; color: #fff; margin-bottom: 10px; text-transform: uppercase;">
+                            Cluster Profiles</h4>
+                        <div id="cluster-profiles-content">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+
                     <div class="filter-separator" style="margin-top: 1rem;"></div>
                     <button id="export-btn" class="cluster-btn" style="background-color: #334155;">Export Graph
                         Snapshot</button>
@@ -96,7 +107,7 @@
                         <summary>
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 <!-- Removed Toggle for Bots -->
-                                <span class="filter-color-dot" style="background-color: #D55E00;"></span>
+                                <span class="filter-color-dot" style="background-color: #CBD5E1;"></span>
                                 <span>Bots</span>
                             </div>
                         </summary>

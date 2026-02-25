@@ -10,8 +10,8 @@ const colors = {
     // Accessible Okabe-Ito Palette for Distinct Node Types
     // https://jfly.uni-koeln.de/color/
 
-    // Bot: Vermilion (Action/Agent) -> #D55E00
-    bot: ['#E37640', '#D55E00', '#A34600'],
+    // Bot: Grey (Neutral background for logos) -> #CBD5E1
+    bot: ['#E2E8F0', '#CBD5E1', '#94A3B8'],
 
     // Domain: Bluish Green (Structure/Area) -> #009E73
     domain: ['#33C297', '#009E73', '#00664A'],
@@ -129,7 +129,32 @@ async function initGraph() {
                         'height': 75,
                         'font-size': '14px',
                         'font-weight': 'bold',
-                        'text-margin-y': '50px'
+                        'text-margin-y': '50px',
+                        'background-image': (node) => `assets/logos/${node.id()}.png`,
+                        'background-fit': 'none',
+                        'background-width': (node) => {
+                            const id = node.id().toLowerCase();
+                            switch (id) {
+                                case 'ada': return '70%';
+                                case 'talkpal': return '60%';
+                                case 'rocky': return '65%';
+                                case 'replika': return '70%';
+                                case 'wysa': return '70%';
+                                default: return '80%';
+                            }
+                        },
+                        'background-height': (node) => {
+                            const id = node.id().toLowerCase();
+                            switch (id) {
+                                case 'ada': return '70%';
+                                case 'talkpal': return '60%';
+                                case 'rocky': return '65%';
+                                case 'replika': return '75%';
+                                case 'wysa': return '65%';
+                                default: return '80%';
+                            }
+                        },
+                        'background-image-opacity': 1
                     }
                 },
                 {
@@ -352,21 +377,21 @@ function generatePlasticShades(hexColor) {
     return `${highlight} ${hexColor} ${shadow}`;
 }
 
-// Color-Blind Safe Palette (Okabe-Ito + extras)
+// Color-Blind Safe Pastel Palette (Derived from Okabe-Ito for Logos)
 const clusterColors = [
-    '#E69F00', // Orange
-    '#56B4E9', // Sky Blue
-    '#009E73', // Bluish Green
-    '#F0E442', // Yellow
-    '#0072B2', // Blue
-    '#D55E00', // Vermilion
-    '#CC79A7', // Reddish Purple
-    '#882255', // Dark Red / Magenta
-    '#332288', // Indigo
-    '#117733', // Dark Green
-    '#44AA99', // Teal
-    '#999933', // Olive
-    '#AA4499'  // Purple
+    '#F7CC8A', // Pastel Orange
+    '#D0E7F5', // Ice Sky Blue (pushed very light)
+    '#8ED1BD', // Pastel Bluish Green
+    '#F8F3AD', // Pastel Yellow
+    '#5C8EB8', // Slate Blue (pushed much darker for high contrast)
+    '#F0A785', // Pastel Vermilion
+    '#EABEDA', // Pastel Reddish Purple
+    '#C4839D', // Pastel Dark Red / Magenta
+    '#9588C0', // Pastel Indigo
+    '#7DBC93', // Pastel Dark Green
+    '#91C9C0', // Pastel Teal
+    '#CDCD8C', // Pastel Olive
+    '#D797CC'  // Pastel Purple
 ];
 
 
@@ -380,12 +405,16 @@ if (clusterBtn) {
 
         try {
             const response = await fetch(`/cluster?algorithm=${algorithm}`, { method: 'POST' });
-            const clusters = await response.json();
+            const responseData = await response.json();
 
-            if (clusters.error) {
-                alert(`Error: ${clusters.error}`);
+            if (responseData.error) {
+                alert(`Error: ${responseData.error}`);
                 return;
             }
+
+            // Handle new vs old backend format
+            const clusters = responseData.clusters || responseData;
+            const analysisData = responseData.analysis || null;
 
             // Save original node positions if not already saved during this session
             if (Object.keys(originalNodePositions).length === 0) {
@@ -395,18 +424,25 @@ if (clusterBtn) {
             }
 
             // HIDE UI Sections
-            // 1. Hide entire filters container (Includes Title + Subsections)
             const allFilters = document.getElementById('all-filters-container');
             if (allFilters) allFilters.style.display = 'none';
 
-            // 2. Hide Walkthrough Section
             const wtSection = document.getElementById('walkthrough-section');
             if (wtSection) wtSection.style.display = 'none';
-
 
             const sidebarContent = document.querySelector('.sidebar-content');
             if (sidebarContent) sidebarContent.classList.add('clustering-active');
 
+            // Render Analysis if present
+            const analysisContainer = document.getElementById('cluster-analysis-container');
+            if (analysisContainer) {
+                if (analysisData && algorithm === 'agglomerative') {
+                    renderClusterAnalysis(analysisData, clusters);
+                    analysisContainer.classList.remove('hidden');
+                } else {
+                    analysisContainer.classList.add('hidden');
+                }
+            }
 
             // Apply colors and create invisible groups
             cy.batch(() => {
@@ -417,6 +453,17 @@ if (clusterBtn) {
                     }
                 });
                 cy.remove('node[id^="cluster_group_"]');
+
+                // Clear any leftover edge styling from previous runs
+                cy.edges().removeStyle('width');
+                cy.edges().removeStyle('line-color');
+                cy.edges().removeStyle('target-arrow-color');
+                cy.edges().removeStyle('opacity');
+                cy.edges().removeStyle('z-index');
+                cy.edges().removeStyle('display');
+
+                // Keep node visibility clean between different algorithm runs
+                cy.nodes().removeStyle('display');
 
                 // Create parent nodes
                 const uniqueClusters = new Set(Object.values(clusters));
@@ -446,9 +493,8 @@ if (clusterBtn) {
                         node.style('background-gradient-stop-colors', gradientStops);
                         node.style('background-gradient-direction', 'to-bottom-right');
 
-                        // Border - Standard
                         node.style('border-color', adjustColor(color, -20));
-                        node.style('border-width', 0); // Reset width first
+                        node.style('border-width', 0);
 
                         node.data('clusterColor', color);
                         node.move({ parent: `cluster_group_${clusterId}` });
@@ -457,20 +503,80 @@ if (clusterBtn) {
                     }
                 });
 
+                // Highlight Defining Feature Edges (Optional UI Polish)
+                if (analysisData) {
+                    cy.edges().forEach(edge => {
+                        const src = edge.source().id();
+                        const tgt = edge.target().id();
+                        const rel = edge.data('relation');
+
+                        if (rel === 'hasFeature') {
+                            let botNode, featNode;
+                            if (edge.source().data('nodeType') === 'bot') {
+                                botNode = edge.source();
+                                featNode = edge.target();
+                            } else {
+                                botNode = edge.target();
+                                featNode = edge.source();
+                            }
+
+                            const botCluster = clusters[botNode.id()];
+                            const clusterAnalysis = analysisData.find(a => a.cluster_id === botCluster);
+
+                            if (clusterAnalysis) {
+                                // Is this feature one of the top 5 defining features for this bot's cluster?
+                                const isDefining = clusterAnalysis.top_features.some(tf => tf.feature_id === featNode.id());
+
+                                if (isDefining) {
+                                    // Make thick and matching cluster color
+                                    const clusterColor = clusterColors[botCluster % clusterColors.length];
+                                    edge.style({
+                                        'width': 4,
+                                        'line-color': clusterColor,
+                                        'target-arrow-color': clusterColor,
+                                        'opacity': 1,
+                                        'z-index': 100
+                                    });
+                                } else {
+                                    // Make it faint
+                                    edge.style({
+                                        'width': 1,
+                                        'line-color': '#e2e8f0',
+                                        'target-arrow-color': '#e2e8f0',
+                                        'opacity': 0.2
+                                    });
+                                }
+                            }
+                        }
+                    });
+                }
+
                 // --- ADD DARK BORDER TO BOTS & DOMAINS (Clustering Mode) ---
                 const specializedNodes = cy.nodes('[nodeType="bot"], [nodeType="domain"]');
                 specializedNodes.removeStyle('border-width'); // Clear inline override so class works
                 specializedNodes.removeStyle('border-color'); // Clear inline override
                 specializedNodes.addClass('clustered-border');
+
+                // --- HIDE NON-BOT NODES FOR BOT TYPES ---
+                if (algorithm === 'agglomerative') {
+                    cy.nodes().forEach(node => {
+                        if (node.data('nodeType') !== 'bot' && !node.id().startsWith('cluster_group_')) {
+                            node.style('display', 'none');
+                        }
+                    });
+                    cy.edges().style('display', 'none'); // Also hide edges as the features they connect to are hidden
+                }
             });
 
             // Show reset
             resetClusterBtn.style.display = 'block';
 
             // Layout
+            const paddingValue = algorithm === 'agglomerative' ? 150 : 30;
+
             cy.layout({
                 name: 'fcose', quality: 'proof', randomize: false, animate: true, animationDuration: 1000,
-                fit: true, padding: 30, nodeSeparation: 75, idealEdgeLength: 50, edgeElasticity: 0.45, nestingFactor: 0.1,
+                fit: true, padding: paddingValue, nodeSeparation: 75, idealEdgeLength: 50, edgeElasticity: 0.45, nestingFactor: 0.1,
                 gravity: 0.25, numIter: 2500, tilingPaddingVertical: 20, tilingPaddingHorizontal: 20, initialEnergyOnIncremental: 0.3
             }).run();
 
@@ -495,6 +601,11 @@ if (resetClusterBtn) {
             // Restore Edges
             cy.edges().removeStyle('opacity');
             cy.edges().removeStyle('events');
+            cy.edges().removeStyle('width');
+            cy.edges().removeStyle('line-color');
+            cy.edges().removeStyle('target-arrow-color');
+            cy.edges().removeStyle('z-index');
+            cy.edges().removeStyle('display');
 
             // Restore Nodes
             cy.nodes().forEach(node => {
@@ -514,6 +625,11 @@ if (resetClusterBtn) {
             // Remove groups
             cy.nodes('[id^="cluster_group_"]').remove();
         });
+
+        const analysisContainer = document.getElementById('cluster-analysis-container');
+        if (analysisContainer) {
+            analysisContainer.classList.add('hidden');
+        }
 
         // Restore UI Visibility
         // 1. Filters Container
@@ -542,6 +658,56 @@ if (resetClusterBtn) {
 
         // Fit the restored layout within the viewport, without re-running random physics Layout
         cy.fit(cy.elements(), 50);
+    });
+}
+
+function renderClusterAnalysis(analysisData) {
+    const container = document.getElementById('cluster-profiles-content');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    analysisData.forEach(cluster => {
+        const color = clusterColors[cluster.cluster_id % clusterColors.length];
+
+        let html = `
+            <div class="cluster-profile-card">
+                <div class="cluster-profile-header">
+                    <div>
+                        <span class="cluster-color-badge" style="background-color: ${color};"></span>
+                        Cluster ${cluster.cluster_id}
+                    </div>
+                    <div style="font-weight:normal; font-size:0.7rem;">${cluster.bots.length} Bots</div>
+                </div>
+                <div class="cluster-bot-list">
+                    ${cluster.bots.join(', ')}
+                </div>
+                <!-- Defining Features -->
+        `;
+
+        cluster.top_features.forEach(feat => {
+            // Reformat node snake_case ID to somewhat readable text
+            const label = cy.getElementById(feat.feature_id)?.data('label') || feat.feature_id.replace(/_/g, ' ');
+
+            // Width based on presence in cluster (out of 100%)
+            const presencePercent = (feat.cluster_presence * 100).toFixed(0);
+            const diffPercent = (feat.diff * 100).toFixed(0);
+
+            html += `
+                <div class="feature-bar-container">
+                    <div class="feature-bar-label">
+                        <span>${label}</span>
+                        <span>+${diffPercent}%</span>
+                    </div>
+                    <div class="feature-bar-bg">
+                        <div class="feature-bar-fill" style="width: ${presencePercent}%; background-color: ${color};"></div>
+                    </div>
+                </div>
+            `;
+        });
+
+        html += `</div>`;
+        container.innerHTML += html;
     });
 }
 
@@ -1117,27 +1283,27 @@ const tutorialSteps = [
     {
         title: "Welcome to Chatbot Feature Graph",
         content: "Explore the connections between 12 chatbots from 4 different domains and explore their features. This interactive graph visualizes how features are distributed across different chatbot platforms.",
-        media: '<img src="assets/tutorial/tutorial_welcome.png?v=2" alt="Graph Overview" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">'
+        media: '<img src="assets/tutorial/tutorial_welcome.png?v=4" alt="Graph Overview" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">'
     },
     {
         title: "Understanding the Graph",
-        content: "<strong>Nodes</strong> represent Chatbots (Large Circles), their Features and their Domains (Small Circles).<br><strong>Colors</strong> indicate categories: Orange for Chatbots, Green for Domains, Pink for System Features, and more.",
-        media: '<img src="assets/tutorial/tutorial_nodes.png?v=2" alt="Node Types" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">'
+        content: "<strong>Nodes</strong> represent Chatbots (Large Circles), their Features and their Domains (Small Circles).<br><strong>Colors</strong> indicate categories: Grey for Chatbots, Green for Domains, Pink for System Features, and more.",
+        media: '<img src="assets/tutorial/tutorial_nodes.png?v=4" alt="Node Types" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">'
     },
     {
         title: "Interacting with Nodes",
         content: "<strong>Hover</strong> over a node to highlight its connections.<br><strong>Click</strong> on a node to open the Detail Panel. For feature nodes, <strong>screenshots</strong> of the UI implementation are included.",
-        media: '<img src="assets/tutorial/tutorial_interaction.png?v=2" alt="Interaction" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">'
+        media: '<img src="assets/tutorial/tutorial_interaction.png?v=4" alt="Interaction" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">'
     },
     {
         title: "Sidebar & Filters",
         content: "Use the Left Sidebar to filter visible nodes by category. You can toggle Bots, Domains, and various Feature Groups to focus your analysis.",
-        media: '<img src="assets/tutorial/tutorial_sidebar.png?v=2" alt="Sidebar Filters" style="width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 8px;">'
+        media: '<img src="assets/tutorial/tutorial_sidebar.png?v=4" alt="Sidebar Filters" style="width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 8px;">'
     },
     {
         title: "Analysis Tools",
         content: "Use the Analysis Tool at the top of the left sidebar to run clustering algorithms to find communities within the graph. Use the checkboxes to hide edges and labels for edges and nodes to get a cleaner view. You can also export snaphots of the graph in high-resoltuion pngs.",
-        media: '<img src="assets/tutorial/tutorial_analysis.png?v=2" alt="Clustering Analysis" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">'
+        media: '<img src="assets/tutorial/tutorial_analysis.png?v=4" alt="Clustering Analysis" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">'
     }
 ];
 
@@ -1229,21 +1395,32 @@ function closeTutorial() {
 const exportBtn = document.getElementById('export-btn');
 if (exportBtn) {
     exportBtn.addEventListener('click', () => {
-        if (!cy) return;
+        try {
+            // Use 'blob' output to prevent Chrome from crashing on massive base64 URIs in the href attribute.
+            const blob = cy.png({
+                output: 'blob',
+                scale: 1.5,
+                full: true,
+                bg: 'white'
+            });
 
-        // 1. Export High-Res PNG (Scale 3 = ~300 DPI for typical screens)
-        const pngContent = cy.png({
-            output: 'blob',
-            scale: 3,
-            full: true, // Export full graph, not just current viewport
-            bg: 'white' // White background for papers
-        });
+            // Create a Blob URL and trigger download
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            document.body.appendChild(a);
 
-        // 2. Trigger Download
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(pngContent);
-        a.download = 'graph_visualization_high_res.png';
-        a.click();
+            a.href = url;
+            a.download = 'graph_visualization_high_res.png';
+            a.click();
+
+            // Clean up the URL and element to free memory
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 100);
+        } catch (error) {
+            console.error('PNG export failed:', error);
+            alert('Export failed. Please disable privacy extensions for this site.');
+        }
     });
 }
 // Start

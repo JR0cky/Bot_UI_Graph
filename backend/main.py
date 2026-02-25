@@ -5,6 +5,8 @@ from fastapi.responses import FileResponse
 
 from sklearn.cluster import AgglomerativeClustering, SpectralClustering
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics import silhouette_score
+import pandas as pd
 
 import numpy as np
 import networkx as nx
@@ -188,95 +190,166 @@ def cluster_graph(algorithm: str = "spectral"):
     # 5. Agglomerative (Hidden Similarities / Bot Types)
     # ============================================================
     elif algorithm == "agglomerative":
+        from sklearn.cluster import AgglomerativeClustering
+        from itertools import combinations
+        
+        # 1. Build Bot Projection (Jaccard)
+        bot_features = {b: set() for b in bots}
+        feature_to_bots = {}
+        
+        for edge in data["edges"]:
+            d = edge["data"]
+            src = d["source"]
+            tgt = d["target"]
+            rel = d.get("relation")
+            
+            if rel == "hasFeature":
+                b, f = None, None
+                if src in bots and tgt in features: b, f = src, tgt
+                elif tgt in bots and src in features: b, f = tgt, src
+                
+                if b and f:
+                    bot_features[b].add(f)
+                    feature_to_bots.setdefault(f, []).append(b)
+
+        # Build Distance Matrix (1 - Jaccard) for clustering
+        n_bots = len(bots)
+        dist_mat = np.ones((n_bots, n_bots)) # Default max distance
+        np.fill_diagonal(dist_mat, 0)
+        
+        bot_list = list(bots)
+        bot_idx = {b: i for i, b in enumerate(bot_list)}
+        
+        for b1, b2 in combinations(bot_list, 2):
+            f1 = bot_features[b1]
+            f2 = bot_features[b2]
+            
+            intersection = len(f1 & f2)
+            union = len(f1 | f2)
+            
+            if union > 0:
+                jaccard = intersection / union
+                dist = 1.0 - jaccard
+                i, j = bot_idx[b1], bot_idx[b2]
+                dist_mat[i, j] = dist_mat[j, i] = dist
+
+        # Build DF for Silhouette Score and Analysis
+        matrix = np.zeros((len(bot_list), len(features)), dtype=int)
+        sorted_features = sorted(list(features))
+        feat_idx = {f: j for j, f in enumerate(sorted_features)}
+        
+        for i, b in enumerate(bot_list):
+            for f in bot_features[b]:
+                matrix[i, feat_idx[f]] = 1
+                
+        df = pd.DataFrame(matrix, index=bot_list, columns=sorted_features)
+
+        # 2. Cluster - Auto-select K using Silhouette Score
         try:
-            from sklearn.cluster import AgglomerativeClustering
-            from itertools import combinations
+            from scipy.cluster.hierarchy import linkage, fcluster
+            Z_bots = linkage(df, method='average', metric='jaccard')
             
-            # 1. Build Bot Projection (Jaccard)
-            bot_features = {b: set() for b in bots}
-            feature_to_bots = {}
+            best_k = 2
+            best_score = -1
+            max_k = min(8, len(df) - 1)
             
-            for edge in data["edges"]:
-                d = edge["data"]
-                src = d["source"]
-                tgt = d["target"]
-                rel = d.get("relation")
-                
-                if rel == "hasFeature":
-                    b, f = None, None
-                    if src in bots and tgt in features: b, f = src, tgt
-                    elif tgt in bots and src in features: b, f = tgt, src
-                    
-                    if b and f:
-                        bot_features[b].add(f)
-                        feature_to_bots.setdefault(f, []).append(b)
+            if max_k >= 2:
+                for k in range(2, max_k + 1):
+                    labels_temp = fcluster(Z_bots, k, criterion='maxclust')
+                    if len(set(labels_temp)) > 1:
+                        score = silhouette_score(df, labels_temp, metric='jaccard')
+                        if score > best_score:
+                            best_score = score
+                            best_k = k
+                n_clusters = best_k
+            else:
+                n_clusters = 2
 
-            # Build Distance Matrix (1 - Jaccard)
-            n_bots = len(bots)
-            dist_mat = np.ones((n_bots, n_bots)) # Default max distance
-            np.fill_diagonal(dist_mat, 0)
+            labels = fcluster(Z_bots, n_clusters, criterion='maxclust')
             
-            bot_list = list(bots)
-            bot_idx = {b: i for i, b in enumerate(bot_list)}
-            
-            for b1, b2 in combinations(bot_list, 2):
-                f1 = bot_features[b1]
-                f2 = bot_features[b2]
-                
-                intersection = len(f1 & f2)
-                union = len(f1 | f2)
-                
-                if union > 0:
-                    jaccard = intersection / union
-                    dist = 1.0 - jaccard
-                    i, j = bot_idx[b1], bot_idx[b2]
-                    dist_mat[i, j] = dist_mat[j, i] = dist
-
-            # 2. Cluster
-            # k=4 based on our analysis showing meaningful groups
-            ac = AgglomerativeClustering(n_clusters=4, metric='precomputed', linkage='average')
-            labels = ac.fit_predict(dist_mat)
-            
-            # 3. Assign to Bots
-            for i, b in enumerate(bot_list):
-                clusters[b] = int(labels[i])
-                
-            # 4. Propagate to Features/Domains (Simple Majority Vote)
-            # Assign features to the cluster of the bots that use them most
-            for fid, b_list in feature_to_bots.items():
-                counts = {}
-                for b in b_list:
-                    if b in clusters:
-                        c = clusters[b]
-                        counts[c] = counts.get(c, 0) + 1
-                if counts:
-                    best_c = max(counts, key=counts.get)
-                    clusters[fid] = best_c
-            
-            # Assign domains to the cluster of their bots
-            domain_votes = {}
-            for edge in data["edges"]:
-                src = edge["data"]["source"]
-                tgt = edge["data"]["target"]
-                rel = edge["data"].get("relation")
-                if rel == "partOf" and src in bots and tgt in domains:
-                    if src in clusters:
-                        c = clusters[src]
-                        domain_votes.setdefault(tgt, {}).setdefault(c, 0)
-                        domain_votes[tgt][c] += 1
-            
-            for d, counts in domain_votes.items():
-                if counts:
-                    best_c = max(counts, key=counts.get)
-                    clusters[d] = best_c
+            # Note: fcluster returns 1-indexed. Let's make it 0-indexed to match.
+            labels = labels - 1
 
         except Exception as e:
-            return {"error": f"Agglomerative error: {str(e)}"}
+            # Fallback
+            print(f"Silhouette failed, falling back to basic layout: {e}")
+            ac = AgglomerativeClustering(n_clusters=4, metric='precomputed', linkage='average')
+            labels = ac.fit_predict(dist_mat)
+            n_clusters = 4
+        
+        # 3. Assign to Bots
+        for i, b in enumerate(bot_list):
+            clusters[b] = int(labels[i])
+            
+        # 4. Propagate to Features/Domains (Simple Majority Vote)
+        for fid, b_list in feature_to_bots.items():
+            counts = {}
+            for b in b_list:
+                if b in clusters:
+                    c = clusters[b]
+                    counts[c] = counts.get(c, 0) + 1
+            if counts:
+                best_c = max(counts, key=counts.get)
+                clusters[fid] = best_c
+        
+        domain_votes = {}
+        for edge in data["edges"]:
+            src = edge["data"]["source"]
+            tgt = edge["data"]["target"]
+            rel = edge["data"].get("relation")
+            if rel == "partOf" and src in bots and tgt in domains:
+                if src in clusters:
+                    c = clusters[src]
+                    domain_votes.setdefault(tgt, {}).setdefault(c, 0)
+                    domain_votes[tgt][c] += 1
+        
+        for d, counts in domain_votes.items():
+            if counts:
+                best_c = max(counts, key=counts.get)
+                clusters[d] = best_c
+
+        # 5. Build Feature Analysis Object
+        analysis_data = []
+        df_clustered = df.copy()
+        df_clustered['Cluster'] = [clusters[b] for b in df_clustered.index]
+        global_presence = df.mean()
+        
+        for cluster_id in sorted(df_clustered['Cluster'].unique()):
+            cluster_bots_df = df_clustered[df_clustered['Cluster'] == cluster_id].drop(columns=['Cluster'])
+            bots_in_cluster = cluster_bots_df.index.tolist()
+            cluster_presence = cluster_bots_df.mean()
+            
+            feature_metrics = []
+            for feature in sorted_features:
+                g_rate = global_presence[feature]
+                c_rate = cluster_presence[feature]
+                diff_from_global = c_rate - g_rate
+                
+                # Only care about features actually present in the cluster
+                if c_rate > 0:
+                    feature_metrics.append({
+                        'feature_id': feature,
+                        # Assuming feature id roughly maps to name, frontend uses full nodes anyway
+                        'cluster_presence': round(float(c_rate), 3),
+                        'global_presence': round(float(g_rate), 3),
+                        'diff': round(float(diff_from_global), 3)
+                    })
+            
+            # Sort by diff descending
+            feature_metrics.sort(key=lambda x: x['diff'], reverse=True)
+            
+            analysis_data.append({
+                'cluster_id': int(cluster_id),
+                'bots': bots_in_cluster,
+                'top_features': feature_metrics[:5] # Send top 5 most defining features
+            })
+
+        return {"clusters": clusters, "analysis": analysis_data}
 
     else:
         return {"error": f"Unknown algorithm: {algorithm}"}
 
-    return clusters
+    return {"clusters": clusters}
 
 
 # -----------------------------
