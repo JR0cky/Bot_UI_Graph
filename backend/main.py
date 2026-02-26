@@ -323,25 +323,35 @@ def cluster_graph(algorithm: str = "spectral"):
             for feature in sorted_features:
                 g_rate = global_presence[feature]
                 c_rate = cluster_presence[feature]
-                diff_from_global = c_rate - g_rate
                 
-                # Only care about features actually present in the cluster
+                # We only care about features actually present in the cluster
                 if c_rate > 0:
+                    # Option 2: Unique Prominence (Cluster Frequency / Global Frequency)
+                    score = float(c_rate) / float(g_rate) if g_rate > 0 else 0.0
+                    
                     feature_metrics.append({
                         'feature_id': feature,
-                        # Assuming feature id roughly maps to name, frontend uses full nodes anyway
+                        # Pass these as float to keep type safety
                         'cluster_presence': round(float(c_rate), 3),
                         'global_presence': round(float(g_rate), 3),
-                        'diff': round(float(diff_from_global), 3)
+                        'score': round(score, 2)
                     })
             
-            # Sort by diff descending
-            feature_metrics.sort(key=lambda x: x['diff'], reverse=True)
+            # Sort by the new score descending
+            feature_metrics.sort(key=lambda x: x['score'], reverse=True)
+            
+            # Send top 5 most defining features
+            top_features = feature_metrics[:5]
+            
+            # Normalize scores for visual bars (0-100% relative to the highest score in this cluster)
+            max_score = top_features[0]['score'] if top_features else 1.0
+            for fm in top_features:
+                fm['normalized_score'] = round(fm['score'] / max_score if max_score > 0 else 0, 3)
             
             analysis_data.append({
                 'cluster_id': int(cluster_id),
                 'bots': bots_in_cluster,
-                'top_features': feature_metrics[:5] # Send top 5 most defining features
+                'top_features': top_features
             })
 
         return {"clusters": clusters, "analysis": analysis_data}

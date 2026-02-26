@@ -343,8 +343,8 @@ const algoInfoContent = document.getElementById('algo-info-content');
 
 // Descriptions
 const algoDescriptions = {
-    domain: "<strong>Domain:</strong> Groups nodes strictly by the Domain structure relative to Bots. Features are assigned to the Domain with the most connected Bots.",
-    agglomerative: "<strong>Bot Types (Agglomerative):</strong> Groups bots by feature similarity. Reveals hidden structures like 'Generalist LLMs' vs 'Specialized Tools' (Data-Driven)."
+    domain: "<strong>Domain (Structure):</strong> Groups bots by the primary domain they belong to (e.g., Companion, Therapy). Features are assigned based on which domain uses them most frequently.",
+    agglomerative: "<strong>Bot Types (Agglomerative):</strong> Discovers hidden functional similarities between bots based purely on the features they share, ignoring their assigned domains. Feature importance is calculated using a TF-IDF style metric (Cluster Frequency vs Global Frequency) to highlight what makes each cluster unique."
 };
 
 // Update info on selection change
@@ -426,6 +426,9 @@ if (clusterBtn) {
             // HIDE UI Sections
             const allFilters = document.getElementById('all-filters-container');
             if (allFilters) allFilters.style.display = 'none';
+
+            const sidebarControls = document.querySelector('.sidebar-controls');
+            if (sidebarControls) sidebarControls.style.display = 'none';
 
             const wtSection = document.getElementById('walkthrough-section');
             if (wtSection) wtSection.style.display = 'none';
@@ -636,7 +639,11 @@ if (resetClusterBtn) {
         const allFilters = document.getElementById('all-filters-container');
         if (allFilters) allFilters.style.display = '';
 
-        // 2. Walkthrough
+        // 2. Display Toggles (Show Edge Labels etc.)
+        const sidebarControls = document.querySelector('.sidebar-controls');
+        if (sidebarControls) sidebarControls.style.display = '';
+
+        // 3. Walkthrough
         const wtSection = document.getElementById('walkthrough-section');
         if (wtSection) wtSection.style.display = '';
 
@@ -689,18 +696,19 @@ function renderClusterAnalysis(analysisData) {
             // Reformat node snake_case ID to somewhat readable text
             const label = cy.getElementById(feat.feature_id)?.data('label') || feat.feature_id.replace(/_/g, ' ');
 
-            // Width based on presence in cluster (out of 100%)
+            // Calculate display strings
             const presencePercent = (feat.cluster_presence * 100).toFixed(0);
-            const diffPercent = (feat.diff * 100).toFixed(0);
+            const scoreMultiplier = feat.score !== undefined ? feat.score.toFixed(1) : "0.0";
+            const fillWidth = feat.normalized_score !== undefined ? (feat.normalized_score * 100).toFixed(0) : "0";
 
             html += `
-                <div class="feature-bar-container">
+                <div class="feature-bar-container" title="Present in ${presencePercent}% of cluster bots (vs. ${(feat.global_presence * 100).toFixed(0)}% globally)">
                     <div class="feature-bar-label">
                         <span>${label}</span>
-                        <span>+${diffPercent}%</span>
+                        <span style="font-weight: 600; color: #4ade80;">${scoreMultiplier}</span>
                     </div>
                     <div class="feature-bar-bg">
-                        <div class="feature-bar-fill" style="width: ${presencePercent}%; background-color: ${color};"></div>
+                        <div class="feature-bar-fill" style="width: ${fillWidth}%; background-color: ${color};"></div>
                     </div>
                 </div>
             `;
@@ -880,7 +888,7 @@ function updateFilters(type, value, isChecked) {
         else activeFilters.ids.delete(value);
 
         // Sync checkboxes
-        document.querySelectorAll(`input[data-value="${value}"]`).forEach(cb => cb.checked = isChecked);
+        document.querySelectorAll(`input[data - value= "${value}"]`).forEach(cb => cb.checked = isChecked);
 
         // Domain Sync
         if (lookup.domainToBots && lookup.domainToBots.has(value)) {
@@ -888,7 +896,7 @@ function updateFilters(type, value, isChecked) {
             botIds.forEach(botId => {
                 if (isChecked) activeFilters.ids.add(botId);
                 else activeFilters.ids.delete(botId);
-                const cb = document.querySelector(`input[data-value="${botId}"]`);
+                const cb = document.querySelector(`input[data - value= "${botId}"]`);
                 if (cb) cb.checked = isChecked;
             });
         }
@@ -998,11 +1006,11 @@ function showDetails(data) {
             : '<span style="color:#94a3b8;font-style:italic;">No description available</span>';
 
         html += `
-            <div class="detail-item detail-description">
+                < div class="detail-item detail-description" >
                 <div class="detail-label">Description</div>
                 <div class="detail-value">${desc}</div>
-            </div>
-        `;
+            </div >
+                `;
     }
 
     // --- Render all other fields except screenshots + description + id + duplicates ---
@@ -1026,11 +1034,11 @@ function showDetails(data) {
             }
 
             return `
-                <div class="detail-item">
+                < div class="detail-item" >
                     <div class="detail-label">${key.replace(/_/g, ' ')}</div>
                     <div class="detail-value">${formattedValue}</div>
-                </div>
-            `;
+                </div >
+                `;
         }).join('');
 
     content.innerHTML = html;
@@ -1340,7 +1348,7 @@ function renderStep(index) {
     indicator.innerHTML = '';
     tutorialSteps.forEach((_, i) => {
         const dot = document.createElement('div');
-        dot.className = `step-dot ${i === index ? 'active' : ''}`;
+        dot.className = `step - dot ${i === index ? 'active' : ''} `;
         indicator.appendChild(dot);
     });
 
