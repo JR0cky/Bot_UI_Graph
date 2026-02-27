@@ -1006,10 +1006,10 @@ function showDetails(data) {
             : '<span style="color:#94a3b8;font-style:italic;">No description available</span>';
 
         html += `
-                < div class="detail-item detail-description" >
+                <div class="detail-item detail-description">
                 <div class="detail-label">Description</div>
                 <div class="detail-value">${desc}</div>
-            </div >
+            </div>
                 `;
     }
 
@@ -1034,10 +1034,10 @@ function showDetails(data) {
             }
 
             return `
-                < div class="detail-item" >
+                <div class="detail-item">
                     <div class="detail-label">${key.replace(/_/g, ' ')}</div>
                     <div class="detail-value">${formattedValue}</div>
-                </div >
+                </div>
                 `;
         }).join('');
 
