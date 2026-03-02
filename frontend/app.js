@@ -1164,7 +1164,8 @@ function updateBotSelector(nodeId) {
             if (!src.startsWith('assets/') && !src.startsWith('http')) {
                 src = 'assets/screenshots/' + src;
             }
-            screenshotImg.src = src;
+            // Add cache-busting query parameter
+            screenshotImg.src = src + '?v=' + new Date().getTime();
 
             screenshotContainer.classList.remove('hidden');
         } else {
@@ -1198,7 +1199,8 @@ function updateBotSelector(nodeId) {
 
         let src = currentScreenshots[currentScreenshotIndex];
         if (!src.startsWith('assets/') && !src.startsWith('http')) src = 'assets/screenshots/' + src;
-        screenshotImg.src = src;
+        // Add cache-busting query parameter
+        screenshotImg.src = src + '?v=' + new Date().getTime();
     };
 
     prevBtn.onclick = () => {
@@ -1208,7 +1210,8 @@ function updateBotSelector(nodeId) {
 
         let src = currentScreenshots[currentScreenshotIndex];
         if (!src.startsWith('assets/') && !src.startsWith('http')) src = 'assets/screenshots/' + src;
-        screenshotImg.src = src;
+        // Add cache-busting query parameter
+        screenshotImg.src = src + '?v=' + new Date().getTime();
     };
 }
 
