@@ -4,7 +4,7 @@ Ada;Quick Reply;Ada_Quick_Reply.png
 Ada;Call-on Menu;Ada_call-on-menu-help.PNG, Ada_call-on-menu-help2.PNG
 Ada;Message Reaction;Ada_Help_System1.png, Ada_Message_Reaction2.png
 Ada;Help System;Ada_Help_System1.png, Ada_Help_System2.png
-Ada;System Information;Ada_Disclaimer1.png, Ada_Disclaimer2.png, Ada_Disclaimer_popup.png
+Ada;System Information;Ada_Disclaimer1.png, Ada_Disclaimer_popup.png
 Ada;Avatar;Ada_Chat_Message.png
 ChatGPT;Accordion;ChatGPT_Accordion.png
 ChatGPT;Carousel Chat Message;ChatGPT_Carousel_Chat_Message.png
@@ -15,8 +15,8 @@ ChatGPT;Help System;ChatGPT_Help_System.png
 ChatGPT;Image Chat Message;ChatGPT_Image_Chat_Message.png
 ChatGPT;Input Adjustment;ChatGPT_Additional_Input.png, ChatGPT_Persona_Popup.png
 ChatGPT;Interactive Canvas;ChatGPT_Interactive_Canvas.png
-ChatGPT;Message Reaction;ChatGPT_Message_Reactions.png
-ChatGPT;Message Action;Chat_GPT_Sticker_Emoji.png
+ChatGPT;Message Reaction;Chat_GPT_Sticker_Emoji.png
+ChatGPT;Message Action;ChatGPT_Message_Reactions.png, ChatGPT_Edit_Code.png
 ChatGPT;Persistent Menu;ChatGPT_Persistent_Menu.png
 ChatGPT;Processing Indicator;ChatGPT_Processing_Indicator.png, ChatGPT_Voice_Mode_Transcription.png
 ChatGPT;Quick Start Button;ChatGPT_Chat_Quickstart.png, ChatGPT_Quickstart_Image_Generation.png
@@ -80,7 +80,7 @@ Gemini;Voice Chat Message;gemini_nina_images.png
 Gemini;Web Preview Chat Message;gemini_nina_weblinks.png
 Gemini;Emoji Chat Message;gemini_nina_emoticon.png
 Gemini;Quick Reply;gemini_nina_quickreplies.png
-Gemini;Message Action;gemini_nina_reaction.png
+Gemini;Message Action;gemini_nina_reaction.png, gemini_nina_image.png
 Gemini;Processing Indicator;gemini_nina_progress.png, gemini_nina_progress2.png
 Gemini;Persistent Menu;gemini_nina_settings.png, gemini_nina_menu.png
 Gemini;Message Reaction;gemini_nina_image.png
@@ -114,10 +114,10 @@ Replika;Text Chat Message;Replika_chat-message.PNG
 Replika;Image Chat Message;replika_nina_avatar.png
 Replika;Voice Chat Message;Replika_voice-message_PRO.PNG, replika_nina_voice.png
 Replika;Emoji Chat Message;Replika_emoji-chat-message.PNG, Replika_emoji-chat-message2.PNG
-Replika;Message Action;Replika_emoji-chat-message.PNG
+Replika;Message Action;Replika_message-reactions.PNG, replika_nina_myreactions.png
 Replika;Processing Indicator;Replika_processing-indicator.PNG
 Replika;Persistent Menu;replika_nina_settings.png
-Replika;Message Reaction;Replika_message-reactions.PNG, replika_nina_myreactions.png
+Replika;Message Reaction;Replika_emoji-chat-message.PNG
 Replika;Information Stamp;replika_nina_today.png
 Replika;System Information;E65FB7EE-06D9-4C05-88DF-8C4B30CE33D0.PNG, replika_nina_supscription.png, replika_nina_menu2.png
 Replika;Avatar;replika_nina_avatar.png
@@ -142,7 +142,7 @@ SeniorTalk;Voice Chat Message;seniortalk_nina_voiceoutput.png, SeniorTalk_Voice_
 SeniorTalk;Emoji Chat Message;seniortalk_nina_emoticons.png
 SeniorTalk;Accordion;SeniorTalk_Intro_Accordion.png
 SeniorTalk;Quick Reply;SeniorTalk_Quick_Reply.png
-SeniorTalk;Message Action;SeniorTalk_Forward_Chat_Message.png, SeniorTalk_Message_Action.png
+SeniorTalk;Message Action;seniortalk_nina_message_reaction.png
 SeniorTalk;Persistent Menu;SeniorTalk_Persistent_Menu.png, SeniorTalk_Avatar.png
 SeniorTalk;Message Reaction;seniortalk_nina_message_reaction.png
 SeniorTalk;Functionality Introduction;seniortalk_nina_start.png

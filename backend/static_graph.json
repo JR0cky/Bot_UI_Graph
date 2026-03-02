@@ -409,7 +409,8 @@
         "class": "Message Action",
         "screenshots": {
           "chatgpt": [
-            "Chat_GPT_Sticker_Emoji.png"
+            "ChatGPT_Message_Reactions.png",
+            "ChatGPT_Edit_Code.png"
           ],
           "talkpal": [
             "Talkpal_Message_Reactions.png"
@@ -421,20 +422,21 @@
             "Deepseek_Chat_Message.png"
           ],
           "gemini": [
-            "gemini_nina_reaction.png"
+            "gemini_nina_reaction.png",
+            "gemini_nina_image.png"
           ],
           "paradot": [
             "Paradot_System_Information.png"
           ],
           "replika": [
-            "Replika_emoji-chat-message.PNG"
+            "Replika_message-reactions.PNG",
+            "replika_nina_myreactions.png"
           ],
           "rocky": [
             "RockyAI_Chat_Messages.png"
           ],
           "seniortalk": [
-            "SeniorTalk_Forward_Chat_Message.png",
-            "SeniorTalk_Message_Action.png"
+            "seniortalk_nina_message_reaction.png"
           ],
           "supertutor": [
             "Supertutor_message-reactions.PNG"
@@ -866,7 +868,7 @@
             "Ada_Message_Reaction2.png"
           ],
           "chatgpt": [
-            "ChatGPT_Message_Reactions.png"
+            "Chat_GPT_Sticker_Emoji.png"
           ],
           "talkpal": [
             "Talkpal_Message_Reactions.png"
@@ -888,8 +890,7 @@
             "paradot_nina_interface.png"
           ],
           "replika": [
-            "Replika_message-reactions.PNG",
-            "replika_nina_myreactions.png"
+            "Replika_emoji-chat-message.PNG"
           ],
           "seniortalk": [
             "seniortalk_nina_message_reaction.png"
@@ -941,7 +942,6 @@
         "screenshots": {
           "ada": [
             "Ada_Disclaimer1.png",
-            "Ada_Disclaimer2.png",
             "Ada_Disclaimer_popup.png"
           ],
           "chatgpt": [
