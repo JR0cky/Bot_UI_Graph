@@ -888,7 +888,7 @@ function updateFilters(type, value, isChecked) {
         else activeFilters.ids.delete(value);
 
         // Sync checkboxes
-        document.querySelectorAll(`input[data - value= "${value}"]`).forEach(cb => cb.checked = isChecked);
+        document.querySelectorAll(`input[data-value="${value}"]`).forEach(cb => cb.checked = isChecked);
 
         // Domain Sync
         if (lookup.domainToBots && lookup.domainToBots.has(value)) {
@@ -896,7 +896,7 @@ function updateFilters(type, value, isChecked) {
             botIds.forEach(botId => {
                 if (isChecked) activeFilters.ids.add(botId);
                 else activeFilters.ids.delete(botId);
-                const cb = document.querySelector(`input[data - value= "${botId}"]`);
+                const cb = document.querySelector(`input[data-value="${botId}"]`);
                 if (cb) cb.checked = isChecked;
             });
         }
