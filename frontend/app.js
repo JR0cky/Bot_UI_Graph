@@ -428,7 +428,9 @@ if (clusterBtn) {
             if (allFilters) allFilters.style.display = 'none';
 
             const sidebarControls = document.querySelector('.sidebar-controls');
-            if (sidebarControls) sidebarControls.style.display = 'none';
+            if (sidebarControls) {
+                sidebarControls.style.display = algorithm === 'agglomerative' ? 'none' : '';
+            }
 
             const wtSection = document.getElementById('walkthrough-section');
             if (wtSection) wtSection.style.display = 'none';
