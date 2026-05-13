@@ -1,10 +1,10 @@
-# Chatbot Feature Graph
+# Graph-based Chatbot Explorer (GraCE)
 
-The **Chatbot Feature Graph** is an interactive visualization tool designed to explore the functional landscape of 12 popular chatbots across varying domains. It maps chatbots to their specific features and core domains using a force-directed graph, where nodes representing bots, domains, and features are color-coded by category for intuitive distinction.
+The **Graph-based Chatbot Explorer (GraCE)** is an interactive visualization tool designed to explore the functional landscape of 12 popular chatbots across varying domains. It maps chatbots to their specific features and core domains using a force-directed graph, where nodes representing bots, domains, and features are color-coded by category for intuitive distinction.
 
 Users can actively query the dataset through a dynamic sidebar to filter views, hover over nodes to highlight network connections, and click to access detailed metadata and implementation screenshots. The tool further supports advanced exploratory analysis through customizable clustering algorithms (currently exposing **Agglomerative** and **Domain-based** models) that reveal latent community structures.
 
-To ensure a smooth user experience, the system includes a comprehensive **interactive tutorial** that launches automatically for first-time users, providing a guided walkthrough of the graph’s visual encoding, navigation controls, and key analytical capabilities.
+To ensure a smooth user experience, the system includes a comprehensive **tutorial** that launches automatically for first-time users, providing a guided walkthrough of the graph’s visual encoding, navigation controls, and key analytical capabilities.
 
 ---
 
@@ -86,3 +86,22 @@ The application will be available at [http://localhost:8000](http://localhost:80
 *   **Backend**: Python, FastAPI, NetworkX, Scikit-learn, Pandas, SciPy
 *   **Data**: CSV-based annotations converted to JSON graph format
 
+
+## Citation
+
+If you use this tool in your research or publication, please cite:
+
+```bibtex
+@inproceedings{yourkey2026,
+  title     = {Same, Same But Different? A Cross-Domain Analysis of Chatbot User Interfaces.},
+  author    = {Author A and Author B and Author C},
+  booktitle = {Proceedings of ...},
+  year      = {2026}
+}
+
+More details on the tool can be found in the following publication:
+
+> Author A, Author B, and Author C.  
+> *Same, Same But Different? A Cross-Domain Analysis of Chatbot User Interfaces.* 
+> Conference/Journal Name, Year.  
+> [PDF](https://example.com/paper.pdf)
