@@ -7,6 +7,8 @@ Users can actively query the dataset through a dynamic sidebar to filter views, 
 To ensure a smooth user experience, the system includes a comprehensive **tutorial** that launches automatically for first-time users, providing a guided walkthrough of the graph’s visual encoding, navigation controls, and key analytical capabilities.
 
 ---
+## Access to GraCE
+The tool is currently hosted under [https://grace.apps.uni.informatik.uni-bremen.de](https://grace.apps.uni.informatik.uni-bremen.de). If you want to use and edit the data locally, please follow the instructions below.
 
 ## Key Features
 
@@ -94,14 +96,14 @@ If you use this tool in your research or publication, please cite:
 ```bibtex
 @inproceedings{yourkey2026,
   title     = {Same, Same But Different? A Cross-Domain Analysis of Chatbot User Interfaces.},
-  author    = {Author A and Author B and Author C},
-  booktitle = {Proceedings of ...},
+  author    = {Johanna Rockstroh and Laura Spillner and Nina Wenig and Thomas Eßmeyer and Nima Zargham and Rainer Malaka},
+  booktitle = {Proceedings of the 8th ACM Conference on Conversational User Interfaces},
   year      = {2026}
 }
 
 More details on the tool can be found in the following publication:
 
-> Author A, Author B, and Author C.  
+> Johanna Rockstroh, Laura Spillner, Nina Wenig, Thomas Eßmeyer,Nima Zargham and Rainer Malaka  
 > *Same, Same But Different? A Cross-Domain Analysis of Chatbot User Interfaces.* 
-> Conference/Journal Name, Year.  
+> Proceedings of the 8th ACM Conference on Conversational User Interfaces, 2026.  
 > [PDF](https://example.com/paper.pdf)
