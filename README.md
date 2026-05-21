@@ -91,19 +91,19 @@ The application will be available at [http://localhost:8000](http://localhost:80
 
 ## Citation
 
-If you use this tool in your research or publication, please cite:
+If you use this work, please cite:
 
 ```bibtex
-@inproceedings{yourkey2026,
-  title     = {Same, Same But Different? A Cross-Domain Analysis of Chatbot User Interfaces.},
-  author    = {Johanna Rockstroh and Laura Spillner and Nina Wenig and Thomas Eßmeyer and Nima Zargham and Rainer Malaka},
-  booktitle = {Proceedings of the 8th ACM Conference on Conversational User Interfaces},
-  year      = {2026}
+@inproceedings{rockstroh2026same,
+  author    = {Johanna Rockstroh and Laura Spillner and Nina Wenig and Thomas E{\ss}meyer and Nima Zargham and Rainer Malaka},
+  title     = {Same, Same But Different? A Cross-Domain Analysis of Chatbot User Interfaces},
+  booktitle = {Proceedings of the ACM Conversational User Interfaces Conference (CUI '26)},
+  year      = {2026},
+  address   = {Bremen, Germany},
+  publisher = {ACM},
+  location  = {New York, NY, USA},
+  pages     = {14},
+  doi       = {10.1145/3816046.3816229},
+  url       = {https://doi.org/10.1145/3816046.3816229}
 }
-
-More details on the tool can be found in the following publication:
-
-> Johanna Rockstroh, Laura Spillner, Nina Wenig, Thomas Eßmeyer,Nima Zargham and Rainer Malaka  
-> *Same, Same But Different? A Cross-Domain Analysis of Chatbot User Interfaces.* 
-> Proceedings of the 8th ACM Conference on Conversational User Interfaces, 2026.  
-> [PDF](https://example.com/paper.pdf)
+```
