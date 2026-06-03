@@ -8,7 +8,7 @@ To ensure a smooth user experience, the system includes a comprehensive **tutori
 
 ---
 ## Access to GraCE
-The tool is currently hosted under [https://bot-ui-graph.onrender.com/](https://bot-ui-graph.onrender.com/) and will be ater moved to [https://grace.apps.uni.informatik.uni-bremen.de](https://grace.apps.uni.informatik.uni-bremen.de). If you want to use and edit the data locally, please follow the instructions below.
+The tool is currently hosted under [https://bot-ui-graph.onrender.com/](https://bot-ui-graph.onrender.com/) and will be later moved to [https://grace.apps.uni.informatik.uni-bremen.de](https://grace.apps.uni.informatik.uni-bremen.de). If you want to use and edit the data locally, please follow the instructions below.
 
 ## Key Features
 
